@@ -1,4 +1,4 @@
-package com.mtgox.examples.utils;
+package mtgox_api.com.mtgox.examples.utils;
  
 import java.io.*;
 import java.util.logging.Level;
@@ -8,7 +8,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.mtgox.api.ApiKeys;
+import mtgox_api.com.mtgox.api.ApiKeys;
 
 /**
  *

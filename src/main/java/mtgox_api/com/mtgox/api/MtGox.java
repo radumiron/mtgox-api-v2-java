@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mtgox.api;
+package mtgox_api.com.mtgox.api;
 
 
 import java.io.BufferedReader;

@@ -1,10 +1,10 @@
 
-package com.mtgox.examples;
+package mtgox_api.com.mtgox.examples;
 
-import com.mtgox.api.ApiKeys;
-import com.mtgox.api.MtGox;
-import com.mtgox.api.MtGox.Currency;
-import com.mtgox.examples.utils.Utils;
+import mtgox_api.com.mtgox.api.ApiKeys;
+import mtgox_api.com.mtgox.api.MtGox;
+import mtgox_api.com.mtgox.api.MtGox.Currency;
+import mtgox_api.com.mtgox.examples.utils.Utils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;

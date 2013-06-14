@@ -1,5 +1,5 @@
 
-package com.mtgox.api;
+package mtgox_api.com.mtgox.api;
 
 /**
  * @author Nicolò Paternoster <paternoster.nicolo at gmail.com>
