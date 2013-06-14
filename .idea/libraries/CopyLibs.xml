@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="CopyLibs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/CopyLibs/commons-codec-1.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/CopyLibs/json-simple-1.1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
