@@ -9,6 +9,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+
 /**
  * https://github.com/adv0r/mtgox-apiv2-java
  * @author adv0r <leg@lize.it>
@@ -21,16 +28,16 @@ public class UsageExample {
     public static void main(String args[])
     {
       
-        initSSL(); //Setup the SSL certificate to interact with mtgox over secure http.
+        new UsageExample().initSSL(); //Setup the SSL certificate to interact with mtgox over secure http.
         
         
         //Read api Keys---------------------------------------------------------------------------------
         //from the JSON file located in res/api-keys.json
-        //ApiKeys keys = readApiKeys("res/api-keys.json");
+        ApiKeys keys = readApiKeys("res/api-keys.json");
         
         //or simply create the keys passing them to the constructor
-        ApiKeys keys = new ApiKeys("your-secret-key",
-                "your-api-key"); 
+        /*ApiKeys keys = new ApiKeys("your-secret-key",
+                "your-api-key"); */
               
            
         //Library Usage Examples -----------------------------------------------------------------------
@@ -81,15 +88,33 @@ public class UsageExample {
     }
     
     
-    public static void initSSL()
+    public void initSSL()
     {        
            
         // SSL Certificates  trustStore ----------------------------------------
         //Set the SSL certificate for mtgox - Read up on Java Trust store. 
+        //System.setProperty("javax.net.ssl.trustStore","./res/ssl/mtgox.jks");
         System.setProperty("javax.net.ssl.trustStore","res/ssl/mtgox.jks");
         System.setProperty("javax.net.ssl.trustStorePassword","h4rdc0r_"); //I encripted the jks file using this pwd
-        //System.setProperty("javax.net.debug","ssl"); //Uncomment for debugging SSL errors  
-        
+        System.setProperty("javax.net.debug","ssl"); //Uncomment for debugging SSL errors
+
+
+
+        KeyStore keyStore = null;
+        try {
+            InputStream is = getClass().getClassLoader().getResourceAsStream(System.getProperty("javax.net.ssl.trustStore"));
+            keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+            keyStore.load(is, System.getProperty("javax.net.ssl.trustStorePassword").toCharArray());
+        } catch (KeyStoreException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (CertificateException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
     }
     
      //readApiKeysFromFile
