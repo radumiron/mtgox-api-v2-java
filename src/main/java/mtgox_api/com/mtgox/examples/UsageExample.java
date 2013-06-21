@@ -96,11 +96,11 @@ public class UsageExample {
         //System.setProperty("javax.net.ssl.trustStore","./res/ssl/mtgox.jks");
         System.setProperty("javax.net.ssl.trustStore","res/ssl/mtgox.jks");
         System.setProperty("javax.net.ssl.trustStorePassword","h4rdc0r_"); //I encripted the jks file using this pwd
-        System.setProperty("javax.net.debug","ssl"); //Uncomment for debugging SSL errors
+        //System.setProperty("javax.net.debug","ssl"); //Uncomment for debugging SSL errors
 
 
 
-        KeyStore keyStore = null;
+       /* KeyStore keyStore = null;
         try {
             InputStream is = getClass().getClassLoader().getResourceAsStream(System.getProperty("javax.net.ssl.trustStore"));
             keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -113,7 +113,7 @@ public class UsageExample {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        }*/
 
     }
     

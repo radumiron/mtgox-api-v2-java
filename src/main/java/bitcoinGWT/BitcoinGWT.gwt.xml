@@ -2,12 +2,46 @@
         "http://google-web-toolkit.googlecode.com/svn/releases/2.0/distro-source/core/src/gwt-module.dtd">
 <module rename-to="BitcoinGWT">
 
-    <!-- Inherit the core Web Toolkit stuff.                  -->
-    <inherits name='com.google.gwt.user.User'/>
+    <!-- Inherit the core Web Toolkit stuff. -->
+    <inherits name="com.google.gwt.user.User" />
+    <inherits name="com.google.gwt.i18n.I18N"/>
+    <inherits name="com.google.gwt.resources.Resources" />
+    <!-- Logging configuration -->
+    <inherits name="com.google.gwt.logging.Logging" />
+    <set-property name="gwt.logging.logLevel" value="INFO" />
+    <set-property name="gwt.logging.enabled" value="TRUE" />
+    <set-property name="gwt.logging.simpleRemoteHandler"
+                  value="ENABLED" />
+    <set-property name="gwt.logging.developmentModeHandler"
+                  value="ENABLED" />
+    <set-property name="gwt.logging.systemHandler" value="ENABLED" />
+    <set-property name="gwt.logging.popupHandler" value="DISABLED" />
+    <set-property name="gwt.logging.consoleHandler" value="DISABLED" />
+    <set-property name="gwt.logging.firebugHandler" value="DISABLED" />
+
+    <!-- For development, a default of `DEBUG` is recommended -->
+    <inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
+    <set-property name="log_DivLogger" value="DISABLED" />
+    <inherits name="com.allen_sauer.gwt.log.gwt-log-RemoteLogger" />
+    <set-configuration-property name="log_url" value="/med/gwt-log" />
+
+
+    <!--<inherits name="org.apache.log4j.Log4j" />-->
+
+    <!-- Inherit the default GWT style sheet. You can change -->
+    <!-- the theme of your GWT application by uncommenting -->
+    <!-- any one of the following lines. -->
+    <inherits name="com.google.gwt.user.theme.clean.Clean" />
+    <!-- <inherits name="com.google.gwt.user.theme.standard.Standard"/> -->
+    <!-- <inherits name="com.google.gwt.user.theme.chrome.Chrome"/> -->
+    <!-- <inherits name="com.google.gwt.user.theme.dark.Dark"/> -->
+
+    <!-- Other module inherits -->
+    <inherits name="com.sencha.gxt.ui.GXT" />
+    <!-- Specify the app entry point class. -->
 
     <!-- Specify the app entry point class.                   -->
     <entry-point class='bitcoinGWT.client.BitcoinGWT'/>
-
 
     <!-- Specify the app servlets.                   -->
     <servlet path='/BitcoinGWTService' class='bitcoinGWT.server.BitcoinGWTServiceImpl'/>
