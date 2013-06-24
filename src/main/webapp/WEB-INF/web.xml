@@ -22,6 +22,12 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
+    <listener>
+        <listener-class>
+            bitcoinGWT.server.listeners.AppConfigListener
+        </listener-class>
+    </listener>
+
     <!--<listener>
         <listener-class>bitcoinGWT.server.AppContextInitializerListener</listener-class>
     </listener>-->

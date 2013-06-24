@@ -4,6 +4,7 @@ import mtgox_api.com.mtgox.api.MtGox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,9 +19,9 @@ import java.util.TimerTask;
 public class TickerEngine {
 
     @Autowired
-    MtGox trade;
+    private MtGox trade;
 
-    private static int INITIAL_DELAY = 1000;
+    private static int INITIAL_DELAY = 5000;
     private static int TICKER_INTERVAL = 500;
 
     private Timer tickerTimer = new Timer();
@@ -33,7 +34,7 @@ public class TickerEngine {
 
         @Override
         public void run() {
-            //To change body of implemented methods use File | Settings | File Templates.
+            System.out.println(new Date() + ": last price: " + trade.getLastPrice(MtGox.Currency.EUR).getPrice() + ", lag: " + trade.getLag());
         }
     }
 }

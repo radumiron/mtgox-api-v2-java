@@ -23,6 +23,7 @@ import javax.crypto.spec.SecretKeySpec;
 import bitcoinGWT.server.TradeUtils;
 import bitcoinGWT.shared.model.TickerShallowObject;
 import mtgox_api.com.mtgox.api.constants.TradeParams;
+import mtgox_api.com.mtgox.examples.utils.Utils;
 import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -66,8 +67,8 @@ private final String ENCODING = "UTF-8";
 private boolean printHttpResponse;
 
     public MtGox() {
-        TradeUtils.initSSL();
-        ApiKeys keys = TradeUtils.readApiKeys("res/api-keys.json");
+        Utils.initSSL();
+        ApiKeys keys = Utils.readApiKeys("WEB-INF/res/api-keys.json");
 
         initTrade(keys);
     }
