@@ -46,4 +46,7 @@
     <!-- Specify the app servlets.                   -->
     <servlet path='/BitcoinGWTService' class='bitcoinGWT.server.BitcoinGWTServiceImpl'/>
 
+    <!--specify code which needs to be translated to JavaScript-->
+    <source path="client" />
+    <source path="shared" />
 </module>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Mtgox-api-v2-java:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="bitcoin-graph-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Mtgox-api-v2-java:war exploded" />
+    </root>
+  </artifact>
+</component>

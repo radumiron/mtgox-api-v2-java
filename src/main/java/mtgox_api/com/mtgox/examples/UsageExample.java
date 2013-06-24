@@ -28,13 +28,13 @@ public class UsageExample {
     public static void main(String args[])
     {
       
-        new UsageExample().initSSL(); //Setup the SSL certificate to interact with mtgox over secure http.
-        
-        
+        //new UsageExample().initSSL(); //Setup the SSL certificate to interact with mtgox over secure http.
+
+
         //Read api Keys---------------------------------------------------------------------------------
         //from the JSON file located in res/api-keys.json
-        ApiKeys keys = readApiKeys("res/api-keys.json");
-        
+        //ApiKeys keys = readApiKeys("res/api-keys.json");
+
         //or simply create the keys passing them to the constructor
         /*ApiKeys keys = new ApiKeys("your-secret-key",
                 "your-api-key"); */
@@ -42,7 +42,7 @@ public class UsageExample {
            
         //Library Usage Examples -----------------------------------------------------------------------
         //Create the interface for trading on Mtgox, passing the apikeys object
-        MtGox trade = new MtGox(keys);
+        MtGox trade = new MtGox();
         //trade.setPrintHTTPResponse(true); //Uncomment this line if you want to read the JSON HTTP response
         
         //Get the current balance in USD,EUR, and BTC---------------------------------------------------
@@ -64,8 +64,8 @@ public class UsageExample {
         
         
         //Get the current price of a bitcoin using the ticker fast-------------------------------------
-        double lastPriceUSD = trade.getLastPrice(Currency.USD);
-        double lastPriceEUR = trade.getLastPrice(Currency.EUR);
+        double lastPriceUSD = trade.getLastPrice(Currency.USD).getPrice();
+        double lastPriceEUR = trade.getLastPrice(Currency.EUR).getPrice();
         System.out.println("Current price of 1 BTC : \n" +
                 "   "+lastPriceUSD+" $\n"+
                 "   "+lastPriceEUR+" €");
@@ -74,7 +74,7 @@ public class UsageExample {
         //Buy 0.1 BTC at market price -----------------------------------------------------------------
         //String buyResult = trade.buyBTC(0.1); //If you uncomment this, be sure of what you are doing
         //System.out.println(buyResult);
-        
+
         //Sell 0.1 BTC at market price -----------------------------------------------------------------
         //String sellResult = trade.sellBTC(0.1); //If you uncomment this, be sure of what you are doing
         //System.out.println(sellResult);

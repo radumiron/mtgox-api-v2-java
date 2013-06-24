@@ -19,10 +19,16 @@ import java.util.logging.Logger;
 import javax.net.ssl.HttpsURLConnection;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+
+import bitcoinGWT.server.TradeUtils;
+import bitcoinGWT.shared.model.TickerShallowObject;
+import mtgox_api.com.mtgox.api.constants.TradeParams;
 import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  *
@@ -33,14 +39,14 @@ import org.json.simple.parser.ParseException;
  * Consider donations @ 1N7XxSvek1xVnWEBFGa5sHn1NhtDdMhkA7
  * unofficial documentation by nitrous https://bitbucket.org/nitrous/mtgox-api/overview
  */
-public class MtGox implements TradeInterface{
+@Component
+public class MtGox implements TradeInterface {
 	
 public enum Currency {BTC, USD, GBP, EUR, JPY, AUD, CAD, CHF, CNY, DKK, HKD, PLN, RUB, SEK, SGD, THB};
     
 private ApiKeys keys;
 
-
-private final HashMap<Currency, Integer> devisionFactors;
+private HashMap<Currency, Integer> devisionFactors;
 
 
 private final double MIN_ORDER = 0.01; //BTC
@@ -57,9 +63,16 @@ private final String API_ADD_ORDER = "BTCUSD/MONEY/ORDER/ADD";
 private final String SIGN_HASH_FUNCTION = "HmacSHA512";
 private final String ENCODING = "UTF-8";
 
-private boolean printHttpResponse ;
+private boolean printHttpResponse;
 
-  public MtGox(ApiKeys keys) {
+    public MtGox() {
+        TradeUtils.initSSL();
+        ApiKeys keys = TradeUtils.readApiKeys("res/api-keys.json");
+
+        initTrade(keys);
+    }
+
+    private void initTrade(ApiKeys keys) {
         this.keys = keys;
         printHttpResponse = false;
         // set division Factors
@@ -103,8 +116,8 @@ private boolean printHttpResponse ;
          String lag="";
          try {
             JSONObject httpAnswerJson=(JSONObject)(parser.parse(queryResult));
-            JSONObject dataJson = (JSONObject)httpAnswerJson.get("data");
-            lag = (String)dataJson.get("lag_text");                      
+            JSONObject dataJson = (JSONObject)httpAnswerJson.get(TradeParams.DATA);
+            lag = (String)dataJson.get(TradeParams.LAG);
          } catch (ParseException ex) {
             Logger.getLogger(MtGox.class.getName()).log(Level.SEVERE, null, ex);
         }   
@@ -311,7 +324,7 @@ private boolean printHttpResponse ;
     }
     
 
-    public double getLastPrice(Currency cur) {    
+    public TickerShallowObject getLastPrice(Currency cur) {
   
         String urlPath=getTickerPath(cur, true);
         long divideFactor = devisionFactors.get(cur);
@@ -345,15 +358,16 @@ private boolean printHttpResponse ;
         double last=0;
         try {
             JSONObject httpAnswerJson=(JSONObject)(parser.parse(queryResult));
-            JSONObject dataJson = (JSONObject)httpAnswerJson.get("data");
-            JSONObject lastJson = (JSONObject)dataJson.get("last");
-            String last_String = (String)lastJson.get("value");
+            JSONObject dataJson = (JSONObject)httpAnswerJson.get(TradeParams.DATA);
+            JSONObject lastJson = (JSONObject)dataJson.get(TradeParams.LAST);
+            String last_String = (String)lastJson.get(TradeParams.VALUE);
             last = Double.parseDouble(last_String);
             
          } catch (ParseException ex) {
             Logger.getLogger(MtGox.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return last;
+
+        return new TickerShallowObject(cur, last);
     }
    
     private class GoxService  {

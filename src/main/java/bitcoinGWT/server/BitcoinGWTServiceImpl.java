@@ -3,6 +3,8 @@ package bitcoinGWT.server;
 import bitcoinGWT.server.ticker.TickerEngine;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import bitcoinGWT.client.BitcoinGWTService;
+import mtgox_api.com.mtgox.api.ApiKeys;
+import mtgox_api.com.mtgox.api.MtGox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Service;

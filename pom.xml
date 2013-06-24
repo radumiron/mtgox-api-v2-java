@@ -189,6 +189,19 @@
                 </configuration>
             </plugin>
         </plugins>
+
+        <resources>
+            <resource>
+                <directory>res</directory>
+                <includes>
+                    <!--<include>**/*</include>-->
+                    <include>api-keys.json</include>
+                </includes>
+                <excludes>
+                    <exclude>**/*</exclude>
+                </excludes>
+            </resource>
+        </resources>
     </build>
 
 </project>
