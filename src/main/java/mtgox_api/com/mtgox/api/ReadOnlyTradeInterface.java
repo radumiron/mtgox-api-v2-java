@@ -1,6 +1,9 @@
 package mtgox_api.com.mtgox.api;
 
 import bitcoinGWT.shared.model.TickerShallowObject;
+import bitcoinGWT.shared.model.TradesFullLayoutObject;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,4 +36,6 @@ public interface ReadOnlyTradeInterface {
      * @return      a string with the lag
      */
     public String getLag();
+
+    public List<TradesFullLayoutObject> getTrades(MtGox.Currency currency, long previousTimestamp);
 }

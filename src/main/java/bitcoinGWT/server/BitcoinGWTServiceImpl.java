@@ -1,6 +1,7 @@
 package bitcoinGWT.server;
 
 import bitcoinGWT.server.ticker.TickerEngine;
+import bitcoinGWT.server.ticker.TradesEngine;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import bitcoinGWT.client.BitcoinGWTService;
 import mtgox_api.com.mtgox.api.ApiKeys;
@@ -17,8 +18,11 @@ import javax.servlet.ServletException;
 @Service
 public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements BitcoinGWTService {
 
+/*    @Autowired
+    TickerEngine ticker;*/
+
     @Autowired
-    TickerEngine ticker;
+    TradesEngine tradesEngine;
 
     /*@Override
     public void init(ServletConfig config) throws ServletException {
