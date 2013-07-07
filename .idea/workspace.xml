@@ -2,32 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="39043197-f22d-415e-8614-6f779225a83d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/CustomAsyncCallback.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/MainContentPanel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/ticker/TickerComponent.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/Constants.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/Currency.java" />
-      <change type="DELETED" beforePath="C:\Users\Radu\git\mtgox-api-v2-java\src\main\java\bitcoinGWT\shared\model\TradesShallowObject.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/Mtgox_api_v2_java_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/Mtgox_api_v2_java_war_exploded.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/1st_mock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_carrotsearch_java_sizeof_0_0_3.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Mtgox-api-v2-java.iml" afterPath="$PROJECT_DIR$/Mtgox-api-v2-java.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/BitcoinGWT.gwt.xml" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/BitcoinGWT.gwt.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWT.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWT.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWTService.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWTService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TickerEngine.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TickerEngine.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TradesEngine.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TradesEngine.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TickerFullLayoutObject.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TickerFullLayoutObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TickerShallowObject.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TickerShallowObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TradesFullLayoutObject.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TradesFullLayoutObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/MtGox.java" afterPath="$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/MtGox.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/ReadOnlyTradeInterface.java" afterPath="$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/ReadOnlyTradeInterface.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/constants/TradeParams.java" afterPath="$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/constants/TradeParams.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/examples/UsageExample.java" afterPath="$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/examples/UsageExample.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/BitcoinGWT.css" afterPath="$PROJECT_DIR$/src/main/webapp/BitcoinGWT.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/BitcoinGWT.html" afterPath="$PROJECT_DIR$/src/main/webapp/BitcoinGWT.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
     </list>
     <list id="08dc186c-8746-4a8c-9b20-b6179447f89e" name="Ignore" comment="" />
     <ignored path="BitcoinGraph.iws" />
@@ -150,115 +127,98 @@
     <favorites_list name="BitcoinGraph" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.59123564">
-      <split-first>
-        <leaf>
-          <file leaf-file-name="ReadOnlyTradeInterface.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/ReadOnlyTradeInterface.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="41" column="0" selection-start="1177" selection-end="1177" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="MtGox.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/MtGox.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="639" column="45" selection-start="25084" selection-end="25084" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="TickerFullLayoutObject.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TickerFullLayoutObject.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="110" column="5" selection-start="2995" selection-end="2995" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="TradesFullLayoutObject.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TradesFullLayoutObject.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="26" column="11" selection-start="943" selection-end="943" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="BitcoinGWTServiceImpl.java" pinned="false" current="true" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="42" column="0" selection-start="1383" selection-end="1383" vertical-scroll-proportion="1.7198443">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="BitcoinGWTService.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWTService.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="TickerComponent.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/ticker/TickerComponent.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="BitcoinGWTServiceAsync.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/target/generated-sources/gwt/bitcoinGWT/client/BitcoinGWTServiceAsync.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="9" column="42" selection-start="227" selection-end="227" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="AbstractTradeEngine.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/AbstractTradeEngine.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="16" column="0" selection-start="389" selection-end="389" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="TradesEngine.java" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TradesEngine.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="19" column="91" selection-start="563" selection-end="563" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="TradeParams.java" pinned="false" current="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/constants/TradeParams.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="52" column="51" selection-start="1954" selection-end="1954" vertical-scroll-proportion="1.4569733">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf>
+      <file leaf-file-name="MtGox.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/MtGox.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="639" column="45" selection-start="25084" selection-end="25084" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TickerFullLayoutObject.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TickerFullLayoutObject.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="110" column="5" selection-start="2995" selection-end="2995" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TradesFullLayoutObject.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TradesFullLayoutObject.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="11" selection-start="943" selection-end="943" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BitcoinGWTServiceImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="42" column="0" selection-start="1383" selection-end="1383" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="workspace.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BitcoinGWTService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWTService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TickerComponent.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/ticker/TickerComponent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BitcoinGWTServiceAsync.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/target/generated-sources/gwt/bitcoinGWT/client/BitcoinGWTServiceAsync.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="42" selection-start="227" selection-end="227" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AbstractTradeEngine.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/AbstractTradeEngine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="0" selection-start="389" selection-end="389" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TradesEngine.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TradesEngine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="91" selection-start="563" selection-end="563" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -276,7 +236,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/examples/utils/Utils.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/listeners/AppConfigListener.java" />
         <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TradeType.java" />
@@ -292,6 +251,7 @@
         <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TickerEngine.java" />
         <option value="$PROJECT_DIR$/target/generated-sources/gwt/bitcoinGWT/client/BitcoinGWTServiceAsync.java" />
         <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java" />
+        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
       </list>
     </option>
   </component>
@@ -960,7 +920,11 @@
       <created>1372102181572</created>
       <updated>1372102181572</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="first UI ticker version">
+      <created>1373226639669</created>
+      <updated>1373226639669</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView" selected-index="3">
@@ -1047,7 +1011,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="first ticker version" />
+    <option name="LAST_COMMIT_MESSAGE" value="first UI ticker version" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1064,6 +1028,7 @@
     <MESSAGE value="moving mtgox-api to another package" />
     <MESSAGE value="more tweaking" />
     <MESSAGE value="first ticker version" />
+    <MESSAGE value="first UI ticker version" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1073,11 +1038,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/src.zip!/java/util/HashMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="402" column="0" selection-start="14993" selection-end="14993" vertical-scroll-proportion="0.33333334" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TickerShallowObject.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="13" selection-start="238" selection-end="238" vertical-scroll-proportion="0.33333334" />
@@ -1100,25 +1060,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TickerFullLayoutObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="5" selection-start="2995" selection-end="2995" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/AbstractTradeEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="389" selection-end="389" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TradesEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="91" selection-start="563" selection-end="563" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/constants/TradeParams.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="52" column="51" selection-start="1954" selection-end="1954" vertical-scroll-proportion="1.4569733">
@@ -1133,6 +1074,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/MtGox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="639" column="45" selection-start="25084" selection-end="25084" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TickerFullLayoutObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="110" column="5" selection-start="2995" selection-end="2995" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TradesFullLayoutObject.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="11" selection-start="943" selection-end="943" vertical-scroll-proportion="0.0">
@@ -1140,16 +1095,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/target/generated-sources/gwt/bitcoinGWT/client/BitcoinGWTServiceAsync.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="42" selection-start="227" selection-end="227" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/MtGox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="639" column="45" selection-start="25084" selection-end="25084" vertical-scroll-proportion="0.0">
+        <state line="42" column="0" selection-start="1383" selection-end="1383" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1168,9 +1116,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/target/generated-sources/gwt/bitcoinGWT/client/BitcoinGWTServiceAsync.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="0" selection-start="1383" selection-end="1383" vertical-scroll-proportion="1.7198443">
+        <state line="9" column="42" selection-start="227" selection-end="227" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/AbstractTradeEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="0" selection-start="389" selection-end="389" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TradesEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="91" selection-start="563" selection-end="563" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
