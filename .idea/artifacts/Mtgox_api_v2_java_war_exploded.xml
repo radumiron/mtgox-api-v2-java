@@ -8,6 +8,7 @@
           <element id="module-output" name="Mtgox-api-v2-java" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: com.carrotsearch:java-sizeof:0.0.3" />
           <element id="library" level="project" name="Maven: com.allen-sauer.gwt.log:gwt-log:3.2.0" />
           <element id="library" level="project" name="Maven: org.apache.derby:derby:10.9.1.0" />
           <element id="library" level="project" name="Maven: org.apache.derby:derbyclient:10.4.2.0" />

@@ -23,7 +23,7 @@
     <inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
     <set-property name="log_DivLogger" value="DISABLED" />
     <inherits name="com.allen_sauer.gwt.log.gwt-log-RemoteLogger" />
-    <set-configuration-property name="log_url" value="/med/gwt-log" />
+    <!--<set-configuration-property name="log_url" value="/med/gwt-log" />-->
 
 
     <!--<inherits name="org.apache.log4j.Log4j" />-->
@@ -31,9 +31,9 @@
     <!-- Inherit the default GWT style sheet. You can change -->
     <!-- the theme of your GWT application by uncommenting -->
     <!-- any one of the following lines. -->
-    <inherits name="com.google.gwt.user.theme.clean.Clean" />
+    <!--<inherits name="com.google.gwt.user.theme.clean.Clean" />-->
     <!-- <inherits name="com.google.gwt.user.theme.standard.Standard"/> -->
-    <!-- <inherits name="com.google.gwt.user.theme.chrome.Chrome"/> -->
+    <inherits name="com.google.gwt.user.theme.chrome.Chrome"/>
     <!-- <inherits name="com.google.gwt.user.theme.dark.Dark"/> -->
 
     <!-- Other module inherits -->
@@ -43,8 +43,8 @@
     <!-- Specify the app entry point class.                   -->
     <entry-point class='bitcoinGWT.client.BitcoinGWT'/>
 
-    <!-- Specify the app servlets.                   -->
-    <servlet path='/BitcoinGWTService' class='bitcoinGWT.server.BitcoinGWTServiceImpl'/>
+   <!-- &lt;!&ndash; Specify the app servlets.                   &ndash;&gt;
+    <servlet path='/BitcoinGWT/BitcoinGWTService' class='bitcoinGWT.server.BitcoinGWTServiceImpl'/>-->
 
     <!--specify code which needs to be translated to JavaScript-->
     <source path="client" />

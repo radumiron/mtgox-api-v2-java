@@ -1,5 +1,8 @@
 package bitcoinGWT.server.ticker;
 
+import bitcoinGWT.shared.model.Constants;
+import bitcoinGWT.shared.model.Currency;
+import bitcoinGWT.shared.model.TickerFullLayoutObject;
 import mtgox_api.com.mtgox.api.MtGox;
 import org.springframework.stereotype.Component;
 
@@ -15,21 +18,27 @@ import java.util.Date;
 @Component
 public class TickerEngine extends AbstractTradeEngine {
 
-    protected static int TICKER_INTERVAL = 100;
+    private TickerFullLayoutObject fullLayoutObject;
 
     @Override
     protected void executeTradeTask() {
         Date initialDate = new Date();
         System.out.println(initialDate + ": execute ticker task");
-        double price = trade.getLastPrice(MtGox.Currency.EUR).getPrice();
+        //double price = trade.getPrice(MtGox.Currency.EUR).getPrice();
+        fullLayoutObject = trade.getPrice(Currency.EUR);
+        double price = fullLayoutObject.getPrice();
         //String lag = trade.getLag();
         System.out.println(new Date() + ": last price: " + price);// + ", lag: " + lag);
         System.out.println();
     }
 
+    public TickerFullLayoutObject getPrice(Currency currency) {
+        return fullLayoutObject;
+    }
+
     @Override
     protected int getTimerInterval() {
-        return TICKER_INTERVAL;
+        return Constants.TICKER_INTERVAL;
     }
 
 

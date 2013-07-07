@@ -1,6 +1,8 @@
 package bitcoinGWT.shared.model;
 
-import mtgox_api.com.mtgox.api.MtGox;
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,17 +11,22 @@ import mtgox_api.com.mtgox.api.MtGox;
  * Time: 7:17 PM
  * To change this template use File | Settings | File Templates.
  */
-public class TickerShallowObject {
+public class TickerShallowObject implements IsSerializable {
 
-    private MtGox.Currency currency;
+    private Currency currency;
     private double price;
+    private Date now;
 
-    public TickerShallowObject(MtGox.Currency currency, double price) {
+    public TickerShallowObject(Currency currency, double price, Date now) {
         this.currency = currency;
         this.price = price;
+        this.now = now;
     }
 
-    public MtGox.Currency getCurrency() {
+    public TickerShallowObject() {
+    }
+
+    public Currency getCurrency() {
         return currency;
     }
 
@@ -27,11 +34,16 @@ public class TickerShallowObject {
         return price;
     }
 
+    public Date getNow() {
+        return now;
+    }
+
     @Override
     public String toString() {
         return "TickerShallowObject{" +
                 "currency=" + currency +
                 ", price=" + price +
+                ", now=" + now +
                 '}';
     }
 }

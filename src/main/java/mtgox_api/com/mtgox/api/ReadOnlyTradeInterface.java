@@ -1,5 +1,7 @@
 package mtgox_api.com.mtgox.api;
 
+import bitcoinGWT.shared.model.Currency;
+import bitcoinGWT.shared.model.TickerFullLayoutObject;
 import bitcoinGWT.shared.model.TickerShallowObject;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 
@@ -28,7 +30,9 @@ public interface ReadOnlyTradeInterface {
      * Returns the current price of 1 BTC in given currency.
      * @return      a double value with the current price of 1 BTC in the Currency cur
      */
-    public TickerShallowObject getLastPrice(MtGox.Currency cur);
+    public <T extends TickerShallowObject> T getLastPrice(Currency cur);
+
+    public <T extends TickerShallowObject> T getPrice(Currency currency);
 
 
     /**
@@ -37,5 +41,5 @@ public interface ReadOnlyTradeInterface {
      */
     public String getLag();
 
-    public List<TradesFullLayoutObject> getTrades(MtGox.Currency currency, long previousTimestamp);
+    public List<TradesFullLayoutObject> getTrades(Currency currency, long previousTimestamp);
 }

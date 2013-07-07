@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
@@ -21,10 +20,10 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import bitcoinGWT.server.TradeUtils;
+import bitcoinGWT.shared.model.Currency;
+import bitcoinGWT.shared.model.TickerFullLayoutObject;
 import bitcoinGWT.shared.model.TickerShallowObject;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
-import bitcoinGWT.shared.model.TradesShallowObject;
 import mtgox_api.com.mtgox.api.constants.TradeParams;
 import mtgox_api.com.mtgox.examples.utils.Utils;
 import org.apache.commons.codec.binary.Base64;
@@ -33,7 +32,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 /**
  * https://github.com/adv0r/mtgox-apiv2-java
@@ -48,10 +46,6 @@ import org.springframework.stereotype.Service;
 public class MtGox implements TradeInterface {
 
     public static final String MONEY_TICKER = "/MONEY/TICKER";
-
-    public enum Currency {BTC, USD, GBP, EUR, JPY, AUD, CAD, CHF, CNY, DKK, HKD, PLN, RUB, SEK, SGD, THB}
-
-    ;
 
     public enum RequestType {GET, POST}
 
@@ -309,11 +303,18 @@ public class MtGox implements TradeInterface {
         //TODO should be done by a different thread ...
     }
 
+    public <T extends TickerShallowObject> T getLastPrice(Currency cur) {
+        return getPrice(cur, false);
+    }
 
-    public TickerShallowObject getLastPrice(Currency cur) {
+    public <T extends TickerShallowObject> T getPrice(Currency currency) {
+        return getPrice(currency, true);
+    }
 
-        String urlPath = getTickerPath(cur, true);
-        long divideFactor = devisionFactors.get(cur);
+    private <T extends TickerShallowObject> T getPrice(Currency currency, boolean fullLayoutObject) {
+
+        String urlPath = getTickerPath(currency, !fullLayoutObject);
+        long divideFactor = devisionFactors.get(currency);
         HashMap<String, String> query_args = new HashMap<>();
 
         /*Params :
@@ -343,19 +344,73 @@ public class MtGox implements TradeInterface {
         */
         System.out.println(new Date() + ": parsing ticker results");
         JSONParser parser = new JSONParser();
-        double last = 0;
+        TickerShallowObject result = null;
         try {
             JSONObject httpAnswerJson = (JSONObject) (parser.parse(queryResult));
             JSONObject dataJson = (JSONObject) httpAnswerJson.get(TradeParams.DATA);
-            JSONObject lastJson = (JSONObject) dataJson.get(TradeParams.LAST);
-            String last_String = (String) lastJson.get(TradeParams.VALUE);
-            last = Double.parseDouble(last_String);
-
+            double last = getDoubleJSONValue(dataJson, TradeParams.LAST);
+            Date now = new Date(Long.parseLong((String) dataJson.get(TradeParams.NOW)) / 1000); //MTGOX gives microsecond, we need normal seconds
+            if (fullLayoutObject) {
+                double high = getDoubleJSONValue(dataJson, TradeParams.HIGH);
+                double low = getDoubleJSONValue(dataJson, TradeParams.LOW);
+                double average = getDoubleJSONValue(dataJson, TradeParams.AVERAGE);
+                double vwap = getDoubleJSONValue(dataJson, TradeParams.VWAP);
+                double volume = getDoubleJSONValue(dataJson, TradeParams.VOLUME);
+                double lastLocal = getDoubleJSONValue(dataJson, TradeParams.LAST_LOCAL);
+                //TODO still don't need this, it returns the original value in $, not depending on the currency
+                //double lastOrig = getDoubleJSONValue(dataJson, TradeParams.LAST_ORIGINAL);
+                double lastAll = getDoubleJSONValue(dataJson, TradeParams.LAST_ALL);
+                double bid = getDoubleJSONValue(dataJson, TradeParams.BID);
+                double ask = getDoubleJSONValue(dataJson, TradeParams.ASK);
+                result = new TickerFullLayoutObject(currency, last, now, ask, average, bid, high, lastAll, lastLocal, -1, low, volume, vwap);
+            } else {
+                result = new TickerShallowObject(currency, last, now);
+            }
         } catch (ParseException ex) {
             Logger.getLogger(MtGox.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println(new Date() + ": after parsing ticker result");
-        return new TickerShallowObject(cur, last);
+        return (T) (result != null ? result : new TickerShallowObject(currency, 0, null));
+    }
+
+    private String getStringJSONValue(JSONObject object, String params) {
+        return (String) object.get(params);
+    }
+
+    private Double getDoubleJSONValue(JSONObject object, String params) {
+        double value = 0;
+        try {
+            JSONObject lastJson = (JSONObject) object.get(params);
+            value = Double.parseDouble((String) lastJson.get(TradeParams.VALUE));
+        } catch (Exception e) {
+            //todo
+        }
+
+        return value;
+    }
+
+    private Long getLongJSONValue(JSONObject object, String params) {
+        long value = 0;
+        try {
+            JSONObject lastJson = (JSONObject) object.get(params);
+            value = Long.parseLong((String) lastJson.get(TradeParams.VALUE));
+        } catch (Exception e) {
+            //todo
+        }
+
+        return value;
+    }
+
+    private Date getDateJSONValue(JSONObject object, String params) {
+        Date value = null;
+        try {
+            JSONObject lastJson = (JSONObject) object.get(params);
+            value = new Date(Long.parseLong((String) lastJson.get(TradeParams.VALUE)));
+        } catch (Exception e) {
+            //todo
+        }
+
+        return value;
     }
 
     @Override

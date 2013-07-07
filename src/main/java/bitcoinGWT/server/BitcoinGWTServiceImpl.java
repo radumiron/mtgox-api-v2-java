@@ -2,6 +2,9 @@ package bitcoinGWT.server;
 
 import bitcoinGWT.server.ticker.TickerEngine;
 import bitcoinGWT.server.ticker.TradesEngine;
+import bitcoinGWT.shared.model.Currency;
+import bitcoinGWT.shared.model.TickerFullLayoutObject;
+import bitcoinGWT.shared.model.TickerShallowObject;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import bitcoinGWT.client.BitcoinGWTService;
 import mtgox_api.com.mtgox.api.ApiKeys;
@@ -18,8 +21,8 @@ import javax.servlet.ServletException;
 @Service
 public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements BitcoinGWTService {
 
-/*    @Autowired
-    TickerEngine ticker;*/
+    @Autowired
+    TickerEngine ticker;
 
     @Autowired
     TradesEngine tradesEngine;
@@ -33,5 +36,10 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
     @Override
     public String getMessage(String msg) {
         return "Client said: \"" + msg + "\"<br>Server answered: \"Hi!\"";
+    }
+
+    @Override
+    public TickerFullLayoutObject getPrice(Currency currency) {
+        return ticker.getPrice(currency);
     }
 }

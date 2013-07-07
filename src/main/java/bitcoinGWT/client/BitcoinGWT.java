@@ -34,5 +34,8 @@ public class BitcoinGWT implements EntryPoint {
                 System.out.println("all ok, message from server:"+ result);
             }
         });
+
+        MainContentPanel viewport = new MainContentPanel(mainService);
+        RootPanel.get().add(viewport);
     }
 }

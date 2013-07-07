@@ -1,20 +1,13 @@
 
 package mtgox_api.com.mtgox.examples;
 
+import bitcoinGWT.shared.model.Currency;
 import mtgox_api.com.mtgox.api.ApiKeys;
 import mtgox_api.com.mtgox.api.MtGox;
-import mtgox_api.com.mtgox.api.MtGox.Currency;
 import mtgox_api.com.mtgox.examples.utils.Utils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
 
 /**
  * https://github.com/adv0r/mtgox-apiv2-java

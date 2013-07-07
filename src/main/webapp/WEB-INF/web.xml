@@ -10,14 +10,26 @@
     </context-param>
 
     <servlet>
-        <servlet-name>bitcoinGWT.BitcoinGWT BitcoinGWTService</servlet-name>
+        <servlet-name>bitcoinServlet</servlet-name>
         <servlet-class>bitcoinGWT.server.BitcoinGWTServiceImpl</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>bitcoinGWT.BitcoinGWT BitcoinGWTService</servlet-name>
-        <url-pattern>/BitcoinGWT/BitcoinGWTService</url-pattern>
+        <servlet-name>bitcoinServlet</servlet-name>
+        <url-pattern>/BitcoinGWT/bit</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>gwt-log-remote-logger-servlet</servlet-name>
+        <servlet-class>com.allen_sauer.gwt.log.server.RemoteLoggerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>gwt-log-remote-logger-servlet</servlet-name>
+        <url-pattern>/bitcoinGWT/gwt-log</url-pattern>
+    </servlet-mapping>
+
+    <!--LISTENERS-->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>

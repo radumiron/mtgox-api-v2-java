@@ -1,12 +1,11 @@
 package bitcoinGWT.server.ticker;
 
+import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
-import mtgox_api.com.mtgox.api.MtGox;
+import com.carrotsearch.sizeof.RamUsageEstimator;
 import org.springframework.stereotype.Component;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,12 +23,20 @@ public class TradesEngine extends AbstractTradeEngine {
 
     private Long previousTimestamp;
 
+    private Set<TradesFullLayoutObject> allTrades = new LinkedHashSet<>();
+
     @Override
     protected void executeTradeTask() {
-        List<TradesFullLayoutObject> trades = trade.getTrades(MtGox.Currency.EUR, getPreviousTimestamp());
+        List<TradesFullLayoutObject> trades = trade.getTrades(Currency.EUR, getPreviousTimestamp());
         for (TradesFullLayoutObject trade : trades) {
             System.out.println(trade);
         }
+
+        if (trades.size() > 0) {
+            System.out.println(new Date() + " before adding new trades, size of allTrades=" + RamUsageEstimator.humanSizeOf(allTrades));
+        }
+        allTrades.addAll(trades);
+        System.out.println(new Date() + " size of allTrades=" + RamUsageEstimator.humanSizeOf(allTrades));
         System.out.println();
     }
 
