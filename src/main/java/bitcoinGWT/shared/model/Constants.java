@@ -8,5 +8,5 @@ package bitcoinGWT.shared.model;
  * To change this template use File | Settings | File Templates.
  */
 public class Constants {
-    public static int TICKER_INTERVAL = 100;
+    public static int TICKER_INTERVAL = 500;
 }

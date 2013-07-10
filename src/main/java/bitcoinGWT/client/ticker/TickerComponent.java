@@ -33,7 +33,10 @@ public class TickerComponent extends ContentPanel {
         setExpanded(true);
         setCollapsible(true);
         setAnimCollapse(true);
+        setTitleCollapse(true);
+
         //setHeaderVisible(false);
+        setHeadingText("Ticker");
 
         tickerLabel = new Label("");
         tickerLabel.addStyleName("ticker-label");
