@@ -21,8 +21,10 @@ public class TradesFullLayoutObject implements IsSerializable {
     protected Date date;
     protected double price;
     protected double amount;
+    protected long tradeId;
 
-    public TradesFullLayoutObject(Date dateDate, double tradePrice, double tradeAmount, Currency currency, Currency tradeItem, TradeType type) {
+    public TradesFullLayoutObject(long tradeId, Date dateDate, double tradePrice, double tradeAmount, Currency currency, Currency tradeItem, TradeType type) {
+        this.tradeId = tradeId;
         this.date = dateDate;
         this.price = tradePrice;
         this.amount = tradeAmount;
@@ -58,52 +60,41 @@ public class TradesFullLayoutObject implements IsSerializable {
         return amount;
     }
 
-    public enum TradeType {
-        bid, ask
+    public long getTradeId() {
+        return tradeId;
     }
 
     @Override
     public String toString() {
         return "TradesFullLayoutObject{" +
-                "amount=" + amount +
+                "tradeId=" + tradeId +
+                ", amount=" + amount +
                 ", currency=" + currency +
                 ", tradeItem=" + tradeItem +
                 ", type=" + type +
                 ", date=" + date +
                 ", price=" + price +
-                "} " + super.toString();
+                '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TradesFullLayoutObject)) return false;
-        if (!super.equals(o)) return false;
 
         TradesFullLayoutObject that = (TradesFullLayoutObject) o;
 
-        if (Double.compare(that.amount, amount) != 0) return false;
-        if (Double.compare(that.price, price) != 0) return false;
-        if (currency != that.currency) return false;
-        if (!date.equals(that.date)) return false;
-        if (tradeItem != that.tradeItem) return false;
-        if (type != that.type) return false;
+        if (tradeId != that.tradeId) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        long temp;
-        result = 31 * result + currency.hashCode();
-        result = 31 * result + tradeItem.hashCode();
-        result = 31 * result + type.hashCode();
-        result = 31 * result + date.hashCode();
-        temp = price != +0.0d ? Double.doubleToLongBits(price) : 0L;
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = amount != +0.0d ? Double.doubleToLongBits(amount) : 0L;
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
+        return (int) (tradeId ^ (tradeId >>> 32));
+    }
+
+    public enum TradeType {
+        bid, ask
     }
 }

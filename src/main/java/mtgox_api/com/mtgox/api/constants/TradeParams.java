@@ -51,7 +51,7 @@ public class TradeParams {
     // "tid":"1364767201381791","price_currency":"USD","item":"BTC",
     // "trade_type":"bid","primary":"Y","properties":"limit"
     public enum Trades {
-        date, price, amount, price_currency, item, trade_type;
+        date, price, amount, price_currency, item, trade_type, tid;
     }
 
 }

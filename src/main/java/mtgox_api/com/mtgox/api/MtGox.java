@@ -464,7 +464,8 @@ public class MtGox implements TradeInterface {
             while (it.hasNext()) {
                 JSONObject jsonTrade = it.next();
 
-                long date = (Long) jsonTrade.get(TradeParams.Trades.date.toString()) * 1000; //in order to get the amount in milliseconds
+                long tradeId = Long.parseLong((String) jsonTrade.get(TradeParams.Trades.tid.toString()));
+                long date = tradeId / 1000; //in order to get the amount in milliseconds (converted from microseconds)
                 Double price = Double.parseDouble((String) jsonTrade.get(TradeParams.Trades.price.toString()));
                 Double amount = Double.parseDouble((String) jsonTrade.get(TradeParams.Trades.amount.toString()));
                 Currency priceCurrency = Currency.valueOf((String) jsonTrade.get(TradeParams.Trades.price_currency.toString()));
@@ -472,7 +473,7 @@ public class MtGox implements TradeInterface {
                 TradesFullLayoutObject.TradeType tradeType = TradesFullLayoutObject.TradeType
                         .valueOf((String) jsonTrade.get(TradeParams.Trades.trade_type.toString()));
 
-                TradesFullLayoutObject trade = new TradesFullLayoutObject(new Date(date), price, amount, priceCurrency, item, tradeType);
+                TradesFullLayoutObject trade = new TradesFullLayoutObject(tradeId, new Date(date), price, amount, priceCurrency, item, tradeType);
                 trades.add(trade);
             }
         } catch (Exception ex) {
@@ -480,6 +481,8 @@ public class MtGox implements TradeInterface {
         }
         System.out.println(new Date() + ": after parsing trades result");
 
+        //reverse the list so that it's from the most recent one to the oldest one
+        Collections.reverse(trades);
         return trades;
     }
 
