@@ -94,6 +94,9 @@ public class LiveGridExample implements IsWidget, EntryPoint {
             l.add(dateColumn);
 
             final LiveGridView<TradesFullLayoutObject> liveGridView = new LiveGridView<TradesFullLayoutObject>();
+            //set the grid to hold 200 items in the cache
+            //liveGridView.setCacheSize(200);
+            liveGridView.setCacheSize(30);
             liveGridView.setForceFit(true);
 
             ColumnModel<TradesFullLayoutObject> cm = new ColumnModel<TradesFullLayoutObject>(l);

@@ -18,7 +18,7 @@ import java.util.*;
 public class TradesEngine extends AbstractTradeEngine {
 
     //TODO increase this to 7 days (1 week)
-    private static final int INITIAL_TRADES_INTERVAL = /*12 * 60*/30 * 60 * 1000; //last 12 hours
+    private static final int INITIAL_TRADES_INTERVAL = /*12 **/ 60 * 60 * 1000; //last 12 hours
 
     private static final int TRADES_RETRIEVAL_INTERVAL = 5000;//60000;
 
@@ -28,14 +28,12 @@ public class TradesEngine extends AbstractTradeEngine {
 
     private List<TradesFullLayoutObject> lastLoadedTrades = new ArrayList<>();
 
-    private LinkedHashMap<Date, List<TradesFullLayoutObject>> allTrades;
-
-    private boolean shouldLoadTrades = false;
+    private LinkedHashMap<Long, TradesFullLayoutObject> allTrades;
 
     public TradesEngine() {
-        allTrades = new LinkedHashMap<Date, List<TradesFullLayoutObject>>() {
+        allTrades = new LinkedHashMap<Long, TradesFullLayoutObject>() {
             @Override
-            protected boolean removeEldestEntry(Map.Entry<Date, List<TradesFullLayoutObject>> eldest) {
+            protected boolean removeEldestEntry(Map.Entry<Long, TradesFullLayoutObject> eldest) {
                 return size() > TRADES_SIZE;
             }
         };
@@ -47,22 +45,7 @@ public class TradesEngine extends AbstractTradeEngine {
         for (TradesFullLayoutObject trade : lastLoadedTrades) {
             System.out.println("trade size=" + RamUsageEstimator.humanSizeOf(trade) + "," + trade);
             //add each trade to the map. Because the map holds only the last TRADES_SIZE, this method will also remove the oldest entries.
-            List<TradesFullLayoutObject> tradesAtDate;
-            //in case we already have some trades at some trade specific trade second, add the new trade there
-            if ((tradesAtDate = allTrades.get(trade.getDate())) != null) {
-                tradesAtDate.add(trade);
-                //System.out.println("trades list=" + RamUsageEstimator.humanSizeOf(tradesAtDate));
-                //System.out.println("trades before adding 1 trade:" + RamUsageEstimator.humanSizeOf(allTrades));
-                allTrades.put(trade.getDate(), tradesAtDate);
-                //System.out.println("trades after adding 1 trade:" + RamUsageEstimator.humanSizeOf(allTrades));
-            } else {    //if there aren't yet any trades at a specific date, add the current trade as the first one
-                tradesAtDate = new ArrayList<>();
-                tradesAtDate.add(trade);
-                //System.out.println("trades list=" + RamUsageEstimator.humanSizeOf(tradesAtDate));
-                //System.out.println("trades before adding 1 trade:" + RamUsageEstimator.humanSizeOf(allTrades));
-                allTrades.put(trade.getDate(), tradesAtDate);
-                //System.out.println("trades after adding 1 trade:" + RamUsageEstimator.humanSizeOf(allTrades));
-            }
+            allTrades.put(trade.getTradeId(), trade);
         }
 
         if (lastLoadedTrades.size() > 0) {
@@ -105,6 +88,10 @@ public class TradesEngine extends AbstractTradeEngine {
         return calendar.getTimeInMillis();
     }
 
+    public int getTradesSize() {
+        return allTrades.size();
+    }
+
     public Set<TradesFullLayoutObject> getTrades(Currency currency, int sizeOfLoadedTrades) {
         if (sizeOfLoadedTrades == 0) {  //in case the client doesn't have any trades yet, give him all the trades
             return getAllTrades();
@@ -117,12 +104,8 @@ public class TradesEngine extends AbstractTradeEngine {
     private Set<TradesFullLayoutObject> getAllTrades() {
         LinkedHashSet<TradesFullLayoutObject> result = new LinkedHashSet<>();
         //first copy the map
-        LinkedHashMap<Date, List<TradesFullLayoutObject>> allTradesCopy = new LinkedHashMap<>(allTrades);
-        for (Map.Entry<Date, List<TradesFullLayoutObject>> entry : allTradesCopy.entrySet()) {
-            //add all values inside the list corresponding to each trading second to the result
-            result.addAll(entry.getValue());
-        }
-
+        LinkedHashMap<Long, TradesFullLayoutObject> allTradesCopy = new LinkedHashMap<>(allTrades);
+        result.addAll(allTradesCopy.values());
         return result;
     }
 }

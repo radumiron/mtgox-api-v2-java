@@ -19,9 +19,9 @@ public class TradesFullLayoutObject implements IsSerializable {
     private Currency tradeItem;
     private TradeType type;
     protected Date date;
-    protected double price;
-    protected double amount;
-    protected long tradeId;
+    protected Double price;
+    protected Double amount;
+    protected Long tradeId;
 
     public TradesFullLayoutObject(long tradeId, Date dateDate, double tradePrice, double tradeAmount, Currency currency, Currency tradeItem, TradeType type) {
         this.tradeId = tradeId;
@@ -52,15 +52,15 @@ public class TradesFullLayoutObject implements IsSerializable {
         return date;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public long getTradeId() {
+    public Long getTradeId() {
         return tradeId;
     }
 

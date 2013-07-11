@@ -6,6 +6,9 @@ import bitcoinGWT.server.ticker.TradesEngine;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.sencha.gxt.data.shared.SortDir;
+import com.sencha.gxt.data.shared.SortInfo;
+import com.sencha.gxt.data.shared.SortInfoBean;
 import com.sencha.gxt.data.shared.loader.PagingLoadConfig;
 import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 import com.sencha.gxt.data.shared.loader.PagingLoadResultBean;
@@ -17,9 +20,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -52,9 +53,69 @@ public class ExampleServiceImpl extends RemoteServiceServlet implements ExampleS
         Random random = new Random();
         int tradesSize = random.nextInt(2);
 
+        //config.setLimit(tradesEngine.getTradesSize());
+
         List<TradesFullLayoutObject> trades = new ArrayList<>(tradesEngine.getTrades(Currency.EUR, 0));
+
+        for (SortInfo sortField : config.getSortInfo()) {
+            Comparator<TradesFullLayoutObject> comparator = getComparator(sortField);
+            if (comparator != null) { //in case we have a valid comparator for this field
+                Collections.sort(trades, comparator);
+            }
+        }
+
 
         PagingLoadResult<TradesFullLayoutObject> pagingLoadResult = new PagingLoadResultBean<>(trades, trades.size(), config.getOffset());
         return pagingLoadResult;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    private Comparator<TradesFullLayoutObject> getComparator(final SortInfo sortParams) {
+        switch (sortParams.getSortField()) {
+            case "price" : return new Comparator<TradesFullLayoutObject>() {
+
+                @Override
+                public int compare(TradesFullLayoutObject o1, TradesFullLayoutObject o2) {
+                    return sortParams.getSortDir() == SortDir.ASC ? o1.getPrice().compareTo(o2.getPrice()) : (-1) * o1.getPrice().compareTo(o2.getPrice());
+                }
+            };
+            /*case "date" : return new Comparator<TradesFullLayoutObject>() {
+
+                @Override
+                public int compare(TradesFullLayoutObject o1, TradesFullLayoutObject o2) {
+                    return sortParams.getSortDir() == SortDir.ASC ? o1.getPrice().compareTo(o2.getPrice()) : (-1) * o1.getPrice().compareTo(o2.getPrice());
+                }
+            };
+            case "amount" : return new Comparator<TradesFullLayoutObject>() {
+
+                @Override
+                public int compare(TradesFullLayoutObject o1, TradesFullLayoutObject o2) {
+                    return sortParams.getSortDir() == SortDir.ASC ? o1.getPrice().compareTo(o2.getPrice()) : (-1) * o1.getPrice().compareTo(o2.getPrice());
+                }
+            };
+            case "tradeItem" : return new Comparator<TradesFullLayoutObject>() {
+
+                @Override
+                public int compare(TradesFullLayoutObject o1, TradesFullLayoutObject o2) {
+                    return sortParams.getSortDir() == SortDir.ASC ? o1.getPrice().compareTo(o2.getPrice()) : (-1) * o1.getPrice().compareTo(o2.getPrice());
+                }
+            };
+            case "currency" : return new Comparator<TradesFullLayoutObject>() {
+
+                @Override
+                public int compare(TradesFullLayoutObject o1, TradesFullLayoutObject o2) {
+                    return sortParams.getSortDir() == SortDir.ASC ? o1.getPrice().compareTo(o2.getPrice()) : (-1) * o1.getPrice().compareTo(o2.getPrice());
+                }
+            };
+            case "type" : return new Comparator<TradesFullLayoutObject>() {
+
+                @Override
+                public int compare(TradesFullLayoutObject o1, TradesFullLayoutObject o2) {
+                    return sortParams.getSortDir() == SortDir.ASC ? o1.getPrice().compareTo(o2.getPrice()) : (-1) * o1.getPrice().compareTo(o2.getPrice());
+                }
+            };*/
+
+        }
+
+        return null;
     }
 }
