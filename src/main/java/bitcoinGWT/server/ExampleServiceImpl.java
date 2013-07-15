@@ -65,7 +65,7 @@ public class ExampleServiceImpl extends RemoteServiceServlet implements ExampleS
         }
 
 
-        PagingLoadResult<TradesFullLayoutObject> pagingLoadResult = new PagingLoadResultBean<>(trades, trades.size(), config.getOffset());
+        PagingLoadResult<TradesFullLayoutObject> pagingLoadResult = new PagingLoadResultBean<>(trades, trades.size(), config.getOffset() * 2);
         return pagingLoadResult;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

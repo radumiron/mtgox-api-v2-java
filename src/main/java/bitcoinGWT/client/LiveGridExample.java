@@ -69,7 +69,7 @@ public class LiveGridExample implements IsWidget, EntryPoint {
             ListStore<TradesFullLayoutObject> store = new ListStore<TradesFullLayoutObject>(new ModelKeyProvider<TradesFullLayoutObject>() {
                 @Override
                 public String getKey(TradesFullLayoutObject item) {
-                    return "" + item.getDate().getTime();
+                    return "" + item.getTradeId();
                 }
             });
 

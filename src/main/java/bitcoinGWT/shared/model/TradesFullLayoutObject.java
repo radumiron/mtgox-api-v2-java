@@ -23,10 +23,13 @@ public class TradesFullLayoutObject implements IsSerializable {
     protected Double amount;
     protected Long tradeId;
 
+    static double PRICE = 0;
+
     public TradesFullLayoutObject(long tradeId, Date dateDate, double tradePrice, double tradeAmount, Currency currency, Currency tradeItem, TradeType type) {
         this.tradeId = tradeId;
         this.date = dateDate;
-        this.price = tradePrice;
+        //this.price = tradePrice;
+        this.price = ++PRICE;
         this.amount = tradeAmount;
         this.currency = currency;
         this.tradeItem = tradeItem;

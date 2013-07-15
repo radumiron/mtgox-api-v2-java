@@ -18,7 +18,7 @@ import java.util.*;
 public class TradesEngine extends AbstractTradeEngine {
 
     //TODO increase this to 7 days (1 week)
-    private static final int INITIAL_TRADES_INTERVAL = /*12 **/ 60 * 60 * 1000; //last 12 hours
+    private static final int INITIAL_TRADES_INTERVAL = /*12 **/2*  60 * 60 * 1000; //last 12 hours
 
     private static final int TRADES_RETRIEVAL_INTERVAL = 5000;//60000;
 

@@ -21,6 +21,8 @@ public interface PostProperties extends PropertyAccess<TradesFullLayoutObject> {
 
     ValueProvider<TradesFullLayoutObject, Currency> currency();
 
+    ModelKeyProvider<TradesFullLayoutObject> tradeId();
+
     ValueProvider<TradesFullLayoutObject, Double> price();
 
     ValueProvider<TradesFullLayoutObject, Double> amount();
