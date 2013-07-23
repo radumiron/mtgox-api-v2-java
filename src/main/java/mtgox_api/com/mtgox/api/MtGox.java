@@ -474,7 +474,13 @@ public class MtGox implements TradeInterface {
                         .valueOf((String) jsonTrade.get(TradeParams.Trades.trade_type.toString()));
 
                 TradesFullLayoutObject trade = new TradesFullLayoutObject(tradeId, new Date(date), price, amount, priceCurrency, item, tradeType);
-                trades.add(trade);
+                //don't return trades with amounts under 0.01
+                if (amount >= 0.01) {
+                    trades.add(trade);
+                } else {
+                    Logger.getLogger(MtGox.class.getName()).info("Retrieved trade under 0.01BTC, tradeId = " + tradeId);
+                }
+
             }
         } catch (Exception ex) {
             Logger.getLogger(MtGox.class.getName()).log(Level.SEVERE, null, ex);

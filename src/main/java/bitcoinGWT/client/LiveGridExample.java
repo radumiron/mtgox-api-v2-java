@@ -60,7 +60,7 @@ public class LiveGridExample implements IsWidget, EntryPoint {
             RpcProxy<PagingLoadConfig, PagingLoadResult<TradesFullLayoutObject>> proxy = new RpcProxy<PagingLoadConfig, PagingLoadResult<TradesFullLayoutObject>>() {
                 @Override
                 public void load(PagingLoadConfig loadConfig, AsyncCallback<PagingLoadResult<TradesFullLayoutObject>> callback) {
-                    service.getPosts(loadConfig, callback);
+                    service.getPosts(loadConfig, true, callback);
                 }
             };
 
@@ -123,7 +123,6 @@ public class LiveGridExample implements IsWidget, EntryPoint {
             root.setCollapsible(true);
             root.setHeadingText("Live Grid Example");
             root.setPixelSize(600, 390);
-            root.addStyleName("margin-10");
             new Resizable(root);
 
             VerticalLayoutContainer con = new VerticalLayoutContainer();

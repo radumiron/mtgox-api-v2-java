@@ -9,4 +9,5 @@ package bitcoinGWT.shared.model;
  */
 public class Constants {
     public static int TICKER_INTERVAL = 500;
+    public static int TRADES_INTERVAL = 5000;
 }

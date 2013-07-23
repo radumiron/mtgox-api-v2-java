@@ -17,6 +17,6 @@ import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 @RemoteServiceRelativePath("example")
 public interface ExampleService extends RemoteService {
  
-  PagingLoadResult<TradesFullLayoutObject> getPosts(PagingLoadConfig config);
+  PagingLoadResult<TradesFullLayoutObject> getPosts(PagingLoadConfig config, boolean initialLoad);
 
 }

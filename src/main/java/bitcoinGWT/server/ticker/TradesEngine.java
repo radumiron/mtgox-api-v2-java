@@ -88,12 +88,8 @@ public class TradesEngine extends AbstractTradeEngine {
         return calendar.getTimeInMillis();
     }
 
-    public int getTradesSize() {
-        return allTrades.size();
-    }
-
-    public Set<TradesFullLayoutObject> getTrades(Currency currency, int sizeOfLoadedTrades) {
-        if (sizeOfLoadedTrades == 0) {  //in case the client doesn't have any trades yet, give him all the trades
+    public Set<TradesFullLayoutObject> getTrades(Currency currency, boolean initialLoad) {
+        if (initialLoad) {  //in case the client doesn't have any trades yet, give him all the trades
             return getAllTrades();
         } else {    //in case the client already has the initial trades, he loads just what what he doesn't yet have
             LinkedHashSet<TradesFullLayoutObject> lastTradesSet = new LinkedHashSet<>(lastLoadedTrades);

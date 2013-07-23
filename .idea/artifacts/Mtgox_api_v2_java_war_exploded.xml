@@ -34,6 +34,7 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:3.0.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:3.0.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context-support:3.0.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.ocpsoft.prettytime:prettytime:3.0.2.Final" />
         </element>
       </element>
       <element id="gwt-compiler-output" facet="Mtgox-api-v2-java/gwt/GWT" />

@@ -5,6 +5,7 @@ import bitcoinGWT.client.controls.ControlsComponent;
 import bitcoinGWT.client.ticker.TickerComponent;
 import bitcoinGWT.client.trades.TradesComponent;
 import com.google.gwt.user.client.ui.Button;
+import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.container.*;
 
@@ -32,13 +33,18 @@ public class MainContentPanel extends Viewport {
         northData.setCollapsible(true);
         mainContainer.setNorthWidget(new TickerComponent(mainService), northData);
 
+        Margins margins = new Margins();
+        margins.setBottom(45);
+
         BorderLayoutContainer.BorderLayoutData westData = new BorderLayoutContainer.BorderLayoutData(200);
         westData.setCollapsible(true);
+        westData.setMargins(margins);
         mainContainer.setWestWidget(new ControlsComponent(), westData);
 
-        BorderLayoutContainer.BorderLayoutData eastData = new BorderLayoutContainer.BorderLayoutData(300);
+        BorderLayoutContainer.BorderLayoutData eastData = new BorderLayoutContainer.BorderLayoutData(400);
         eastData.setCollapsible(true);
-        mainContainer.setEastWidget(new TradesComponent(), eastData);
+        eastData.setMargins(margins);
+        mainContainer.setEastWidget(new TradesComponent(mainService), eastData);
 
         mainContainer.setCenterWidget(new ChartComponent());
 
