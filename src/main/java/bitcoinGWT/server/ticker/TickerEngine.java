@@ -3,6 +3,7 @@ package bitcoinGWT.server.ticker;
 import bitcoinGWT.shared.model.Constants;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.TickerFullLayoutObject;
+import bitcoinGWT.shared.model.TickerShallowObject;
 import mtgox_api.com.mtgox.api.MtGox;
 import org.springframework.stereotype.Component;
 
@@ -25,11 +26,20 @@ public class TickerEngine extends AbstractTradeEngine {
         Date initialDate = new Date();
         System.out.println(initialDate + ": execute ticker task");
         //double price = trade.getPrice(MtGox.Currency.EUR).getPrice();
-        fullLayoutObject = trade.getPrice(Currency.EUR);
-        double price = fullLayoutObject.getPrice();
-        //String lag = trade.getLag();
-        System.out.println(new Date() + ": last price: " + price);// + ", lag: " + lag);
-        System.out.println();
+        TickerShallowObject tradeObject = trade.getPrice(Currency.EUR);
+        if (tradeObject instanceof TickerFullLayoutObject) {
+            //if all went well, we should have a full layout object
+            fullLayoutObject = (TickerFullLayoutObject) tradeObject;
+            double price = fullLayoutObject.getPrice();
+            //String lag = trade.getLag();
+            System.out.println(new Date() + ": last price: " + price);// + ", lag: " + lag);
+            System.out.println();
+        } else {
+            System.out.println(new Date() + ": something went wrong when getting the price. Got a shallow object instead of a full object");
+            //String lag = trade.getLag();
+            System.out.println(new Date() + ": last price: " + tradeObject.getPrice());// + ", lag: " + lag);
+            System.out.println();
+        }
     }
 
     public TickerFullLayoutObject getPrice(Currency currency) {

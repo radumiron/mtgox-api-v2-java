@@ -1,7 +1,6 @@
 package bitcoinGWT.client.trades;
 
 import bitcoinGWT.client.BitcoinGWTServiceAsync;
-import bitcoinGWT.client.util.PrettyDateFormat;
 import bitcoinGWT.shared.model.Constants;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
@@ -9,14 +8,15 @@ import bitcoinGWT.shared.model.example.PostProperties;
 import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.text.shared.SafeHtmlRenderer;
-import com.google.gwt.text.shared.SimpleSafeHtmlRenderer;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.resources.ThemeStyles;
 import com.sencha.gxt.data.client.loader.RpcProxy;
-import com.sencha.gxt.data.shared.*;
+import com.sencha.gxt.data.shared.ListStore;
+import com.sencha.gxt.data.shared.ModelKeyProvider;
+import com.sencha.gxt.data.shared.SortDir;
+import com.sencha.gxt.data.shared.SortInfoBean;
 import com.sencha.gxt.data.shared.loader.PagingLoadConfig;
 import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 import com.sencha.gxt.data.shared.loader.PagingLoader;
@@ -45,6 +45,8 @@ public class TradesComponent extends ContentPanel {
     private boolean initialLoad = true;
     private LiveGridView<TradesFullLayoutObject> liveGridView;
 
+    private int lastLoadedTradesListSize = 0;
+
     public TradesComponent(BitcoinGWTServiceAsync mainService) {
         this.mainService = mainService;
         initComponent();
@@ -59,14 +61,18 @@ public class TradesComponent extends ContentPanel {
 
         RpcProxy<PagingLoadConfig, PagingLoadResult<TradesFullLayoutObject>> proxy = new RpcProxy<PagingLoadConfig, PagingLoadResult<TradesFullLayoutObject>>() {
             @Override
-            public void load(PagingLoadConfig loadConfig, AsyncCallback<PagingLoadResult<TradesFullLayoutObject>> callback) {
+            public void load(final PagingLoadConfig loadConfig, final AsyncCallback<PagingLoadResult<TradesFullLayoutObject>> callback) {
                 //autosort by price, in case there is no other sort criteria
                 if (loadConfig.getSortInfo().size() == 0) {
                     List<SortInfoBean> sortInfos = new ArrayList<SortInfoBean>();
                     sortInfos.add(new SortInfoBean("price", SortDir.DESC));
                     loadConfig.setSortInfo(sortInfos);
                 }
-                mainService.getTradesForGrid(loadConfig, initialLoad, callback);
+                mainService.getTradesForGrid(Currency.EUR, loadConfig, initialLoad, callback);
+
+                if (initialLoad) {
+                    initialLoad = false;
+                }
                 System.out.println(new Date() + " finished running get trades task");
             }
         };
@@ -147,20 +153,39 @@ public class TradesComponent extends ContentPanel {
     private void initTradesTimer() {
         Timer timer = new Timer() {
 
-            @Override
+            //@Override
             public void run() {
                 //if first time, load the initial grid size
                 System.out.println(new Date() + " run get trades task");
-                if (initialLoad) {
-                    gridLoader.load(0, liveGridView.getCacheSize());
-                    //set initial load to false since already loaded
-                    initialLoad = false;
-                } else {
-                    gridLoader.load();
-                }
+                //check to see if there are any additional trades to load on the client
+                mainService.getLastLoadedTradesSizeFromServer(Currency.EUR, new AsyncCallback<Integer>() {
+
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        loadGrid(lastLoadedTradesListSize);
+                    }
+
+                    @Override
+                    public void onSuccess(Integer loadedTradesListSize) {
+                        //in case getting the trades size was successful
+                        loadGrid(loadedTradesListSize);
+                        //initTradesTimer();
+                    }
+                });
+
             }
         };
 
         timer.scheduleRepeating(Constants.TRADES_INTERVAL);
+    }
+
+    private void loadGrid(int loadedTradesListSize) {
+        //load the trades from the server only if there are any differences. Or in case it's the initial loading
+        if (initialLoad) {
+            gridLoader.load(0, liveGridView.getCacheSize());
+        } else if ((lastLoadedTradesListSize != loadedTradesListSize)) {//in case the server loaded trades size is different from the UI one, load the last trades from the server
+            lastLoadedTradesListSize = loadedTradesListSize;
+            gridLoader.load();
+        }
     }
 }

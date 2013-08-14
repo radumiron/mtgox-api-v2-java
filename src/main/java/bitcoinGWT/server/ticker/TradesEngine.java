@@ -6,6 +6,8 @@ import com.carrotsearch.sizeof.RamUsageEstimator;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,7 +28,11 @@ public class TradesEngine extends AbstractTradeEngine {
 
     private Long previousTimestamp;
 
-    private List<TradesFullLayoutObject> lastLoadedTrades = new ArrayList<>();
+    private LinkedBlockingQueue<TradesFullLayoutObject> lastLoadedTrades = new LinkedBlockingQueue<>();
+
+    private long lastLoadedTradesTimestamp;
+
+    private int loadedTradesListSize;
 
     private LinkedHashMap<Long, TradesFullLayoutObject> allTrades;
 
@@ -41,7 +47,7 @@ public class TradesEngine extends AbstractTradeEngine {
 
     @Override
     protected void executeTradeTask() {
-        lastLoadedTrades = trade.getTrades(Currency.EUR, getPreviousTimestamp());
+        lastLoadedTrades = new LinkedBlockingQueue<>(trade.getTrades(Currency.EUR, getPreviousTimestamp()));
         for (TradesFullLayoutObject trade : lastLoadedTrades) {
             System.out.println("trade size=" + RamUsageEstimator.humanSizeOf(trade) + "," + trade);
             //add each trade to the map. Because the map holds only the last TRADES_SIZE, this method will also remove the oldest entries.
@@ -49,7 +55,8 @@ public class TradesEngine extends AbstractTradeEngine {
         }
 
         if (lastLoadedTrades.size() > 0) {
-            System.out.println(new Date() + " size of loaded trades=" + lastLoadedTrades.size());
+            System.out.println(new Date() + " new trades loaded, size of loaded trades=" + lastLoadedTrades.size());
+            loadedTradesListSize = lastLoadedTrades.size();
             //in case the list downloaded is NOT empty, mark that all who will ask for trades will be able to download the new list
             //shouldLoadTrades = true;
             //System.out.println(new Date() + " before adding new trades, size of allTrades=" + RamUsageEstimator.humanSizeOf(allTrades));
@@ -95,6 +102,10 @@ public class TradesEngine extends AbstractTradeEngine {
             LinkedHashSet<TradesFullLayoutObject> lastTradesSet = new LinkedHashSet<>(lastLoadedTrades);
             return lastTradesSet;
         }
+    }
+
+    public int getLastLoadedTradesSizeFromServer(Currency currency) {
+        return loadedTradesListSize;
     }
 
     private Set<TradesFullLayoutObject> getAllTrades() {

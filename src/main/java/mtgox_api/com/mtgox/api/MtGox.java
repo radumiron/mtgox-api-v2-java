@@ -625,9 +625,11 @@ public class MtGox implements TradeInterface {
 
             //Capture Exceptions
             catch (IllegalStateException ex) {
-                System.err.println(ex);
+                ex.printStackTrace();
+                //System.err.println(ex);
             } catch (IOException ex) {
-                System.err.println(ex);
+                //System.err.println(ex);
+                ex.printStackTrace();
             } finally {
                 //close the connection, set all objects to null
                 if (connection != null) {
