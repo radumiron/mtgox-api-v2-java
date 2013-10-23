@@ -55,7 +55,7 @@ public class Utils {
         //Set the SSL certificate for mtgox - Read up on Java Trust store. 
         System.setProperty("javax.net.ssl.trustStore","WEB-INF/res/ssl/mtgox.jks");
         System.setProperty("javax.net.ssl.trustStorePassword","h4rdc0r_"); //I encripted the jks file using this pwd
-        //System.setProperty("javax.net.debug","ssl"); //Uncomment for debugging SSL errors  
+        //System.setProperty("javax.net.debug","ssl"); //Uncomment for debugging SSL errors
         
     }
     

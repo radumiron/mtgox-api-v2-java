@@ -2,14 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="39043197-f22d-415e-8614-6f779225a83d" name="Default" comment="">
+      <change type="DELETED" beforePath="C:\Users\Radu\git\mtgox-api-v2-java\res\MtGox response file" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Radu\git\mtgox-api-v2-java\res\api-keys.json" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Radu\git\mtgox-api-v2-java\res\ssl\data.mtgox.com.cer" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Radu\git\mtgox-api-v2-java\res\ssl\data.mtgox2.com.cer" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Radu\git\mtgox-api-v2-java\res\ssl\mtgox.com.cer" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Radu\git\mtgox-api-v2-java\res\ssl\mtgox.jks" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Radu\git\mtgox-api-v2-java\res\ssl\mtgox2.com.cer" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Radu\git\mtgox-api-v2-java\src\main\resources\res\ssl\data.mtgox2.com.cer" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Radu\git\mtgox-api-v2-java\src\main\resources\res\ssl\mtgox2.com.cer" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/res/ssl/data.mtgox.com.cer" afterPath="$PROJECT_DIR$/src/main/resources/res/ssl/data.mtgox.com.cer" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/res/ssl/mtgox.com.cer" afterPath="$PROJECT_DIR$/src/main/resources/res/ssl/mtgox.com.cer" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/res/ssl/mtgox.jks" afterPath="$PROJECT_DIR$/src/main/resources/res/ssl/mtgox.jks" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWTService.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWTService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/trades/TradesComponent.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/trades/TradesComponent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TickerEngine.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TickerEngine.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TradesEngine.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TradesEngine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Mtgox-api-v2-java.iml" afterPath="$PROJECT_DIR$/Mtgox-api-v2-java.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/BitcoinGWT.gwt.xml" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/BitcoinGWT.gwt.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/TradeUtils.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/TradeUtils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/Constants.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/Constants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/MtGox.java" afterPath="$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/MtGox.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/examples/utils/Utils.java" afterPath="$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/examples/utils/Utils.java" />
     </list>
     <list id="08dc186c-8746-4a8c-9b20-b6179447f89e" name="Ignore" comment="" />
     <ignored path="BitcoinGraph.iws" />
@@ -84,19 +95,6 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/MtGox.java" line="586" class="mtgox_api.com.mtgox.api.MtGox.GoxService" package="mtgox_api.com.mtgox.api">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
     </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
@@ -145,8 +143,8 @@
       <property name="field_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByClasses" value="true" />
       <property name="exception_breakpoints_viewId" value="TABLE" />
-      <property name="exception_breakpoints_groupByClasses" value="true" />
       <property name="field_breakpoints_viewId" value="TABLE" />
+      <property name="exception_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByMethods" value="false" />
     </ui_properties>
   </component>
@@ -159,91 +157,91 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Cipher.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/jre/lib/jce.jar!/javax/crypto/Cipher.class">
+      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="17" selection-start="3712" selection-end="3712" vertical-scroll-proportion="0.0">
+            <state line="227" column="44" selection-start="8806" selection-end="8806" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CipherBox.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/jre/lib/jsse.jar!/sun/security/ssl/CipherBox.class">
+      <file leaf-file-name="TradesComponent.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/trades/TradesComponent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="12" selection-start="665" selection-end="665" vertical-scroll-proportion="0.0">
+            <state line="185" column="22" selection-start="7871" selection-end="7871" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InetSocketAddress.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/src.zip!/java/net/InetSocketAddress.java">
+      <file leaf-file-name="TradeUtils.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/TradeUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="222" column="0" selection-start="7091" selection-end="7091" vertical-scroll-proportion="0.0">
+            <state line="33" column="2" selection-start="1021" selection-end="1021" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Integer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/src.zip!/java/lang/Integer.java">
+      <file leaf-file-name="ExampleServiceImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ExampleServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="491" column="0" selection-start="17855" selection-end="17855" vertical-scroll-proportion="0.0">
+            <state line="31" column="13" selection-start="1180" selection-end="1180" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CertificateExtensions.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/jre/lib/rt.jar!/sun/security/x509/CertificateExtensions.class">
+      <file leaf-file-name="BitcoinGWTServiceImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="28" selection-start="1623" selection-end="1623" vertical-scroll-proportion="0.0">
+            <state line="72" column="45" selection-start="3147" selection-end="3147" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SSLSocketImpl.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/jre/lib/jsse.jar!/sun/security/ssl/SSLSocketImpl.class">
+      <file leaf-file-name="AppContextInitializerListener.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/AppContextInitializerListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="89" column="0" selection-start="4988" selection-end="4988" vertical-scroll-proportion="0.0">
+            <state line="19" column="13" selection-start="662" selection-end="662" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="X509CertImpl.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/jre/lib/rt.jar!/sun/security/x509/X509CertImpl.class">
+      <file leaf-file-name="UsageExample.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/examples/UsageExample.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="74" column="28" selection-start="5229" selection-end="5229" vertical-scroll-proportion="0.0">
+            <state line="93" column="57" selection-start="4182" selection-end="4182" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MtGox.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/MtGox.java">
+      <file leaf-file-name="TickerEngine.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TickerEngine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="16" selection-start="2304" selection-end="2304" vertical-scroll-proportion="0.0">
+            <state line="50" column="30" selection-start="1889" selection-end="1889" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Utils.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/examples/utils/Utils.java">
+      <file leaf-file-name="Constants.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/Constants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="23" selection-start="1385" selection-end="1385" vertical-scroll-proportion="0.29533678">
+            <state line="8" column="16" selection-start="185" selection-end="185" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InetAddress.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/src.zip!/java/net/InetAddress.java">
+      <file leaf-file-name="BitcoinGWT.gwt.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/BitcoinGWT.gwt.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1040" column="0" selection-start="37142" selection-end="37142" vertical-scroll-proportion="0.0">
+            <state line="53" column="17" selection-start="2592" selection-end="2592" vertical-scroll-proportion="1.4260652">
               <folding />
             </state>
           </provider>
@@ -270,15 +268,11 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/example/PostProperties.java" />
-        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ExampleServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/LiveGridExample.java" />
         <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWT.java" />
         <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/MainContentPanel.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/util/PrettyDateFormat.java" />
         <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TradesFullLayoutObject.java" />
-        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/Constants.java" />
         <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWTService.java" />
         <option value="$PROJECT_DIR$/target/generated-sources/gwt/bitcoinGWT/client/BitcoinGWTServiceAsync.java" />
         <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java" />
@@ -286,6 +280,10 @@
         <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/trades/TradesComponent.java" />
         <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TickerEngine.java" />
         <option value="$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/MtGox.java" />
+        <option value="$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/examples/utils/Utils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/TradeUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/Constants.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/BitcoinGWT.gwt.xml" />
       </list>
     </option>
   </component>
@@ -381,10 +379,6 @@
               <option name="myItemId" value="BitcoinGraph" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -420,19 +414,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="target" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="generated-sources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gwt" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -446,11 +428,85 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="target" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="generated-sources" />
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BitcoinGraph" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mtgox-api-v2-java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BitcoinGraph" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mtgox-api-v2-java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BitcoinGraph" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mtgox-api-v2-java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bitcoinGWT" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -484,25 +540,25 @@
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Global Libraries" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="preferences.keymap" />
+    <property name="options.lastSelected" value="reference.projectsettings.compiler.javacompiler" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="project.structure.side.proportion" value="0.4609929" />
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="MemberChooser.showClasses" value="true" />
     <property name="Repository.Attach.Sources" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="options.searchVisible" value="true" />
     <property name="Downloaded.Files.Path" value="C:\Users\Radu\git\mtgox-api-v2-java\lib" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -510,6 +566,7 @@
       <recent name="C:\Users\Radu\git\mtgox-api-v2-java\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Radu\git\mtgox-api-v2-java\src\main\resources\res\ssl" />
       <recent name="C:\Users\Radu\git\mtgox-api-v2-java\src\main\webapp\WEB-INF" />
       <recent name="C:\Users\Radu\git\mtgox-api-v2-java\src\main\webapp" />
       <recent name="C:\Users\Radu\git\mtgox-api-v2-java\src\main\java\mtgox_api" />
@@ -524,11 +581,11 @@
         </pattern>
       </extension>
       <option name="MAIN_CLASS_NAME" value="mtgox_api.com.mtgox.examples.UsageExample" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="C:/Program Files/Java/jdk1.7.0_21" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
@@ -539,7 +596,9 @@
         <option name="TRANSPORT" value="0" />
         <option name="LOCAL" value="true" />
       </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -629,6 +688,15 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
+    <configuration default="true" type="GWT.ConfigurationType" factoryName="GWT Configuration">
+      <module name="" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -655,21 +723,12 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="GWT.ConfigurationType" factoryName="GWT Configuration">
-      <module name="" />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
     <configuration default="false" name="BitcoinGWT" type="GWT.ConfigurationType" factoryName="GWT Configuration">
       <module name="Mtgox-api-v2-java" />
       <option name="VM_PARAMETERS" value="-Xmx512m" />
       <option name="RUN_PAGE" value="BitcoinGWT.html" />
       <option name="GWT_MODULE" value="bitcoinGWT.BitcoinGWT" />
-      <option name="BROWSER" value="Internet Explorer" />
+      <option name="BROWSER" value="Chrome" />
       <RunnerSettings RunnerId="Debug">
         <option name="DEBUG_PORT" value="" />
         <option name="TRANSPORT" value="0" />
@@ -678,7 +737,12 @@
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
-      <method />
+      <method>
+        <option name="BuildArtifacts" enabled="false">
+          <artifact name="Mtgox-api-v2-java:war" />
+          <artifact name="Mtgox-api-v2-java:war exploded" />
+        </option>
+      </method>
     </configuration>
     <configuration default="false" name="BitcoinGWT - Sencha example" type="GWT.ConfigurationType" factoryName="GWT Configuration">
       <module name="Mtgox-api-v2-java" />
@@ -756,7 +820,11 @@
       <created>1374606878936</created>
       <updated>1374606878936</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="tryout - load partial trades">
+      <created>1376504196962</created>
+      <updated>1376504196962</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -786,9 +854,8 @@
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37988827" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33519554" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5069832" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5265363" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -798,10 +865,11 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34289813" sideWeight="0.22206704" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13433908" sideWeight="0.6201117" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25071838" sideWeight="0.6201117" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24640805" sideWeight="0.6201117" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3840782" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33519554" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24497126" sideWeight="0.6913408" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
     </layout>
@@ -843,7 +911,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="working grid - all results" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixing certificate paths" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -866,6 +934,8 @@
     <MESSAGE value="improve GXT grid" />
     <MESSAGE value="grid paging tryout" />
     <MESSAGE value="working grid - all results" />
+    <MESSAGE value="tryout - load partial trades" />
+    <MESSAGE value="fixing certificate paths" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -875,114 +945,90 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/jre/lib/jsse.jar!/sun/security/ssl/CipherSuite.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="12" selection-start="2486" selection-end="2486" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/jre/lib/jsse.jar!/sun/security/ssl/SSLContextImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="37" selection-start="3353" selection-end="3353" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/jre/lib/jsse.jar!/sun/security/ssl/SSLSocketFactoryImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="27" selection-start="562" selection-end="562" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/jre/lib/rt.jar!/sun/net/www/protocol/https/HttpsClient.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="30" selection-start="3432" selection-end="3432" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/jre/lib/rt.jar!/sun/net/NetworkClient.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="30" selection-start="943" selection-end="943" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/jre/lib/rt.jar!/sun/net/util/IPAddressUtil.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="25" selection-start="481" selection-end="481" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/jre/lib/jce.jar!/javax/crypto/Cipher.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="17" selection-start="3712" selection-end="3712" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/src.zip!/java/net/InetAddress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1040" column="0" selection-start="37142" selection-end="37142" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/jre/lib/jsse.jar!/sun/security/ssl/CipherBox.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="12" selection-start="665" selection-end="665" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/src.zip!/java/net/InetSocketAddress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="222" column="0" selection-start="7091" selection-end="7091" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/src.zip!/java/lang/Integer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="491" column="0" selection-start="17855" selection-end="17855" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/jre/lib/rt.jar!/sun/security/x509/X509CertImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="28" selection-start="5229" selection-end="5229" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/jre/lib/rt.jar!/sun/security/x509/CertificateExtensions.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="28" selection-start="1623" selection-end="1623" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/jre/lib/jsse.jar!/sun/security/ssl/SSLSocketImpl.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="0" selection-start="4988" selection-end="4988" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/MtGox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="16" selection-start="2304" selection-end="2304" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="89" column="0" selection-start="4988" selection-end="4988" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/examples/utils/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="23" selection-start="1385" selection-end="1385" vertical-scroll-proportion="0.29533678">
+        <state line="48" column="26" selection-start="1360" selection-end="1360" vertical-scroll-proportion="1.6504854" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/res/api-keys.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="20" selection-start="180" selection-end="180" vertical-scroll-proportion="0.123786405" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/res/MtGox response file">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TradesEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="40" selection-start="814" selection-end="825" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/api/MtGox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="578" column="0" selection-start="23027" selection-end="23027" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/TradeUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="2" selection-start="1021" selection-end="1021" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ExampleServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="13" selection-start="1180" selection-end="1180" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="72" column="45" selection-start="3147" selection-end="3147" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/AppContextInitializerListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="13" selection-start="662" selection-end="662" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/mtgox_api/com/mtgox/examples/UsageExample.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="93" column="57" selection-start="4182" selection-end="4182" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="227" column="44" selection-start="8806" selection-end="8806" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/trades/TradesComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="185" column="22" selection-start="7871" selection-end="7871" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TickerEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="30" selection-start="1889" selection-end="1889" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="16" selection-start="185" selection-end="185" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/BitcoinGWT.gwt.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="17" selection-start="2592" selection-end="2592" vertical-scroll-proportion="1.4260652">
           <folding />
         </state>
       </provider>
@@ -997,7 +1043,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.21681865" />
+                <option value="0.4609929" />
                 <option value="0.5" />
               </list>
             </option>
@@ -1010,7 +1056,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.21681865" />
+                <option value="0.4609929" />
               </list>
             </option>
           </splitter-proportions>
@@ -1034,7 +1080,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.41540024" />
+                <option value="0.4609929" />
               </list>
             </option>
           </splitter-proportions>
@@ -1042,11 +1088,11 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Web|Mtgox-api-v2-java</last-edited>
+          <last-edited>GWT|Mtgox-api-v2-java</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.21681865" />
+                <option value="0.4609929" />
               </list>
             </option>
           </splitter-proportions>

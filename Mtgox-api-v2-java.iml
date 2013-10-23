@@ -26,7 +26,8 @@
     </facet>
     <facet type="gwt" name="GWT">
       <configuration>
-        <setting name="compilerMaxHeapSize" value="128" />
+        <setting name="additionalCompilerParameters" value="-XX:-UseGCOverheadLimit" />
+        <setting name="compilerMaxHeapSize" value="1024" />
         <setting name="gwtScriptOutputStyle" value="DETAILED" />
         <setting name="gwtSdkUrl" value="file://$MAVEN_REPOSITORY$/com/google/gwt/gwt-dev/2.5.0/" />
         <setting name="gwtSdkType" value="maven" />
@@ -48,7 +49,6 @@
       <excludeFolder url="file://$MODULE_DIR$/target/gwt-unitCache" />
       <excludeFolder url="file://$MODULE_DIR$/target/maven-archiver" />
       <excludeFolder url="file://$MODULE_DIR$/target/surefire" />
-      <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
