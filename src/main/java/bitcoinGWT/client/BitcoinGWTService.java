@@ -16,7 +16,7 @@ public interface BitcoinGWTService extends RemoteService {
 
     TickerFullLayoutObject getPrice(Currency currency);
 
-    PagingLoadResult<TradesFullLayoutObject> getTradesForGrid(Currency currency, PagingLoadConfig config, boolean initialLoad);
+    PagingLoadResult<TradesFullLayoutObject> getTradesForGrid(Currency currency, PagingLoadConfig config);
 
-    int getLastLoadedTradesSizeFromServer(Currency currency);
+    boolean shouldLoadTradesFromServer(Currency currency);
 }

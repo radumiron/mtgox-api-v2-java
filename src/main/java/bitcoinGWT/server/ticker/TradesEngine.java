@@ -6,8 +6,9 @@ import com.carrotsearch.sizeof.RamUsageEstimator;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import static bitcoinGWT.shared.model.Constants.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,28 +20,20 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Component
 public class TradesEngine extends AbstractTradeEngine {
 
-    //TODO increase this to 7 days (1 week)
-    private static final int INITIAL_TRADES_INTERVAL = /*12 **/2*  60 * 60 * 1000; //last 12 hours
-
-    private static final int TRADES_RETRIEVAL_INTERVAL = 5000;//60000;
-
-    private static final int TRADES_SIZE = 5000;
-
     private Long previousTimestamp;
 
     private LinkedBlockingQueue<TradesFullLayoutObject> lastLoadedTrades = new LinkedBlockingQueue<>();
 
-    private long lastLoadedTradesTimestamp;
-
     private int loadedTradesListSize;
 
     private LinkedHashMap<Long, TradesFullLayoutObject> allTrades;
+    private boolean shouldLoadTrades;
 
     public TradesEngine() {
         allTrades = new LinkedHashMap<Long, TradesFullLayoutObject>() {
             @Override
             protected boolean removeEldestEntry(Map.Entry<Long, TradesFullLayoutObject> eldest) {
-                return size() > TRADES_SIZE;
+                return /*(size() > TRADES_SIZE) || */(eldest.getValue().getDate().before(getOldestTradeDate()));
             }
         };
     }
@@ -58,11 +51,11 @@ public class TradesEngine extends AbstractTradeEngine {
             System.out.println(new Date() + " new trades loaded, size of loaded trades=" + lastLoadedTrades.size());
             loadedTradesListSize = lastLoadedTrades.size();
             //in case the list downloaded is NOT empty, mark that all who will ask for trades will be able to download the new list
-            //shouldLoadTrades = true;
+            shouldLoadTrades = true;
             //System.out.println(new Date() + " before adding new trades, size of allTrades=" + RamUsageEstimator.humanSizeOf(allTrades));
         } else {
             //in case the list is empty,
-            //shouldLoadTrades = false
+            shouldLoadTrades = false;
         }
         System.out.println(new Date() + " total size of cached trades=" + allTrades.size());
         //allTrades.addAll(trades);
@@ -104,8 +97,8 @@ public class TradesEngine extends AbstractTradeEngine {
         }
     }
 
-    public int getLastLoadedTradesSizeFromServer(Currency currency) {
-        return loadedTradesListSize;
+    public boolean shouldLoadTradesFromServer(Currency currency) {
+        return shouldLoadTrades;
     }
 
     private Set<TradesFullLayoutObject> getAllTrades() {
@@ -114,5 +107,13 @@ public class TradesEngine extends AbstractTradeEngine {
         LinkedHashMap<Long, TradesFullLayoutObject> allTradesCopy = new LinkedHashMap<>(allTrades);
         result.addAll(allTradesCopy.values());
         return result;
+    }
+
+    private Date getOldestTradeDate() {
+        //return new Date(System.currentTimeMillis() - INITIAL_TRADES_INTERVAL);
+        return new Date(System.currentTimeMillis() - 1 *  60 * 60 * 1000);
+        /*Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR_OF_DAY, -6);
+        Date date = calendar.getTime();*/
     }
 }

@@ -68,7 +68,7 @@ public class TradesComponent extends ContentPanel {
                     sortInfos.add(new SortInfoBean("price", SortDir.DESC));
                     loadConfig.setSortInfo(sortInfos);
                 }
-                mainService.getTradesForGrid(Currency.EUR, loadConfig, initialLoad, callback);
+                mainService.getTradesForGrid(Currency.EUR, loadConfig, callback);
 
                 if (initialLoad) {
                     initialLoad = false;
@@ -107,8 +107,8 @@ public class TradesComponent extends ContentPanel {
         l.add(dateColumn);
 
         liveGridView = new LiveGridView<TradesFullLayoutObject>();
-        //set the grid to hold 200 items in the cache
-        liveGridView.setCacheSize(200);
+        //set the grid to hold by default 200 items in the cache
+        liveGridView.setCacheSize(Constants.TRADES_GRID_UI_BUFFER);
         //liveGridView.setCacheSize(30);
         liveGridView.setForceFit(true);
 
@@ -118,6 +118,7 @@ public class TradesComponent extends ContentPanel {
 
         view.setLoadMask(true);
         view.setLoader(gridLoader);
+        liveGridView.setEmptyText("There are no trades yet...");
 
         view.setView(liveGridView);
 
@@ -151,6 +152,9 @@ public class TradesComponent extends ContentPanel {
     }
 
     private void initTradesTimer() {
+        //this timer checks for new trades on the server. There can be a slight delay
+        //in what the UI shows and what the server actual has. This is caused by the
+        //2 different timers - one on UI, one on Server
         Timer timer = new Timer() {
 
             //@Override
@@ -158,33 +162,31 @@ public class TradesComponent extends ContentPanel {
                 //if first time, load the initial grid size
                 System.out.println(new Date() + " run get trades task");
                 //check to see if there are any additional trades to load on the client
-                mainService.getLastLoadedTradesSizeFromServer(Currency.EUR, new AsyncCallback<Integer>() {
+                mainService.shouldLoadTradesFromServer(Currency.EUR, new AsyncCallback<Boolean>() {
 
                     @Override
                     public void onFailure(Throwable caught) {
-                        loadGrid(lastLoadedTradesListSize);
+                        gridLoader.load(0, liveGridView.getCacheSize());
                     }
 
                     @Override
-                    public void onSuccess(Integer loadedTradesListSize) {
+                    public void onSuccess(Boolean loadedTradesListSize) {
                         //in case getting the trades size was successful
                         loadGrid(loadedTradesListSize);
-                        //initTradesTimer();
                     }
                 });
 
             }
         };
-
-        timer.scheduleRepeating(Constants.TRADES_INTERVAL);
+        //timer.schedule(Constants.INITIAL_UI_TRADES_DELAY);
+        timer.scheduleRepeating(Constants.TRADES_RETRIEVAL_INTERVAL);
     }
 
-    private void loadGrid(int loadedTradesListSize) {
+    private void loadGrid(boolean shouldLoadTradesFromServer) {
         //load the trades from the server only if there are any differences. Or in case it's the initial loading
         if (initialLoad) {
             gridLoader.load(0, liveGridView.getCacheSize());
-        } else if ((lastLoadedTradesListSize != loadedTradesListSize)) {//in case the server loaded trades size is different from the UI one, load the last trades from the server
-            lastLoadedTradesListSize = loadedTradesListSize;
+        } else if (shouldLoadTradesFromServer) {//in case the server says it has new trades, load the last trades from the server
             gridLoader.load();
         }
     }

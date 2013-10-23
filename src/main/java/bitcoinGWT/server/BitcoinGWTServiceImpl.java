@@ -52,7 +52,7 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
     }
 
     @Override
-    public PagingLoadResult<TradesFullLayoutObject> getTradesForGrid(Currency currency, PagingLoadConfig config, boolean initialLoad) {
+    public PagingLoadResult<TradesFullLayoutObject> getTradesForGrid(Currency currency, PagingLoadConfig config) {
         //always take the whole list of retrieved trades: we will return to the UI just part of it, according to the PagingLoadConfig
         List<TradesFullLayoutObject> trades = new ArrayList<>(tradesEngine.getTrades(Currency.EUR, true));
 
@@ -80,8 +80,8 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
     }
 
     @Override
-    public int getLastLoadedTradesSizeFromServer(Currency currency) {
-        return tradesEngine.getLastLoadedTradesSizeFromServer(currency);
+    public boolean shouldLoadTradesFromServer(Currency currency) {
+        return tradesEngine.shouldLoadTradesFromServer(currency);
     }
 
     private Comparator<TradesFullLayoutObject> getComparator(final SortInfo sortParams) {

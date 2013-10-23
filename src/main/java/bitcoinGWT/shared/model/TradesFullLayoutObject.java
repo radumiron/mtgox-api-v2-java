@@ -28,8 +28,8 @@ public class TradesFullLayoutObject implements IsSerializable {
     public TradesFullLayoutObject(long tradeId, Date dateDate, double tradePrice, double tradeAmount, Currency currency, Currency tradeItem, TradeType type) {
         this.tradeId = tradeId;
         this.date = dateDate;
-        //this.price = tradePrice;
-        this.price = ++PRICE;
+        this.price = tradePrice;
+        //this.price = ++PRICE;
         this.amount = tradeAmount;
         this.currency = currency;
         this.tradeItem = tradeItem;
