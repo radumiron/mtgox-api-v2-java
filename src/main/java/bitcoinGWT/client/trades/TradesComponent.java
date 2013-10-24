@@ -65,7 +65,7 @@ public class TradesComponent extends ContentPanel {
                 //autosort by price, in case there is no other sort criteria
                 if (loadConfig.getSortInfo().size() == 0) {
                     List<SortInfoBean> sortInfos = new ArrayList<SortInfoBean>();
-                    sortInfos.add(new SortInfoBean("price", SortDir.DESC));
+                    sortInfos.add(new SortInfoBean("date", SortDir.DESC));
                     loadConfig.setSortInfo(sortInfos);
                 }
                 mainService.getTradesForGrid(Currency.EUR, loadConfig, callback);
@@ -124,7 +124,7 @@ public class TradesComponent extends ContentPanel {
 
         root = new FramedPanel();
         root.setCollapsible(true);
-        root.setHeadingText("Live Grid Example");
+        root.setHeadingText("Trades");
         //root.setPixelSize(600, 390);
         new Resizable(root);
 

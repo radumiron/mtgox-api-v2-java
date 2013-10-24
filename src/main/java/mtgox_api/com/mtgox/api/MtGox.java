@@ -487,8 +487,6 @@ public class MtGox implements TradeInterface {
         }
         System.out.println(new Date() + ": after parsing trades result");
 
-        //reverse the list so that it's from the most recent one to the oldest one
-        Collections.reverse(trades);
         return trades;
     }
 

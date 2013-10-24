@@ -23,28 +23,28 @@ public class TradesEngine extends AbstractTradeEngine {
     private Long previousTimestamp;
 
     private LinkedBlockingQueue<TradesFullLayoutObject> lastLoadedTrades = new LinkedBlockingQueue<>();
+    private LinkedBlockingQueue<TradesFullLayoutObject> allLoadedTrades = new LinkedBlockingQueue<>(TRADES_SIZE);
 
     private int loadedTradesListSize;
 
-    private LinkedHashMap<Long, TradesFullLayoutObject> allTrades;
     private boolean shouldLoadTrades;
-
-    public TradesEngine() {
-        allTrades = new LinkedHashMap<Long, TradesFullLayoutObject>() {
-            @Override
-            protected boolean removeEldestEntry(Map.Entry<Long, TradesFullLayoutObject> eldest) {
-                return /*(size() > TRADES_SIZE) || */(eldest.getValue().getDate().before(getOldestTradeDate()));
-            }
-        };
-    }
 
     @Override
     protected void executeTradeTask() {
-        lastLoadedTrades = new LinkedBlockingQueue<>(trade.getTrades(Currency.EUR, getPreviousTimestamp()));
+        List<TradesFullLayoutObject> sortedTrades = new ArrayList<>(trade.getTrades(Currency.EUR, getPreviousTimestamp()));
+        Collections.sort(sortedTrades, new Comparator<TradesFullLayoutObject>() {
+            @Override
+            public int compare(TradesFullLayoutObject o1, TradesFullLayoutObject o2) {
+                //return the trades in a decreasing order - newest first.
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        });
+        lastLoadedTrades = new LinkedBlockingQueue<>(sortedTrades);
+
         for (TradesFullLayoutObject trade : lastLoadedTrades) {
             System.out.println("trade size=" + RamUsageEstimator.humanSizeOf(trade) + "," + trade);
             //add each trade to the map. Because the map holds only the last TRADES_SIZE, this method will also remove the oldest entries.
-            allTrades.put(trade.getTradeId(), trade);
+            addTrade(trade);
         }
 
         if (lastLoadedTrades.size() > 0) {
@@ -52,15 +52,25 @@ public class TradesEngine extends AbstractTradeEngine {
             loadedTradesListSize = lastLoadedTrades.size();
             //in case the list downloaded is NOT empty, mark that all who will ask for trades will be able to download the new list
             shouldLoadTrades = true;
-            //System.out.println(new Date() + " before adding new trades, size of allTrades=" + RamUsageEstimator.humanSizeOf(allTrades));
         } else {
             //in case the list is empty,
             shouldLoadTrades = false;
         }
-        System.out.println(new Date() + " total size of cached trades=" + allTrades.size());
-        //allTrades.addAll(trades);
-        //System.out.println(new Date() + " size of allTrades=" + RamUsageEstimator.humanSizeOf(allTrades));
+        System.out.println(new Date() + " total size of cached trades=" + allLoadedTrades.size());
         System.out.println();
+    }
+
+    private void addTrade(TradesFullLayoutObject trade) {
+        if (allLoadedTrades.isEmpty()) {
+            allLoadedTrades.add(trade);
+        } else {
+            if (allLoadedTrades.remainingCapacity() > 0) {
+                allLoadedTrades.offer(trade);
+            } else {
+                allLoadedTrades.poll();
+                allLoadedTrades.offer(trade);
+            }
+        }
     }
 
     @Override
@@ -72,14 +82,18 @@ public class TradesEngine extends AbstractTradeEngine {
         Calendar calendar = GregorianCalendar.getInstance();
         //set the time when this method was previously executed
         if (previousTimestamp == null) {    //if first download of trades
+            System.out.println("first time trades");
             previousTimestamp = calendar.getTimeInMillis();
+            System.out.println("current time: " + new Date(previousTimestamp));
             //go back the specified amount of seconds
             calendar.add(Calendar.MILLISECOND, (-1) * INITIAL_TRADES_INTERVAL);
+            System.out.println("getting trades since: " + calendar.getTime());
         } else {
             long temporaryTimestamp = calendar.getTimeInMillis();   //save the current execution time to a temp variable
             //roll back the calendar with the amount of milliseconds passed since the last run.
             calendar.add(Calendar.MILLISECOND, (-1) * (int) (calendar.getTimeInMillis() - previousTimestamp));
 
+            System.out.println("getting trades from: " + new Date(previousTimestamp) + " to " + new Date(temporaryTimestamp));
             //save the current run time as a reference for the next run time.
             previousTimestamp = temporaryTimestamp;
         }
@@ -104,8 +118,10 @@ public class TradesEngine extends AbstractTradeEngine {
     private Set<TradesFullLayoutObject> getAllTrades() {
         LinkedHashSet<TradesFullLayoutObject> result = new LinkedHashSet<>();
         //first copy the map
-        LinkedHashMap<Long, TradesFullLayoutObject> allTradesCopy = new LinkedHashMap<>(allTrades);
-        result.addAll(allTradesCopy.values());
+        List<TradesFullLayoutObject> allTradesCopy = new ArrayList<>(allLoadedTrades);
+        //reverse the result list in order to have it "oldest first"
+        Collections.reverse(allTradesCopy);
+        result.addAll(allLoadedTrades);
         return result;
     }
 

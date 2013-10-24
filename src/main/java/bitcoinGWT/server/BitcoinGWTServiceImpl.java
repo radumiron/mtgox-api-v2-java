@@ -97,35 +97,35 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
 
                 @Override
                 public int compare(TradesFullLayoutObject o1, TradesFullLayoutObject o2) {
-                    return sortParams.getSortDir() == SortDir.ASC ? o1.getPrice().compareTo(o2.getPrice()) : (-1) * o1.getPrice().compareTo(o2.getPrice());
+                    return sortParams.getSortDir() == SortDir.ASC ? o1.getDate().compareTo(o2.getDate()) : (-1) * o1.getDate().compareTo(o2.getDate());
                 }
             };
             case "amount" : return new Comparator<TradesFullLayoutObject>() {
 
                 @Override
                 public int compare(TradesFullLayoutObject o1, TradesFullLayoutObject o2) {
-                    return sortParams.getSortDir() == SortDir.ASC ? o1.getPrice().compareTo(o2.getPrice()) : (-1) * o1.getPrice().compareTo(o2.getPrice());
+                    return sortParams.getSortDir() == SortDir.ASC ? o1.getAmount().compareTo(o2.getAmount()) : (-1) * o1.getAmount().compareTo(o2.getAmount());
                 }
             };
             case "tradeItem" : return new Comparator<TradesFullLayoutObject>() {
 
                 @Override
                 public int compare(TradesFullLayoutObject o1, TradesFullLayoutObject o2) {
-                    return sortParams.getSortDir() == SortDir.ASC ? o1.getPrice().compareTo(o2.getPrice()) : (-1) * o1.getPrice().compareTo(o2.getPrice());
+                    return sortParams.getSortDir() == SortDir.ASC ? o1.getTradeItem().compareTo(o2.getTradeItem()) : (-1) * o1.getTradeItem().compareTo(o2.getTradeItem());
                 }
             };
             case "currency" : return new Comparator<TradesFullLayoutObject>() {
 
                 @Override
                 public int compare(TradesFullLayoutObject o1, TradesFullLayoutObject o2) {
-                    return sortParams.getSortDir() == SortDir.ASC ? o1.getPrice().compareTo(o2.getPrice()) : (-1) * o1.getPrice().compareTo(o2.getPrice());
+                    return sortParams.getSortDir() == SortDir.ASC ? o1.getCurrency().compareTo(o2.getCurrency()) : (-1) * o1.getCurrency().compareTo(o2.getCurrency());
                 }
             };
             case "type" : return new Comparator<TradesFullLayoutObject>() {
 
                 @Override
                 public int compare(TradesFullLayoutObject o1, TradesFullLayoutObject o2) {
-                    return sortParams.getSortDir() == SortDir.ASC ? o1.getPrice().compareTo(o2.getPrice()) : (-1) * o1.getPrice().compareTo(o2.getPrice());
+                    return sortParams.getSortDir() == SortDir.ASC ? o1.getType().compareTo(o2.getType()) : (-1) * o1.getType().compareTo(o2.getType());
                 }
             };
 
