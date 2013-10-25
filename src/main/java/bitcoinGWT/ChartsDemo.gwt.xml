@@ -4,6 +4,5 @@
 
     <inherits name="bitcoinGWT.AbstractMainModule"/>
 
-    <!-- Specify the app entry point class.                   -->
-    <entry-point class='bitcoinGWT.client.LiveGridExample'/>
+    <entry-point class='bitcoinGWT.client.ChartsDemo'/>
 </module>

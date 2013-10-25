@@ -90,8 +90,8 @@ public class TradesComponent extends ContentPanel {
                 proxy);
         gridLoader.setRemoteSort(true);
 
-        ColumnConfig<TradesFullLayoutObject, Currency> currencyColumn = new ColumnConfig<TradesFullLayoutObject, Currency>(props.currency(), 80, "Currency");
-        ColumnConfig<TradesFullLayoutObject, Currency> tradeItemColumn = new ColumnConfig<TradesFullLayoutObject, Currency>(props.tradeItem(), 80, "Trade item");
+        //ColumnConfig<TradesFullLayoutObject, Currency> currencyColumn = new ColumnConfig<TradesFullLayoutObject, Currency>(props.currency(), 80, "Currency");
+        //ColumnConfig<TradesFullLayoutObject, Currency> tradeItemColumn = new ColumnConfig<TradesFullLayoutObject, Currency>(props.tradeItem(), 80, "Trade item");
         ColumnConfig<TradesFullLayoutObject, TradesFullLayoutObject.TradeType> typeColumn = new ColumnConfig<TradesFullLayoutObject, TradesFullLayoutObject.TradeType>(props.type(), 80, "Type");
         ColumnConfig<TradesFullLayoutObject, Double> priceColumn = new ColumnConfig<TradesFullLayoutObject, Double>(props.price(), 150, "Price");
         ColumnConfig<TradesFullLayoutObject, Double> amountColumn = new ColumnConfig<TradesFullLayoutObject, Double>(props.amount(), 150, "Amount");
@@ -99,8 +99,8 @@ public class TradesComponent extends ContentPanel {
         dateColumn.setCell(new DateCell(DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_SHORT)));
 
         List<ColumnConfig<TradesFullLayoutObject, ?>> l = new ArrayList<ColumnConfig<TradesFullLayoutObject, ?>>();
-        l.add(currencyColumn);
-        l.add(tradeItemColumn);
+        /*l.add(currencyColumn);
+        l.add(tradeItemColumn);*/
         l.add(typeColumn);
         l.add(amountColumn);
         l.add(priceColumn);

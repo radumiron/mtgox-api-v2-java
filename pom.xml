@@ -141,6 +141,11 @@
             <artifactId>prettytime</artifactId>
             <version>3.0.2.Final</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.gwt.google-apis</groupId>
+            <artifactId>gwt-visualization</artifactId>
+            <version>1.0.2</version>
+        </dependency>
     </dependencies>
     <build>
 
@@ -166,6 +171,9 @@
                             <resources>
                                 <resource>
                                     <directory>${project.basedir}/src/main/resources</directory>
+                                </resource>
+                                <resource>
+                                    <directory>${project.basedir}/lib</directory>
                                 </resource>
                             </resources>
                         </configuration>
