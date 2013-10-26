@@ -1,0 +1,3 @@
+mvn install:install-file -Dfile=gwt-visualization.jar -DgroupId=com.google.gwt.google-apis -DartifactId=gwt-visualization -Dversion=1.1.2 -Dpackaging=jar
+mvn install:install-file -Dfile=gwt-visualization-javadoc.jar -DgroupId=com.google.gwt.google-apis -DartifactId=gwt-visualization -Dversion=1.1.2 -Dpackaging=jar
+mvn install:install-file -Dfile=gwt-visualization-noredist.jar -DgroupId=com.google.gwt.google-apis -DartifactId=gwt-visualization -Dversion=1.1.2 -Dpackaging=jar

@@ -128,13 +128,6 @@
             <artifactId>spring-context-support</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
-        <!--<dependency>
-            <groupId>org.apache.log4j</groupId>
-            <artifactId>log4j-gwt</artifactId>
-            <version>1.0</version>
-            <scope>provided</scope>
-            <systemPath>src/main/webapp/WEB-INF/lib/log4j-gwt.jar</systemPath>
-        </dependency>-->
 
         <dependency>
             <groupId>org.ocpsoft.prettytime</groupId>
@@ -144,7 +137,18 @@
         <dependency>
             <groupId>com.google.gwt.google-apis</groupId>
             <artifactId>gwt-visualization</artifactId>
-            <version>1.0.2</version>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt.google-apis</groupId>
+            <artifactId>gwt-ajaxloader</artifactId>
+            <version>1.1.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.gwt</groupId>
+                    <artifactId>gwt-dev</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
     <build>
@@ -183,6 +187,7 @@
 
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -209,7 +214,7 @@
             gwt-maven-plugin documentation at codehaus.org -->
                 <configuration>
                     <!--<runTarget>MedicalAssistantGXT.jsp</runTarget>-->
-                    <runTarget>MedicalAssistantGXT.html</runTarget>
+                    <runTarget>BitcoinGWT.html</runTarget>
                     <hostedWebapp>${webappDirectory}</hostedWebapp>
                     <!--<i18nMessagesBundle>org.medical_assistant.client.Messages</i18nMessagesBundle>-->
                 </configuration>

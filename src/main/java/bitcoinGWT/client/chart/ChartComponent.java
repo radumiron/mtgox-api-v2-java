@@ -21,5 +21,7 @@ public class ChartComponent extends ContentPanel {
         setAnimCollapse(true);
         setHeaderVisible(false);
 
+
+        add(new CandleStickChart());
     }
 }

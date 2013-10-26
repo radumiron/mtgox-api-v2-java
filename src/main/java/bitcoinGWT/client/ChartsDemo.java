@@ -1,5 +1,6 @@
 package bitcoinGWT.client;
 
+import bitcoinGWT.client.chart.CandleStickChart;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.user.client.Window;
@@ -34,7 +35,9 @@ public class ChartsDemo implements EntryPoint {
                 PieChart pie = new PieChart(createTable(), createOptions());
 
                 pie.addSelectHandler(createSelectHandler(pie));
-                panel.add(pie);
+                //panel.add(pie);
+
+                panel.add(new CandleStickChart());
             }
         };
 
