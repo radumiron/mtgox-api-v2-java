@@ -1,16 +1,13 @@
 package bitcoinGWT.client.chart;
 
 import bitcoinGWT.shared.model.Constants;
-import bitcoinGWT.shared.model.Currency;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.visualization.client.AbstractDataTable;
 import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.Selection;
 import com.google.gwt.visualization.client.events.SelectHandler;
-import com.google.gwt.visualization.client.visualizations.corechart.PieChart;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 
 import java.util.Date;

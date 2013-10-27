@@ -37,6 +37,7 @@
           <element id="library" level="project" name="Maven: org.ocpsoft.prettytime:prettytime:3.0.2.Final" />
           <element id="library" level="project" name="Maven: com.google.gwt.google-apis:gwt-visualization:1.1.2" />
           <element id="library" level="project" name="Maven: com.google.gwt.google-apis:gwt-ajaxloader:1.1.0" />
+          <element id="library" level="project" name="Maven: com.googlecode.gwt-charts:gwt-charts:0.9.9" />
         </element>
       </element>
       <element id="gwt-compiler-output" facet="Mtgox-api-v2-java/gwt/GWT" />
