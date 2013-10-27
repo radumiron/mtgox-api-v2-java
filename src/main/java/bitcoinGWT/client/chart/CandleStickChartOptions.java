@@ -10,12 +10,12 @@ import com.google.gwt.visualization.client.AbstractDrawOptions;
  * Time: 12:45 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Options extends AbstractDrawOptions {
-    public static Options create() {
+public class CandleStickChartOptions extends AbstractDrawOptions {
+    public static CandleStickChartOptions create() {
         return JavaScriptObject.createObject().cast();
     }
 
-    protected Options() {
+    protected CandleStickChartOptions() {
     }
 
     public final native void setHeight(int height) /*-{

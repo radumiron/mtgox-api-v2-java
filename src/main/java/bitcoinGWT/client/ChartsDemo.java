@@ -1,6 +1,7 @@
 package bitcoinGWT.client;
 
 import bitcoinGWT.client.chart.CandleStickChart;
+import bitcoinGWT.client.chart.ChartComponent;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.user.client.Window;
@@ -12,8 +13,7 @@ import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.Selection;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 import com.google.gwt.visualization.client.events.SelectHandler;
-import com.google.gwt.visualization.client.visualizations.PieChart;
-import com.google.gwt.visualization.client.visualizations.PieChart.Options;
+import com.google.gwt.visualization.client.visualizations.corechart.PieChart;
 
 
 /**
@@ -35,19 +35,19 @@ public class ChartsDemo implements EntryPoint {
                 PieChart pie = new PieChart(createTable(), createOptions());
 
                 pie.addSelectHandler(createSelectHandler(pie));
-                //panel.add(pie);
+                panel.add(pie);
 
-                panel.add(new CandleStickChart());
+                panel.add(new ChartComponent());
             }
         };
 
         // Load the visualization api, passing the onLoadCallback to be called
         // when loading is done.
-        VisualizationUtils.loadVisualizationApi(onLoadCallback, PieChart.PACKAGE);
+        VisualizationUtils.loadVisualizationApi(onLoadCallback, CandleStickChart.PACKAGE);
     }
 
-    private Options createOptions() {
-        Options options = Options.create();
+    private PieChart.PieOptions createOptions() {
+        PieChart.PieOptions options = PieChart.PieOptions.create();
         options.setWidth(400);
         options.setHeight(240);
         options.set3D(true);

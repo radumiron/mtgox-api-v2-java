@@ -210,7 +210,7 @@
                         </goals>
                     </execution>
                 </executions>
-                <!-- Plugin configuration. There are many available options, see
+                <!-- Plugin configuration. There are many available candleStickChartOptions, see
             gwt-maven-plugin documentation at codehaus.org -->
                 <configuration>
                     <!--<runTarget>MedicalAssistantGXT.jsp</runTarget>-->

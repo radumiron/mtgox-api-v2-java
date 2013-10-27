@@ -8,14 +8,18 @@ package bitcoinGWT.client.chart;
  * To change this template use File | Settings | File Templates.
  */
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.visualization.client.AbstractDataTable;
-import com.google.gwt.visualization.client.AbstractDrawOptions;
+import com.google.gwt.visualization.client.DataTable;
+import com.google.gwt.visualization.client.Selection;
 import com.google.gwt.visualization.client.events.Handler;
 import com.google.gwt.visualization.client.events.ReadyHandler;
+import com.google.gwt.visualization.client.events.SelectHandler;
 import com.google.gwt.visualization.client.events.StateChangeHandler;
 import com.google.gwt.visualization.client.visualizations.MotionChart;
 import com.google.gwt.visualization.client.visualizations.Visualization;
+import com.google.gwt.visualization.client.visualizations.corechart.PieChart;
 
 /**
  * Motion Chart visualization. Note that this chart does not work when loading
@@ -26,16 +30,16 @@ import com.google.gwt.visualization.client.visualizations.Visualization;
  *      href="http://code.google.com/apis/visualization/documentation/gallery/motionchart.html"
  *      > Motion Chart Visualization Reference</a>
  */
-public class CandleStickChart extends Visualization<Options> {
+public class CandleStickChart extends Visualization<CandleStickChartOptions> {
 
-    public static final String PACKAGE = "motionchart";
+    public static final String PACKAGE = "corechart";
 
     public CandleStickChart() {
         super();
     }
 
-    public CandleStickChart(AbstractDataTable data, Options options) {
-        super(data, options);
+    public CandleStickChart(AbstractDataTable data, CandleStickChartOptions candleStickChartOptions) {
+        super(data, candleStickChartOptions);
     }
 
     public final void addReadyHandler(ReadyHandler handler) {
@@ -71,9 +75,16 @@ public class CandleStickChart extends Visualization<Options> {
 
     @Override
     protected native JavaScriptObject createJso(Element parent) /*-{
-        return new $wnd.google.visualization.MotionChart(parent);
+        return new $wnd.google.visualization.CandlestickChart(parent);
     }-*/;
 
+    public final void addSelectHandler(SelectHandler handler) {
+        Selection.addSelectHandler(this, handler);
+    }
+
+    public final JsArray<Selection> getSelections() {
+        return Selection.getSelections(this);
+    }
 
 }
 
