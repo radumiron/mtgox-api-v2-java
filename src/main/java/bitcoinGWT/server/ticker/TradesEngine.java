@@ -24,6 +24,7 @@ public class TradesEngine extends AbstractTradeEngine {
 
     private LinkedBlockingQueue<TradesFullLayoutObject> lastLoadedTrades = new LinkedBlockingQueue<>();
     private LinkedBlockingQueue<TradesFullLayoutObject> allLoadedTrades = new LinkedBlockingQueue<>(TRADES_SIZE);
+    private LinkedBlockingQueue<TradesFullLayoutObject> copyOfLastLoadedTrades = new LinkedBlockingQueue<>();
 
     private int loadedTradesListSize;
 
@@ -39,7 +40,8 @@ public class TradesEngine extends AbstractTradeEngine {
                 return o1.getDate().compareTo(o2.getDate());
             }
         });
-        lastLoadedTrades = new LinkedBlockingQueue<>(sortedTrades);
+        lastLoadedTrades.clear();
+        lastLoadedTrades.addAll(sortedTrades);
 
         for (TradesFullLayoutObject trade : lastLoadedTrades) {
             System.out.println("trade size=" + RamUsageEstimator.humanSizeOf(trade) + "," + trade);
@@ -48,6 +50,9 @@ public class TradesEngine extends AbstractTradeEngine {
         }
 
         if (lastLoadedTrades.size() > 0) {
+            //add the new elements to the copy
+            copyOfLastLoadedTrades.addAll(lastLoadedTrades);
+
             System.out.println(new Date() + " new trades loaded, size of loaded trades=" + lastLoadedTrades.size());
             loadedTradesListSize = lastLoadedTrades.size();
             //in case the list downloaded is NOT empty, mark that all who will ask for trades will be able to download the new list
@@ -102,13 +107,35 @@ public class TradesEngine extends AbstractTradeEngine {
         return calendar.getTimeInMillis();
     }
 
-    public Set<TradesFullLayoutObject> getTrades(Currency currency, boolean initialLoad) {
+    public Set<TradesFullLayoutObject> getTrades(Currency currency, boolean initialLoad, boolean blockingCall) {
         if (initialLoad) {  //in case the client doesn't have any trades yet, give him all the trades
             return getAllTrades();
         } else {    //in case the client already has the initial trades, he loads just what what he doesn't yet have
+            if (blockingCall) {
+                //create a copy
+
+                LinkedHashSet<TradesFullLayoutObject> lastTradesSet = new LinkedHashSet<>();
+                //while the copy is not empty, parse it
+                do {
+                    try {
+                        //try to take one element at a time; if there are elements, they will be added to the result set
+                        //if there aren't any elements,
+                        lastTradesSet.add(copyOfLastLoadedTrades.take());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                } while (!copyOfLastLoadedTrades.isEmpty());
+
+                return lastTradesSet;
+
+            }
             LinkedHashSet<TradesFullLayoutObject> lastTradesSet = new LinkedHashSet<>(lastLoadedTrades);
             return lastTradesSet;
         }
+    }
+
+    public Set<TradesFullLayoutObject> getTrades(Currency currency, boolean initialLoad) {
+        return getTrades(currency, initialLoad, false);
     }
 
     public boolean shouldLoadTradesFromServer(Currency currency) {

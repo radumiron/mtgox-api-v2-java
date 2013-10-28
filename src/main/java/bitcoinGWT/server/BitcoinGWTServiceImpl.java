@@ -79,6 +79,12 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
         return new PagingLoadResultBean<TradesFullLayoutObject>(sublist, trades.size(), config.getOffset());
     }
 
+
+    @Override
+    public Set<TradesFullLayoutObject> getTradesForChart(Currency currency) {
+        return tradesEngine.getTrades(Currency.EUR, true);
+    }
+
     @Override
     public boolean shouldLoadTradesFromServer(Currency currency) {
         return tradesEngine.shouldLoadTradesFromServer(currency);

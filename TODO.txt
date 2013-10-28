@@ -1,0 +1,5 @@
+Chart functionality=
+====================
+- split into 10 minutes candles
+- buttons to zoom per 1h, 6h, 1d, 3d, 1w, 2w, 1m, 3m, 6m
+- selecting a candle will display all the trades in that period

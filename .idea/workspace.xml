@@ -2,8 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="39043197-f22d-415e-8614-6f779225a83d" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/TODO.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart2/ChartComponent2.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/util/UiUtils.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/converter/ChartDataConverter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/ChartElement.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TimeInterval.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Mtgox-api-v2-java.iml" afterPath="$PROJECT_DIR$/Mtgox-api-v2-java.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWT.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWT.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWTService.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWTService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart2/ChartRangeFilterExample.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart2/ChartRangeFilterExample.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TradesEngine.java" afterPath="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TradesEngine.java" />
     </list>
     <list id="08dc186c-8746-4a8c-9b20-b6179447f89e" name="Ignore" comment="" />
     <ignored path="BitcoinGraph.iws" />
@@ -27,6 +38,19 @@
   <component name="DebuggerManager">
     <line_breakpoints>
       <breakpoint url="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart/ChartComponent.java" line="135" class="bitcoinGWT.client.chart.ChartComponent" package="bitcoinGWT.client.chart">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart2/ChartComponent2.java" line="130" class="bitcoinGWT.client.chart2.ChartComponent2$2" package="bitcoinGWT.client.chart2">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -101,10 +125,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="ChartComponent2.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart2/ChartComponent2.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="122" column="43" selection-start="4866" selection-end="4866" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Constants.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/Constants.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="22" selection-start="642" selection-end="642" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="CandleStickChart.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart/CandleStickChart.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="43" selection-start="1356" selection-end="1356" vertical-scroll-proportion="0.0">
+            <state line="32" column="13" selection-start="1326" selection-end="1326" vertical-scroll-proportion="0.0">
               <folding>
                 <marker date="1382798952129" expanded="true" signature="2569:2985" placeholder="{...}" />
                 <marker date="1382798952129" expanded="true" signature="2682:2885" placeholder="//..." />
@@ -115,23 +157,37 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ChartComponent.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart/ChartComponent.java">
+      <file leaf-file-name="BitcoinGWTServiceAsync.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/target/generated-sources/gwt/bitcoinGWT/client/BitcoinGWTServiceAsync.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="130" column="36" selection-start="3804" selection-end="4554" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1390#1516#0" expanded="true" />
-                <element signature="e#1505#1506#0" expanded="true" />
-              </folding>
+            <state line="41" column="0" selection-start="1472" selection-end="1472" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AbstractMainModule.gwt.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/AbstractMainModule.gwt.xml">
+      <file leaf-file-name="BitcoinGWTServiceImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="55" selection-start="577" selection-end="577" vertical-scroll-proportion="0.0">
+            <state line="84" column="31" selection-start="3690" selection-end="3690" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TradesEngine.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TradesEngine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="109" column="66" selection-start="4648" selection-end="4656" vertical-scroll-proportion="2.5741324">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BitcoinGWT.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWT.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="7" selection-start="510" selection-end="510" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -140,144 +196,16 @@
       <file leaf-file-name="ChartsDemo2.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/ChartsDemo2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="68" selection-start="1555" selection-end="1555" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1314#1591#0" expanded="true" />
-                <element signature="e#1580#1581#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ControlsComponent.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/controls/ControlsComponent.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="13" selection-start="258" selection-end="258" vertical-scroll-proportion="0.0">
+            <state line="46" column="66" selection-start="1553" selection-end="1553" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ChartRangeFilterExample.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ChartRangeFilterExample.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart2/ChartRangeFilterExample.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="101" column="31" selection-start="3853" selection-end="3853" vertical-scroll-proportion="-1.1749347">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#4611#4737#0" expanded="true" />
-                <element signature="e#4726#4727#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Options.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/com/googlecode/gwt-charts/gwt-charts/0.9.9/gwt-charts-0.9.9.jar!/com/googlecode/gwt/charts/client/options/Options.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="22" selection-start="710" selection-end="710" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1354745068000" expanded="true" signature="893:921" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="976:1002" placeholder="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DataTable.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/com/googlecode/gwt-charts/gwt-charts/0.9.9/gwt-charts-0.9.9.jar!/com/googlecode/gwt/charts/client/DataTable.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="13" selection-start="1730" selection-end="1730" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1354745068000" expanded="true" signature="1976:2032" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="2364:2431" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="2961:3037" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="3423:3489" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="4073:4148" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="5707:5748" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="5894:5922" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="6370:6407" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="6609:6644" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="6967:7004" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="7425:7452" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="8177:8223" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="9011:9057" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="10017:10065" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="10837:10882" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="13284:13327" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="13792:13835" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="14031:14069" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="14396:14452" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="14633:14665" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="14965:15012" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="15340:15383" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="15747:15797" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="16230:16296" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="16911:16989" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="17350:17481" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="17911:18058" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="18670:18829" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="19192:19242" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="19723:19789" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="20403:20481" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="20844:20894" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="21375:21441" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="22055:22133" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="22499:22549" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="23033:23099" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="23716:23794" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="24198:24275" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="24878:24925" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="25536:25593" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="26159:26215" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="26778:26918" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="27483:27539" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="28114:28170" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="28735:28791" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="29606:29675" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="30397:30458" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="31135:31195" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="31869:32013" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="32689:32749" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="33435:33495" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="34171:34231" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="34830:34881" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="35435:35485" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="36036:36170" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="36723:36773" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="37336:37386" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="37939:37989" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="38483:38526" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="38966:39008" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="39445:39571" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="40010:40052" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="40501:40543" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="40982:41024" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="42038:42089" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="43099:43231" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="44243:44294" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="45306:45357" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="46372:46423" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="47294:47344" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="47652:47682" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="48060:48090" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="48644:48676" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="49035:49064" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="49122:49157" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="49229:49271" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="49354:49400" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="49479:49523" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="49616:49667" placeholder="{...}" />
-                <marker date="1354745068000" expanded="true" signature="49771:49826" placeholder="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChartsDemo2.gwt.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/ChartsDemo2.gwt.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="53" selection-start="320" selection-end="320" vertical-scroll-proportion="0.0">
+            <state line="103" column="54" selection-start="0" selection-end="5967" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -304,22 +232,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/SenchaExample.gwt.xml" />
-        <option value="$PROJECT_DIR$/maven install" />
-        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart/Options.java" />
-        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart/MotionChart.java" />
-        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart/CandleStickChartOptions.java" />
-        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/ChartsDemo.java" />
-        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart/CandleStickChart.java" />
-        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart/ChartComponent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/dashboard/Dashboard.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/AbstractMainModule.gwt.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/charts2/CandleStickChart2.java" />
-        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/ChartsDemo2.gwt.xml" />
         <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart/ChartRangeFilterExample.java" />
         <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/ChartsDemo2.java" />
+        <option value="$PROJECT_DIR$/TODO.txt" />
+        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWT.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/util/UiUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TimeInterval.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/ChartElement.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWTService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java" />
+        <option value="$PROJECT_DIR$/target/generated-sources/gwt/bitcoinGWT/client/BitcoinGWTServiceAsync.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart2/ChartDataConverter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/dao/ChartDataConverter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/converter/ChartDataConverter.java" />
         <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart2/ChartRangeFilterExample.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart2/ChartComponent2.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TradesEngine.java" />
       </list>
     </option>
   </component>
@@ -408,6 +336,16 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -422,280 +360,12 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="BitcoinGraph" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BitcoinGraph" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mtgox-api-v2-java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BitcoinGraph" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mtgox-api-v2-java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BitcoinGraph" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mtgox-api-v2-java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BitcoinGraph" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mtgox-api-v2-java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BitcoinGraph" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mtgox-api-v2-java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BitcoinGraph" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mtgox-api-v2-java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bitcoinGWT" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BitcoinGraph" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mtgox-api-v2-java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bitcoinGWT" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BitcoinGraph" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mtgox-api-v2-java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bitcoinGWT" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trades" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BitcoinGraph" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mtgox-api-v2-java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bitcoinGWT" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="chart2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BitcoinGraph" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mtgox-api-v2-java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bitcoinGWT" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="chart" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BitcoinGraph" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mtgox-api-v2-java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -733,15 +403,15 @@
       <recent name="C:\Users\Radu\git\mtgox-api-v2-java\src\main\java\bitcoinGWT" />
       <recent name="C:\Users\Radu\git\mtgox-api-v2-java\src\main\resources" />
     </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="bitcoinGWT.client" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Radu\git\mtgox-api-v2-java\lib" />
       <recent name="C:\Users\Radu\git\mtgox-api-v2-java\src\main\resources\res\ssl" />
       <recent name="C:\Users\Radu\git\mtgox-api-v2-java\src\main\webapp\WEB-INF" />
       <recent name="C:\Users\Radu\git\mtgox-api-v2-java\src\main\webapp" />
       <recent name="C:\Users\Radu\git\mtgox-api-v2-java\src\main\java\mtgox_api" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="bitcoinGWT.client" />
     </key>
   </component>
   <component name="RunManager" selected="GWT Configuration.BitcoinGWT - ChartsDemo2">
@@ -1087,7 +757,11 @@
       <created>1382861794801</created>
       <updated>1382861794801</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="working CandleStick Chart v.2&#10;- with zoom controls at the bottom">
+      <created>1382864187102</created>
+      <updated>1382864187102</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1115,24 +789,24 @@
     <editor active="false" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33240223" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4944134" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.273743" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26293105" sideWeight="0.21648045" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34289813" sideWeight="0.22206704" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13433908" sideWeight="0.5027933" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25215518" sideWeight="0.6675978" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18534483" sideWeight="0.50558656" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6047486" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33519554" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24497126" sideWeight="0.6913408" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1174,7 +848,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="startup CandleStick Chart v.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="working CandleStick Chart v.2&#10;- with zoom controls at the bottom" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1208,6 +882,7 @@
     <MESSAGE value="working CandleStick chart with mock data" />
     <MESSAGE value="working CandleStick chart with mock data&#10;- no zoom as of yet" />
     <MESSAGE value="startup CandleStick Chart v.2" />
+    <MESSAGE value="working CandleStick Chart v.2&#10;- with zoom controls at the bottom" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1217,261 +892,85 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/trades/TradesComponent.java">
+    <entry file="file://$PROJECT_DIR$/TODO.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="181" column="94" selection-start="6905" selection-end="7931" vertical-scroll-proportion="0.0" />
+        <state line="5" column="36" selection-start="195" selection-end="195" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/google/gwt/google-apis/gwt-visualization/1.1.2/gwt-visualization-1.1.2.jar!/com/google/gwt/visualization/client/visualizations/Visualization.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/util/UiUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="22" selection-start="1233" selection-end="1233" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1319720836000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1319720836000" expanded="true" signature="-1:-1" placeholder="{...}" />
-          </folding>
-        </state>
+        <state line="22" column="24" selection-start="620" selection-end="632" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart/CandleStickChartOptions.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/TimeInterval.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="21" selection-start="305" selection-end="2220" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1382797559215" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1382797559215" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1382797559215" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1382797559215" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1382797559215" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1382797559215" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1382797559215" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1382797559215" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1382797559215" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1382797559215" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1382797559215" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1382797559215" expanded="true" signature="-1:-1" placeholder="{...}" />
-          </folding>
-        </state>
+        <state line="11" column="12" selection-start="243" selection-end="243" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/ChartElement.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="156" column="26" selection-start="5813" selection-end="5813" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="22" column="25" selection-start="578" selection-end="590" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/AbstractMainModule.gwt.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWTService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="55" selection-start="577" selection-end="577" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="23" column="0" selection-start="808" selection-end="808" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/ChartsDemo2.gwt.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/converter/ChartDataConverter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="53" selection-start="320" selection-end="320" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="21" column="0" selection-start="528" selection-end="528" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/ChartsDemo2.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_21/src.zip!/java/util/concurrent/LinkedBlockingQueue.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="68" selection-start="1555" selection-end="1555" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1314#1591#0" expanded="true" />
-            <element signature="e#1580#1581#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="87" column="5" selection-start="2529" selection-end="2529" vertical-scroll-proportion="0.7262181" />
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/googlecode/gwt-charts/gwt-charts/0.9.9/gwt-charts-0.9.9.jar!/com/googlecode/gwt/charts/client/corechart/LineChartOptions.class">
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart2/ChartComponent2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="180" selection-end="180" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="122" column="43" selection-start="4866" selection-end="4866" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/googlecode/gwt-charts/gwt-charts/0.9.9/gwt-charts-0.9.9.jar!/com/googlecode/gwt/charts/client/corechart/LineChartOptions.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/shared/model/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="13" selection-start="1045" selection-end="1045" vertical-scroll-proportion="0.33170733">
-          <folding>
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/controls/ControlsComponent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="13" selection-start="258" selection-end="258" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="19" column="22" selection-start="642" selection-end="642" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart/CandleStickChart.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="43" selection-start="1356" selection-end="1356" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1382798952129" expanded="true" signature="2569:2985" placeholder="{...}" />
-            <marker date="1382798952129" expanded="true" signature="2682:2885" placeholder="//..." />
-            <marker date="1382798952129" expanded="true" signature="2912:2958" placeholder="{...}" />
-            <marker date="1382798952129" expanded="true" signature="3072:3150" placeholder="{...}" />
-          </folding>
-        </state>
+        <state line="32" column="13" selection-start="1326" selection-end="1326" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/googlecode/gwt-charts/gwt-charts/0.9.9/gwt-charts-0.9.9.jar!/com/googlecode/gwt/charts/client/DataTable.java">
+    <entry file="file://$PROJECT_DIR$/target/generated-sources/gwt/bitcoinGWT/client/BitcoinGWTServiceAsync.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="13" selection-start="1730" selection-end="1730" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1354745068000" expanded="true" signature="1976:2032" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="2364:2431" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="2961:3037" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="3423:3489" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="4073:4148" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="5707:5748" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="5894:5922" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="6370:6407" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="6609:6644" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="6967:7004" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="7425:7452" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="8177:8223" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="9011:9057" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="10017:10065" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="10837:10882" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="13284:13327" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="13792:13835" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="14031:14069" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="14396:14452" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="14633:14665" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="14965:15012" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="15340:15383" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="15747:15797" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="16230:16296" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="16911:16989" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="17350:17481" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="17911:18058" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="18670:18829" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="19192:19242" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="19723:19789" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="20403:20481" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="20844:20894" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="21375:21441" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="22055:22133" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="22499:22549" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="23033:23099" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="23716:23794" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="24198:24275" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="24878:24925" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="25536:25593" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="26159:26215" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="26778:26918" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="27483:27539" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="28114:28170" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="28735:28791" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="29606:29675" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="30397:30458" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="31135:31195" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="31869:32013" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="32689:32749" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="33435:33495" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="34171:34231" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="34830:34881" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="35435:35485" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="36036:36170" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="36723:36773" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="37336:37386" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="37939:37989" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="38483:38526" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="38966:39008" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="39445:39571" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="40010:40052" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="40501:40543" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="40982:41024" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="42038:42089" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="43099:43231" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="44243:44294" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="45306:45357" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="46372:46423" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="47294:47344" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="47652:47682" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="48060:48090" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="48644:48676" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="49035:49064" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="49122:49157" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="49229:49271" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="49354:49400" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="49479:49523" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="49616:49667" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="49771:49826" placeholder="{...}" />
-          </folding>
-        </state>
+        <state line="41" column="0" selection-start="1472" selection-end="1472" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart/ChartComponent.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/BitcoinGWTServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="130" column="36" selection-start="3804" selection-end="4554" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1390#1516#0" expanded="true" />
-            <element signature="e#1505#1506#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="84" column="31" selection-start="3690" selection-end="3690" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/googlecode/gwt-charts/gwt-charts/0.9.9/gwt-charts-0.9.9.jar!/com/googlecode/gwt/charts/client/options/Options.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/BitcoinGWT.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="22" selection-start="710" selection-end="710" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1354745068000" expanded="true" signature="893:921" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="976:1002" placeholder="{...}" />
-          </folding>
-        </state>
+        <state line="15" column="7" selection-start="510" selection-end="510" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/googlecode/gwt-charts/gwt-charts/0.9.9/gwt-charts-0.9.9.jar!/com/googlecode/gwt/charts/client/options/CoreOptions.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/ChartsDemo2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="45" selection-start="789" selection-end="789" vertical-scroll-proportion="-2.2905264">
-          <folding>
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1354745068000" expanded="true" signature="-1:-1" placeholder="{...}" />
-          </folding>
-        </state>
+        <state line="46" column="66" selection-start="1553" selection-end="1553" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/client/chart2/ChartRangeFilterExample.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="31" selection-start="3853" selection-end="3853" vertical-scroll-proportion="-1.1749347">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4611#4737#0" expanded="true" />
-            <element signature="e#4726#4727#0" expanded="true" />
-          </folding>
+        <state line="103" column="54" selection-start="0" selection-end="5967" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bitcoinGWT/server/ticker/TradesEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="109" column="66" selection-start="4648" selection-end="4656" vertical-scroll-proportion="2.5741324">
+          <folding />
         </state>
       </provider>
     </entry>
