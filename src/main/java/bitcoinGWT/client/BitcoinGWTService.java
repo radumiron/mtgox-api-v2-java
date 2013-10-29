@@ -1,8 +1,6 @@
 package bitcoinGWT.client;
 
-import bitcoinGWT.shared.model.Currency;
-import bitcoinGWT.shared.model.TickerFullLayoutObject;
-import bitcoinGWT.shared.model.TradesFullLayoutObject;
+import bitcoinGWT.shared.model.*;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.sencha.gxt.data.shared.loader.PagingLoadConfig;
@@ -19,9 +17,9 @@ public interface BitcoinGWTService extends RemoteService {
 
     TickerFullLayoutObject getPrice(Currency currency);
 
-    PagingLoadResult<TradesFullLayoutObject> getTradesForGrid(Currency currency, PagingLoadConfig config);
+    PagingLoadResult<TradesFullLayoutObject> getTradesForGrid(Currency currency, Long timestamp, PagingLoadConfig config);
 
-    Set<TradesFullLayoutObject> getTradesForChart(Currency currency);
+    Set<ChartElement> getTradesForChart(Currency currency, Long timestamp, boolean initialLoad, TimeInterval interval);
 
     boolean shouldLoadTradesFromServer(Currency currency);
 }

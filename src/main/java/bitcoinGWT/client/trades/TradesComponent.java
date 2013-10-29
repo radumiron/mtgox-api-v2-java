@@ -68,7 +68,7 @@ public class TradesComponent extends ContentPanel {
                     sortInfos.add(new SortInfoBean("date", SortDir.DESC));
                     loadConfig.setSortInfo(sortInfos);
                 }
-                mainService.getTradesForGrid(Currency.EUR, loadConfig, callback);
+                mainService.getTradesForGrid(Currency.EUR, null, loadConfig, callback);
 
                 if (initialLoad) {
                     initialLoad = false;

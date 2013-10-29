@@ -1,9 +1,10 @@
 package bitcoinGWT.client.chart2;
 
 import bitcoinGWT.client.util.UiUtils;
+import bitcoinGWT.shared.model.ChartElement;
 import bitcoinGWT.shared.model.Constants;
 import bitcoinGWT.shared.model.Currency;
-import bitcoinGWT.shared.model.TradesFullLayoutObject;
+import bitcoinGWT.shared.model.TimeInterval;
 import com.google.gwt.core.client.JsDate;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.Timer;
@@ -18,6 +19,7 @@ import com.googlecode.gwt.charts.client.options.Legend;
 import com.googlecode.gwt.charts.client.options.LegendPosition;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Set;
 
 public class ChartComponent2 extends DockLayoutPanel {
@@ -27,6 +29,9 @@ public class ChartComponent2 extends DockLayoutPanel {
     private DataTable data;
     private ChartRangeFilterStateRange stateRange;
     private Timer timer;
+    private Long timeOfLastTrade = null;
+
+    private boolean initialLoad = true;
 
     public ChartComponent2() {
         super(Unit.PX);
@@ -57,7 +62,7 @@ public class ChartComponent2 extends DockLayoutPanel {
 
     private ChartWrapper<CandlestickChartOptions> getCandlestickChart() {
         if (candlestickChart == null) {
-            candlestickChart = new ChartWrapper<>();
+            candlestickChart = new ChartWrapper<CandlestickChartOptions>();
             candlestickChart.setChartType(ChartType.CANDLESTICK);
         }
         return candlestickChart;
@@ -116,30 +121,51 @@ public class ChartComponent2 extends DockLayoutPanel {
     }
 
     private void setServerData() {
-        //set range to time of first server element
-        //stateRange.setStart(new Date((long) JsDate.create(2012, 2, 9).getTime()));
+        System.out.println(new Date() + ": get chart elements");
 
-        //todo see performance improvement if I am to change here the method to return ChartElement instead of TradesFullLayout - the convert to happen on the server side
-        UiUtils.getAsyncService().getTradesForChart(Currency.EUR, new AsyncCallback<Set<TradesFullLayoutObject>>() {
+        //the first time this happens, initialLoad = true, timeOfLastTrade = null.
+        UiUtils.getAsyncService().getTradesForChart(Currency.EUR, timeOfLastTrade, initialLoad, TimeInterval.TEN_MINUTES, new AsyncCallback<Set<ChartElement>>() {
             @Override
             public void onFailure(Throwable caught) {
                 //To change body of implemented methods use File | Settings | File Templates.
             }
 
             @Override
-            public void onSuccess(Set<TradesFullLayoutObject> result) {
-                data.addRows(result.size());
+            public void onSuccess(Set<ChartElement> result) {
+                System.out.println(new Date() + ": received " + result.size() + " chart elements");
+                if (initialLoad) {  //set the initial load to false, we just want diffs right now.
+                    initialLoad = false;
+                }
+
                 //data.setValue(row_id, low, open, close, high)
-                data.setValue(0, 0, new Date((long) JsDate.create(2012, 2, 9).getTime()));
-                data.setValue(0, 1, 20);
-                data.setValue(0, 2, 28);
-                data.setValue(0, 3, 38);
-                data.setValue(0, 4, 45);
+                Iterator<ChartElement> it = result.iterator();
+                while (it.hasNext()) {
+                    ChartElement trade = it.next();
+                    int currentRow = data.getNumberOfRows();
+                    data.addRow();
+                    data.setValue(currentRow, 0, trade.getElementDate().getEnd());
+                    data.setValue(currentRow, 1, trade.getLow());
+                    data.setValue(currentRow, 2, trade.getOpen());
+                    data.setValue(currentRow, 3, trade.getClose());
+                    data.setValue(currentRow, 4, trade.getHigh());
+
+                    //check if the current chart element is the last
+                    if (!it.hasNext()) {
+                        //save the time of the last trade item
+                        timeOfLastTrade = trade.getTimeOfLastTrade().getTime();
+                    }
+                }
+
+                //in case there were no trades, set the timeOfLastTrade to current time
+                /*if (result.isEmpty()) {
+                    timeOfLastTrade = new Date().getTime();
+                }*/
 
                 dashboard.draw(data);
 
                 //call the server again, after an interval.
                 startTimer();
+                System.out.println();
             }
         });
     }
@@ -152,30 +178,7 @@ public class ChartComponent2 extends DockLayoutPanel {
                 setServerData();
             }
         };
-        timer.schedule(Constants.INITIAL_UI_TRADES_DELAY);
+        timer.schedule(Constants.TRADES_RETRIEVAL_INTERVAL);
         //timer.scheduleRepeating(Constants.TRADES_RETRIEVAL_INTERVAL);
-    }
-
-    public void refreshChart(){
-        int originalRows = data.getNumberOfRows();
-        data.addRows(1);
-
-        double open, close = 300;
-        double low, high;
-        double change = (Math.sin(originalRows / 2.5 + Math.PI) + Math.sin(originalRows / 3) - Math.cos(originalRows * 0.7)) * 150;
-        change = change >= 0 ? change + 10 : change - 10;
-        open = close;
-        close = Math.max(50, open + change);
-        low = Math.min(open, close) - (Math.cos(originalRows * 1.7) + 1) * 15;
-        low = Math.max(0, low);
-        high = Math.max(open, close) + (Math.cos(originalRows * 1.3) + 1) * 15;
-        Date date = new Date((long) JsDate.create(2012, 1, originalRows).getTime());
-        data.setValue(originalRows, 0, date);
-        data.setValue(originalRows, 1, low);
-        data.setValue(originalRows, 2, open);
-        data.setValue(originalRows, 3, close);
-        data.setValue(originalRows, 4, high);
-
-        dashboard.draw(data);
     }
 }

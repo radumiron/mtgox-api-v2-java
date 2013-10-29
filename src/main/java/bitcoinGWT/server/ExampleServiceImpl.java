@@ -52,7 +52,7 @@ public class ExampleServiceImpl extends RemoteServiceServlet implements ExampleS
         Random random = new Random();
         int tradesSize = random.nextInt(2);
 
-        List<TradesFullLayoutObject> trades = new ArrayList<>(tradesEngine.getTrades(Currency.EUR, initialLoad));
+        List<TradesFullLayoutObject> trades = new ArrayList<>(tradesEngine.getTrades(Currency.EUR, null, initialLoad));
 
         for (SortInfo sortField : config.getSortInfo()) {
             Comparator<TradesFullLayoutObject> comparator = getComparator(sortField);

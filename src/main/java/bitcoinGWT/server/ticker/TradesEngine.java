@@ -22,39 +22,33 @@ public class TradesEngine extends AbstractTradeEngine {
 
     private Long previousTimestamp;
 
-    private LinkedBlockingQueue<TradesFullLayoutObject> lastLoadedTrades = new LinkedBlockingQueue<>();
-    private LinkedBlockingQueue<TradesFullLayoutObject> allLoadedTrades = new LinkedBlockingQueue<>(TRADES_SIZE);
-    private LinkedBlockingQueue<TradesFullLayoutObject> copyOfLastLoadedTrades = new LinkedBlockingQueue<>();
-
-    private int loadedTradesListSize;
+    private LinkedHashMap<Long, TradesFullLayoutObject> allLoadedTrades;
 
     private boolean shouldLoadTrades;
+
+    public TradesEngine() {
+        allLoadedTrades = new LinkedHashMap<Long, TradesFullLayoutObject>() {
+            @Override
+            protected boolean removeEldestEntry(Map.Entry<Long, TradesFullLayoutObject> eldest) {
+                return size() > TRADES_SIZE;
+            }
+        };
+    }
 
     @Override
     protected void executeTradeTask() {
         List<TradesFullLayoutObject> sortedTrades = new ArrayList<>(trade.getTrades(Currency.EUR, getPreviousTimestamp()));
-        Collections.sort(sortedTrades, new Comparator<TradesFullLayoutObject>() {
-            @Override
-            public int compare(TradesFullLayoutObject o1, TradesFullLayoutObject o2) {
-                //return the trades in a decreasing order - newest first.
-                return o1.getDate().compareTo(o2.getDate());
+
+        if (sortedTrades.size() > 0) {
+            //put the current trades at the current timestamp
+
+            for (TradesFullLayoutObject trade : sortedTrades) {
+                System.out.println("trade size=" + RamUsageEstimator.humanSizeOf(trade) + "," + trade);
+                //add each trade to the map. Because the map holds only the last TRADES_SIZE, this method will also remove the oldest entries.
+                allLoadedTrades.put(trade.getTradeId(), trade);
             }
-        });
-        lastLoadedTrades.clear();
-        lastLoadedTrades.addAll(sortedTrades);
 
-        for (TradesFullLayoutObject trade : lastLoadedTrades) {
-            System.out.println("trade size=" + RamUsageEstimator.humanSizeOf(trade) + "," + trade);
-            //add each trade to the map. Because the map holds only the last TRADES_SIZE, this method will also remove the oldest entries.
-            addTrade(trade);
-        }
-
-        if (lastLoadedTrades.size() > 0) {
-            //add the new elements to the copy
-            copyOfLastLoadedTrades.addAll(lastLoadedTrades);
-
-            System.out.println(new Date() + " new trades loaded, size of loaded trades=" + lastLoadedTrades.size());
-            loadedTradesListSize = lastLoadedTrades.size();
+            System.out.println(new Date() + " new trades loaded, size of loaded trades=" + sortedTrades.size());
             //in case the list downloaded is NOT empty, mark that all who will ask for trades will be able to download the new list
             shouldLoadTrades = true;
         } else {
@@ -65,7 +59,7 @@ public class TradesEngine extends AbstractTradeEngine {
         System.out.println();
     }
 
-    private void addTrade(TradesFullLayoutObject trade) {
+   /* private void addTrade(TradesFullLayoutObject trade) {
         if (allLoadedTrades.isEmpty()) {
             allLoadedTrades.add(trade);
         } else {
@@ -76,7 +70,7 @@ public class TradesEngine extends AbstractTradeEngine {
                 allLoadedTrades.offer(trade);
             }
         }
-    }
+    }*/
 
     @Override
     protected int getTimerInterval() {
@@ -107,35 +101,34 @@ public class TradesEngine extends AbstractTradeEngine {
         return calendar.getTimeInMillis();
     }
 
-    public Set<TradesFullLayoutObject> getTrades(Currency currency, boolean initialLoad, boolean blockingCall) {
+    public Set<TradesFullLayoutObject> getTrades(Currency currency, Long timestamp, boolean initialLoad) {
         if (initialLoad) {  //in case the client doesn't have any trades yet, give him all the trades
             return getAllTrades();
         } else {    //in case the client already has the initial trades, he loads just what what he doesn't yet have
-            if (blockingCall) {
-                //create a copy
+            List<TradesFullLayoutObject> lastTradesList = new ArrayList<>();
 
-                LinkedHashSet<TradesFullLayoutObject> lastTradesSet = new LinkedHashSet<>();
-                //while the copy is not empty, parse it
-                do {
-                    try {
-                        //try to take one element at a time; if there are elements, they will be added to the result set
-                        //if there aren't any elements,
-                        lastTradesSet.add(copyOfLastLoadedTrades.take());
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    }
-                } while (!copyOfLastLoadedTrades.isEmpty());
-
-                return lastTradesSet;
-
+            Date clientDate;
+            if (timestamp == null) {
+                System.out.println(new Date() + ": WARNING, the client wants to retrieve trades without supplying a timestamp");
+                clientDate = new Date();
+            } else {
+                clientDate = new Date(timestamp);   //initialize the date coming from the customer
             }
-            LinkedHashSet<TradesFullLayoutObject> lastTradesSet = new LinkedHashSet<>(lastLoadedTrades);
-            return lastTradesSet;
-        }
-    }
 
-    public Set<TradesFullLayoutObject> getTrades(Currency currency, boolean initialLoad) {
-        return getTrades(currency, initialLoad, false);
+            //first, make a copy of the allTrades
+            Map<Long, TradesFullLayoutObject> copyOfAllLoadedTrades = new LinkedHashMap<>(allLoadedTrades);
+            //todo find a better way to retrieve chronological data
+            for (Map.Entry<Long, TradesFullLayoutObject> entry : copyOfAllLoadedTrades.entrySet()) {
+                Date tradeDate = entry.getValue().getDate();
+                if (tradeDate.after(clientDate)) { //if the trade is after what the customer has
+                    lastTradesList.add(entry.getValue());
+                }
+            }
+
+            //reverse the trades diff
+            Collections.reverse(lastTradesList);
+            return new HashSet<>(lastTradesList);
+        }
     }
 
     public boolean shouldLoadTradesFromServer(Currency currency) {
@@ -145,18 +138,10 @@ public class TradesEngine extends AbstractTradeEngine {
     private Set<TradesFullLayoutObject> getAllTrades() {
         LinkedHashSet<TradesFullLayoutObject> result = new LinkedHashSet<>();
         //first copy the map
-        List<TradesFullLayoutObject> allTradesCopy = new ArrayList<>(allLoadedTrades);
+        List<TradesFullLayoutObject> allTradesCopy = new ArrayList<>(allLoadedTrades.values());
         //reverse the result list in order to have it "oldest first"
         Collections.reverse(allTradesCopy);
-        result.addAll(allLoadedTrades);
+        result.addAll(allTradesCopy);
         return result;
-    }
-
-    private Date getOldestTradeDate() {
-        //return new Date(System.currentTimeMillis() - INITIAL_TRADES_INTERVAL);
-        return new Date(System.currentTimeMillis() - 1 *  60 * 60 * 1000);
-        /*Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.HOUR_OF_DAY, -6);
-        Date date = calendar.getTime();*/
     }
 }

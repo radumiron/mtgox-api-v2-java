@@ -3,3 +3,13 @@ Chart functionality=
 - split into 10 minutes candles
 - buttons to zoom per 1h, 6h, 1d, 3d, 1w, 2w, 1m, 3m, 6m
 - selecting a candle will display all the trades in that period
+
+
+- add unit tests to verify:
+    - ChartDataConverter.get10MinutesChartElements
+    - ChartDataConverter.get1HourChartElements
+
+
+!attention:
+- when adding new trades to the chart, they might not match with the already drawn chart. This is because some trade might fall in the 10 minutes
+interval which was already drawn on the chart.

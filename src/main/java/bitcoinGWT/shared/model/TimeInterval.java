@@ -1,5 +1,7 @@
 package bitcoinGWT.shared.model;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Radu
@@ -7,7 +9,7 @@ package bitcoinGWT.shared.model;
  * Time: 8:40 PM
  * To change this template use File | Settings | File Templates.
  */
-public enum TimeInterval {
+public enum TimeInterval implements IsSerializable{
     TEN_MINUTES,
     ONE_HOUR
 }

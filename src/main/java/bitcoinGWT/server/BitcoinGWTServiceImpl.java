@@ -2,9 +2,9 @@ package bitcoinGWT.server;
 
 import bitcoinGWT.server.ticker.TickerEngine;
 import bitcoinGWT.server.ticker.TradesEngine;
+import bitcoinGWT.shared.model.*;
 import bitcoinGWT.shared.model.Currency;
-import bitcoinGWT.shared.model.TickerFullLayoutObject;
-import bitcoinGWT.shared.model.TradesFullLayoutObject;
+import bitcoinGWT.server.converter.ChartDataConverter;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import bitcoinGWT.client.BitcoinGWTService;
 import com.sencha.gxt.data.shared.SortDir;
@@ -52,9 +52,9 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
     }
 
     @Override
-    public PagingLoadResult<TradesFullLayoutObject> getTradesForGrid(Currency currency, PagingLoadConfig config) {
+    public PagingLoadResult<TradesFullLayoutObject> getTradesForGrid(Currency currency, Long timestamp, PagingLoadConfig config) {
         //always take the whole list of retrieved trades: we will return to the UI just part of it, according to the PagingLoadConfig
-        List<TradesFullLayoutObject> trades = new ArrayList<>(tradesEngine.getTrades(Currency.EUR, true));
+        List<TradesFullLayoutObject> trades = new ArrayList<>(tradesEngine.getTrades(Currency.EUR, timestamp, true));
 
         for (SortInfo sortField : config.getSortInfo()) {
             Comparator<TradesFullLayoutObject> comparator = getComparator(sortField);
@@ -81,8 +81,16 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
 
 
     @Override
-    public Set<TradesFullLayoutObject> getTradesForChart(Currency currency) {
-        return tradesEngine.getTrades(Currency.EUR, true);
+    public Set<ChartElement> getTradesForChart(Currency currency, Long timestamp, boolean initialLoad, TimeInterval interval) {
+        switch (interval) {
+            default:
+            case TEN_MINUTES:
+                System.out.println(new Date() + ": get chart elements split per 10 minutes");
+                return ChartDataConverter.get10MinutesChartElements(tradesEngine.getTrades(Currency.EUR, timestamp, initialLoad));
+            case ONE_HOUR:
+                System.out.println(new Date() + ": get chart elements split per 1 hour");
+                return ChartDataConverter.get1HourChartElements(tradesEngine.getTrades(Currency.EUR, timestamp, initialLoad));
+        }
     }
 
     @Override
