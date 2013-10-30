@@ -18,9 +18,17 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class ChartDataConverter {
 
     public static Set<ChartElement> get10MinutesChartElements(Set<TradesFullLayoutObject> tradesResult) {
+        return convert(tradesResult, TimeInterval.TEN_MINUTES);
+    }
+
+    public static Set<ChartElement> get1HourChartElements(Set<TradesFullLayoutObject> tradesResult) {
+        return convert(tradesResult, TimeInterval.ONE_HOUR);
+    }
+
+    private static Set<ChartElement> convert(Set<TradesFullLayoutObject> tradesResult, TimeInterval timeInterval) {
         Set<ChartElement> result = new LinkedHashSet<>();
         System.out.println(new Date() + ": converting " + tradesResult.size() + " trade items");
-        Map<TimeWindow, LinkedList<TradesFullLayoutObject>> partialResults = getPartialResults(new ConcurrentLinkedQueue<>(tradesResult), 10);
+        Map<TimeWindow, LinkedList<TradesFullLayoutObject>> partialResults = getPartialResults(new ConcurrentLinkedQueue<>(tradesResult), timeInterval.getMinutes());
         for (Map.Entry<TimeWindow, LinkedList<TradesFullLayoutObject>> entry : partialResults.entrySet()) {
             if (entry.getValue() != null && !entry.getValue().isEmpty()) {
                 double open, close, amount = 0; //initialize the values of the chart element
@@ -49,53 +57,12 @@ public class ChartDataConverter {
                 }
 
                 //now we have all values, create the chart element
-                ChartElement element = new ChartElement(open, close, low, high, amount, entry.getKey(), timeOfLastTrade, TimeInterval.TEN_MINUTES);
+                ChartElement element = new ChartElement(open, close, low, high, amount, entry.getKey(), timeOfLastTrade, timeInterval);
                 result.add(element);
             }
 
         }
         System.out.println(new Date() + ": converted " + tradesResult.size() + " trade items into " + result.size() + " chart elements");
-        return result;
-    }
-
-    public static Set<ChartElement> get1HourChartElements(Set<TradesFullLayoutObject> tradesResult) {
-        Set<ChartElement> result = new LinkedHashSet<>();
-
-        Map<TimeWindow, LinkedList<TradesFullLayoutObject>> partialResults = getPartialResults(new ConcurrentLinkedQueue<>(tradesResult), 60);
-        for (Map.Entry<TimeWindow, LinkedList<TradesFullLayoutObject>> entry : partialResults.entrySet()) {
-            if (entry.getValue() != null && !entry.getValue().isEmpty()) {
-                double open, close, amount = 0; //initialize the values of the chart element
-                double low = Double.POSITIVE_INFINITY;
-                double high = Double.NEGATIVE_INFINITY;
-                //open value is the price of the first element
-                open = entry.getValue().getFirst().getPrice();
-
-                //close value is the price of the last element
-                close = entry.getValue().getFirst().getPrice();
-
-                //time of the last trade
-                Date timeOfLastTrade = new Date(0);
-
-                //find out Max/Min values
-                for (TradesFullLayoutObject trade : entry.getValue()) {
-                    //low is the lowest value from the interval (originally +infinity)
-                    low = Math.min(low, trade.getPrice());
-                    //high is the lowest value from the interval (originally -infinity)
-                    high = Math.max(high, trade.getPrice());
-
-                    //add the current trade amount to the total trade count
-                    amount += trade.getAmount();
-
-                    timeOfLastTrade = new Date(Math.max(timeOfLastTrade.getTime(), trade.getDate().getTime()));
-                }
-
-                //now we have all values, create the chart element
-                ChartElement element = new ChartElement(open, close, low, high, amount, entry.getKey(), timeOfLastTrade, TimeInterval.TEN_MINUTES);
-                result.add(element);
-            }
-
-        }
-
         return result;
     }
 

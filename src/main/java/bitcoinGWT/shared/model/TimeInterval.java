@@ -10,6 +10,21 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * To change this template use File | Settings | File Templates.
  */
 public enum TimeInterval implements IsSerializable{
-    TEN_MINUTES,
-    ONE_HOUR
+
+    TEN_MINUTES(10),
+    ONE_HOUR(60);
+
+    private int minutes;
+
+    private TimeInterval() {
+    }
+
+    TimeInterval(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
 }

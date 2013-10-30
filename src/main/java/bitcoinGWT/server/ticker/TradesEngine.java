@@ -127,7 +127,7 @@ public class TradesEngine extends AbstractTradeEngine {
 
             //reverse the trades diff
             Collections.reverse(lastTradesList);
-            return new HashSet<>(lastTradesList);
+            return new LinkedHashSet<>(lastTradesList);
         }
     }
 

@@ -143,7 +143,7 @@ public class ChartComponent2 extends DockLayoutPanel {
                     ChartElement trade = it.next();
                     int currentRow = data.getNumberOfRows();
                     data.addRow();
-                    data.setValue(currentRow, 0, trade.getElementDate().getEnd());
+                    data.setValue(currentRow, 0, trade.getTimeOfLastTrade());
                     data.setValue(currentRow, 1, trade.getLow());
                     data.setValue(currentRow, 2, trade.getOpen());
                     data.setValue(currentRow, 3, trade.getClose());
@@ -155,11 +155,6 @@ public class ChartComponent2 extends DockLayoutPanel {
                         timeOfLastTrade = trade.getTimeOfLastTrade().getTime();
                     }
                 }
-
-                //in case there were no trades, set the timeOfLastTrade to current time
-                /*if (result.isEmpty()) {
-                    timeOfLastTrade = new Date().getTime();
-                }*/
 
                 dashboard.draw(data);
 
@@ -179,6 +174,28 @@ public class ChartComponent2 extends DockLayoutPanel {
             }
         };
         timer.schedule(Constants.TRADES_RETRIEVAL_INTERVAL);
-        //timer.scheduleRepeating(Constants.TRADES_RETRIEVAL_INTERVAL);
+    }
+
+    public void refreshChart(){
+        int originalRows = data.getNumberOfRows();
+        data.addRows(1);
+
+        double open, close = 300;
+        double low, high;
+        double change = (Math.sin(originalRows / 2.5 + Math.PI) + Math.sin(originalRows / 3) - Math.cos(originalRows * 0.7)) * 150;
+        change = change >= 0 ? change + 10 : change - 10;
+        open = close;
+        close = Math.max(50, open + change);
+        low = Math.min(open, close) - (Math.cos(originalRows * 1.7) + 1) * 15;
+        low = Math.max(0, low);
+        high = Math.max(open, close) + (Math.cos(originalRows * 1.3) + 1) * 15;
+        Date date = new Date((long) JsDate.create(2012, 1, originalRows).getTime());
+        data.setValue(originalRows, 0, date);
+        data.setValue(originalRows, 1, low);
+        data.setValue(originalRows, 2, open);
+        data.setValue(originalRows, 3, close);
+        data.setValue(originalRows, 4, high);
+
+        dashboard.draw(data);
     }
 }
