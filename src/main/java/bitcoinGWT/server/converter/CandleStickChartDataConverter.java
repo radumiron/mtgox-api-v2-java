@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Time: 12:45 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ChartDataConverter {
+public class CandleStickChartDataConverter {
 
     public static Set<ChartElement> get10MinutesChartElements(Set<TradesFullLayoutObject> tradesResult) {
         return convert(tradesResult, TimeInterval.TEN_MINUTES);

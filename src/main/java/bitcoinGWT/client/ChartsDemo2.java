@@ -7,7 +7,7 @@ package bitcoinGWT.client;
  * Time: 9:49 AM
  * To change this template use File | Settings | File Templates.
  */
-import bitcoinGWT.client.chart2.ChartRangeFilterExample;
+import bitcoinGWT.client.candlestick_chart.ChartRangeFilterExample;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;

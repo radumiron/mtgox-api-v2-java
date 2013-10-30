@@ -2,20 +2,14 @@ package bitcoinGWT.client;
 
 import bitcoinGWT.client.chart.CandleStickChart;
 import bitcoinGWT.client.chart.ChartComponent;
-import bitcoinGWT.client.chart2.ChartComponent2;
-import bitcoinGWT.client.chart2.ChartRangeFilterExample;
+import bitcoinGWT.client.candlestick_chart.ChartComponent2;
 import bitcoinGWT.client.controls.ControlsComponent;
 import bitcoinGWT.client.ticker.TickerComponent;
 import bitcoinGWT.client.trades.TradesComponent;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.visualization.client.VisualizationUtils;
-import com.google.gwt.visualization.client.visualizations.corechart.PieChart;
 import com.googlecode.gwt.charts.client.ChartLoader;
 import com.googlecode.gwt.charts.client.ChartPackage;
 import com.sencha.gxt.core.client.util.Margins;
-import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.container.*;
 
 /**

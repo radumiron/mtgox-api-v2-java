@@ -55,7 +55,7 @@ public class ChartComponent extends ContentPanel {
             }
         };
         //timer.schedule(Constants.INITIAL_UI_TRADES_DELAY);
-        timer.scheduleRepeating(Constants.TRADES_RETRIEVAL_INTERVAL);
+        timer.scheduleRepeating(Constants.CANDLESTICK_CHART_TRADES_RETRIEVAL_INTERVAL);
     }
 
     private SelectHandler createSelectHandler(final CandleStickChart chart) {

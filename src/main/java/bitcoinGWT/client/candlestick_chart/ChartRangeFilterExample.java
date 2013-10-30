@@ -1,4 +1,4 @@
-package bitcoinGWT.client.chart2;
+package bitcoinGWT.client.candlestick_chart;
 
 import java.util.Date;
 
@@ -15,9 +15,6 @@ import com.googlecode.gwt.charts.client.controls.filter.ChartRangeFilterState;
 import com.googlecode.gwt.charts.client.controls.filter.ChartRangeFilterStateRange;
 import com.googlecode.gwt.charts.client.controls.filter.ChartRangeFilterUi;
 import com.googlecode.gwt.charts.client.corechart.CandlestickChartOptions;
-import com.googlecode.gwt.charts.client.event.SelectEvent;
-import com.googlecode.gwt.charts.client.event.SelectHandler;
-import com.googlecode.gwt.charts.client.options.Animation;
 import com.googlecode.gwt.charts.client.options.ChartArea;
 import com.googlecode.gwt.charts.client.options.Legend;
 import com.googlecode.gwt.charts.client.options.LegendPosition;
@@ -133,7 +130,7 @@ public class ChartRangeFilterExample extends DockLayoutPanel {
             }
         };
         //timer.schedule(Constants.INITIAL_UI_TRADES_DELAY);
-        timer.scheduleRepeating(Constants.TRADES_RETRIEVAL_INTERVAL);
+        timer.scheduleRepeating(Constants.CANDLESTICK_CHART_TRADES_RETRIEVAL_INTERVAL);
     }
 
     public void refreshChart(){

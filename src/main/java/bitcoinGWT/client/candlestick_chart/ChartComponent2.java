@@ -1,4 +1,4 @@
-package bitcoinGWT.client.chart2;
+package bitcoinGWT.client.candlestick_chart;
 
 import bitcoinGWT.client.util.UiUtils;
 import bitcoinGWT.shared.model.ChartElement;
@@ -36,6 +36,11 @@ public class ChartComponent2 extends DockLayoutPanel {
     public ChartComponent2() {
         super(Unit.PX);
         initialize();
+
+        //trigger the chat init before the timer
+        setServerData();
+
+        //start the timer
         startTimer();
     }
 
@@ -79,9 +84,11 @@ public class ChartComponent2 extends DockLayoutPanel {
         // Set control options
         ChartRangeFilterOptions chartRangeFilterOptions = ChartRangeFilterOptions.create();
         chartRangeFilterOptions.setFilterColumnIndex(0); // Filter by the date axis
+
         CandlestickChartOptions controlChartOptions = CandlestickChartOptions.create();
         controlChartOptions.setHeight(100);
         controlChartOptions.setEnableInteractivity(true);
+
         ChartArea chartArea = ChartArea.create();
         chartArea.setWidth("90%");
         chartArea.setHeight("90%");
@@ -95,8 +102,10 @@ public class ChartComponent2 extends DockLayoutPanel {
         chartRangeFilterOptions.setUi(chartRangeFilterUi);
 
         stateRange = ChartRangeFilterStateRange.create();
+        //todo use the below to modify the filter range window size
         //stateRange.setStart(new Date((long) JsDate.create(2012, 2, 9).getTime()));
         //stateRange.setEnd(new Date((long) JsDate.create(2012, 3, 20).getTime()));
+
         ChartRangeFilterState controlState = ChartRangeFilterState.create();
         controlState.setRange(stateRange);
         numberRangeFilter.setState(controlState);
@@ -173,7 +182,7 @@ public class ChartComponent2 extends DockLayoutPanel {
                 setServerData();
             }
         };
-        timer.schedule(Constants.TRADES_RETRIEVAL_INTERVAL);
+        timer.schedule(Constants.CANDLESTICK_CHART_TRADES_RETRIEVAL_INTERVAL);
     }
 
     public void refreshChart(){

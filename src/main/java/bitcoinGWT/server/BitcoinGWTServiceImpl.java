@@ -1,10 +1,10 @@
 package bitcoinGWT.server;
 
+import bitcoinGWT.server.converter.CandleStickChartDataConverter;
 import bitcoinGWT.server.ticker.TickerEngine;
 import bitcoinGWT.server.ticker.TradesEngine;
 import bitcoinGWT.shared.model.*;
 import bitcoinGWT.shared.model.Currency;
-import bitcoinGWT.server.converter.ChartDataConverter;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import bitcoinGWT.client.BitcoinGWTService;
 import com.sencha.gxt.data.shared.SortDir;
@@ -86,10 +86,10 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
             default:
             case TEN_MINUTES:
                 System.out.println(new Date() + ": get chart elements split per 10 minutes");
-                return ChartDataConverter.get10MinutesChartElements(tradesEngine.getTrades(Currency.EUR, timestamp, initialLoad));
+                return CandleStickChartDataConverter.get10MinutesChartElements(tradesEngine.getTrades(Currency.EUR, timestamp, initialLoad));
             case ONE_HOUR:
                 System.out.println(new Date() + ": get chart elements split per 1 hour");
-                return ChartDataConverter.get1HourChartElements(tradesEngine.getTrades(Currency.EUR, timestamp, initialLoad));
+                return CandleStickChartDataConverter.get1HourChartElements(tradesEngine.getTrades(Currency.EUR, timestamp, initialLoad));
         }
     }
 

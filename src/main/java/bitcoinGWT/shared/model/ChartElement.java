@@ -1,6 +1,5 @@
 package bitcoinGWT.shared.model;
 
-import bitcoinGWT.server.converter.ChartDataConverter;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 import java.util.Date;
