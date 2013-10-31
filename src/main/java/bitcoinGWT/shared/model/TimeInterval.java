@@ -12,7 +12,10 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public enum TimeInterval implements IsSerializable{
 
     TEN_MINUTES(10),
-    ONE_HOUR(60);
+    HALF_HOUR(30),
+    ONE_HOUR(60),
+    THREE_HOURS(3 * 60),
+    SIX_HOURS(6 * 60);
 
     private int minutes;
 

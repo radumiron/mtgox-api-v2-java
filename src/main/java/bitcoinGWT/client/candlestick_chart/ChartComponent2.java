@@ -146,13 +146,16 @@ public class ChartComponent2 extends DockLayoutPanel {
                     initialLoad = false;
                 }
 
+                //hold a reference to the last trade
+                ChartElement lastTrade = null;
+
                 //data.setValue(row_id, low, open, close, high)
                 Iterator<ChartElement> it = result.iterator();
                 while (it.hasNext()) {
                     ChartElement trade = it.next();
                     int currentRow = data.getNumberOfRows();
                     data.addRow();
-                    data.setValue(currentRow, 0, trade.getTimeOfLastTrade());
+                    data.setValue(currentRow, 0, getChartElementEndDate(trade));
                     data.setValue(currentRow, 1, trade.getLow());
                     data.setValue(currentRow, 2, trade.getOpen());
                     data.setValue(currentRow, 3, trade.getClose());
@@ -161,8 +164,13 @@ public class ChartComponent2 extends DockLayoutPanel {
                     //check if the current chart element is the last
                     if (!it.hasNext()) {
                         //save the time of the last trade item
-                        timeOfLastTrade = trade.getTimeOfLastTrade().getTime();
+                        lastTrade = trade;
                     }
+                }
+
+                if (lastTrade != null) {
+                    timeOfLastTrade = lastTrade.getTimeOfLastTrade().getTime();
+                    createChartRangeWindow(lastTrade, TimeInterval.THREE_HOURS);
                 }
 
                 dashboard.draw(data);
@@ -172,6 +180,31 @@ public class ChartComponent2 extends DockLayoutPanel {
                 System.out.println();
             }
         });
+    }
+
+    private void createChartRangeWindow(ChartElement lastTrade, TimeInterval interval) {
+        //take the values of the current chart range
+        Date currentStart = stateRange.getStartDate();
+        Date currentEnd = stateRange.getEndDate();
+
+        if (currentStart == null && currentEnd == null) {
+            stateRange.setStart(new Date(getChartElementEndDate(lastTrade).getTime() - (interval.getMinutes() * 60 * 1000)));
+            stateRange.setEnd(getChartElementEndDate(lastTrade));
+        } else {
+            //calculate the difference between new trade time and current time
+            long timeDifference = getChartElementEndDate(lastTrade).getTime() - currentEnd.getTime();
+
+            //we have to "shift" the new window to display the last trade
+
+            //the new start is the old start + time Difference
+            stateRange.setStart(new Date(currentStart.getTime() + timeDifference));
+            //the new end is the time of the last trade
+            stateRange.setEnd(lastTrade.getTimeOfLastTrade());
+        }
+    }
+
+    private Date getChartElementEndDate(ChartElement chartElement) {
+        return chartElement.getElementDate().getStart();
     }
 
     private void startTimer() {
