@@ -5,8 +5,11 @@ import bitcoinGWT.shared.model.ChartElement;
 import bitcoinGWT.shared.model.Constants;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.TimeInterval;
+import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.core.client.JsDate;
+import com.google.gwt.core.client.JsonUtils;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
@@ -14,9 +17,7 @@ import com.googlecode.gwt.charts.client.*;
 import com.googlecode.gwt.charts.client.controls.Dashboard;
 import com.googlecode.gwt.charts.client.controls.filter.*;
 import com.googlecode.gwt.charts.client.corechart.CandlestickChartOptions;
-import com.googlecode.gwt.charts.client.options.ChartArea;
-import com.googlecode.gwt.charts.client.options.Legend;
-import com.googlecode.gwt.charts.client.options.LegendPosition;
+import com.googlecode.gwt.charts.client.options.*;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -26,7 +27,7 @@ public class ChartComponent2 extends DockLayoutPanel {
     private Dashboard dashboard;
     private ChartWrapper<CandlestickChartOptions> candlestickChart;
     private ChartRangeFilter numberRangeFilter;
-    private DataTable data;
+    private CustomDataTable data;
     private ChartRangeFilterStateRange stateRange;
     private Timer timer;
     private Long timeOfLastTrade = null;
@@ -97,14 +98,19 @@ public class ChartComponent2 extends DockLayoutPanel {
         ChartRangeFilterUi chartRangeFilterUi = ChartRangeFilterUi.create();
         chartRangeFilterUi.setChartType(ChartType.CANDLESTICK);
         chartRangeFilterUi.setChartOptions(controlChartOptions);
-        //chartRangeFilterUi.setMinRangeSize(2 * 24 * 60 * 60 * 1000); // 2 days in milliseconds
+        chartRangeFilterUi.setMinRangeSize(TimeInterval.ONE_HOUR.getMinutes() * 60 * 1000); //one hour
 
+
+        //set the lines in the chart control
+        //0 - date axis
+        //1,2,3,4 = low, open, close, high
+        JsArrayString stringArray = JsonUtils.unsafeEval("{\n" +
+                "           'columns': [0, 2, 3]\n" +
+                "         }");
+        chartRangeFilterUi.setChartView(stringArray);
         chartRangeFilterOptions.setUi(chartRangeFilterUi);
 
         stateRange = ChartRangeFilterStateRange.create();
-        //todo use the below to modify the filter range window size
-        //stateRange.setStart(new Date((long) JsDate.create(2012, 2, 9).getTime()));
-        //stateRange.setEnd(new Date((long) JsDate.create(2012, 3, 20).getTime()));
 
         ChartRangeFilterState controlState = ChartRangeFilterState.create();
         controlState.setRange(stateRange);
@@ -115,15 +121,17 @@ public class ChartComponent2 extends DockLayoutPanel {
         CandlestickChartOptions lineChartOptions = CandlestickChartOptions.create();
         lineChartOptions.setLegend(Legend.create(LegendPosition.NONE));
         lineChartOptions.setChartArea(chartArea);
+        setChartTooltip(lineChartOptions);
         candlestickChart.setOptions(lineChartOptions);
 
         //create the data table
-        data = DataTable.create();
+        data = CustomDataTable.create();
         data.addColumn(ColumnType.DATETIME);
         data.addColumn(ColumnType.NUMBER);
         data.addColumn(ColumnType.NUMBER);
         data.addColumn(ColumnType.NUMBER);
         data.addColumn(ColumnType.NUMBER);
+        data.addTooltipColumn(data, true);
 
         // Draw the chart
         dashboard.bind(numberRangeFilter, candlestickChart);
@@ -160,6 +168,7 @@ public class ChartComponent2 extends DockLayoutPanel {
                     data.setValue(currentRow, 2, trade.getOpen());
                     data.setValue(currentRow, 3, trade.getClose());
                     data.setValue(currentRow, 4, trade.getHigh());
+                    data.setValue(currentRow, 5, getTooltipFromChartElement(trade));
 
                     //check if the current chart element is the last
                     if (!it.hasNext()) {
@@ -191,16 +200,67 @@ public class ChartComponent2 extends DockLayoutPanel {
             stateRange.setStart(new Date(getChartElementEndDate(lastTrade).getTime() - (interval.getMinutes() * 60 * 1000)));
             stateRange.setEnd(getChartElementEndDate(lastTrade));
         } else {
-            //calculate the difference between new trade time and current time
+            /*//calculate the difference between new trade time and current time
             long timeDifference = getChartElementEndDate(lastTrade).getTime() - currentEnd.getTime();
 
             //we have to "shift" the new window to display the last trade
 
             //the new start is the old start + time Difference
             stateRange.setStart(new Date(currentStart.getTime() + timeDifference));
-            //the new end is the time of the last trade
-            stateRange.setEnd(lastTrade.getTimeOfLastTrade());
+            //the new end is the time of the last trade*/
+            stateRange.setEnd(getChartElementEndDate(lastTrade));
         }
+    }
+
+    private void setChartTooltip(CandlestickChartOptions lineChartOptions) {
+        CustomTooltip tooltip = CustomTooltip.create();
+        TextStyle tooltipStyle = TextStyle.create();
+
+        tooltipStyle.setFontName("Arial");
+        tooltipStyle.setFontSize(11);
+        tooltip.setTextStyle(tooltipStyle);
+        tooltip.setHtml(true);
+        lineChartOptions.setTooltip(tooltip);
+    }
+
+    private String getTooltipFromChartElement(ChartElement element) {
+        StringBuilder sb = new StringBuilder();
+        DateTimeFormat format = DateTimeFormat.getFormat(("HH:mm"));
+/*        sb.append("<b>").append("@").append(format.format(getChartElementEndDate(element))).append("\n").append("\n").append("</b>")
+                .append("<br>")
+                .append("Low: ").append(element.getLow()).append("\n")
+                .append("<br>")
+                .append("Open: ").append(element.getOpen()).append("\n")
+                .append("<br>")
+                .append("Close: ").append(element.getClose()).append("\n")
+                .append("<br>")
+                .append("High: ").append(element.getHigh());*/
+
+        sb.append("<style type='text/css'>")
+                        .append("td {font-family:Arial; color:#282828; font-size:10pt;} ")
+                        .append(".date {font-family:Arial; color:#282828; font-size:10pt; font-weight:bold;} ")
+                        .append("</style>");
+
+                sb.append("<div class=\"date\">").append("@").append(format.format(getChartElementEndDate(element))).append("\n").append("\n").append("</div>")
+                .append("<table>")
+                .append("<tr>")
+                    .append("<td>").append("Low:").append("</td>")
+                    .append("<td>").append(element.getLow()).append("</td>")
+                .append("</tr>")
+                .append("<tr>")
+                    .append("<td>").append("Open:").append("</td>")
+                    .append("<td>").append(element.getOpen()).append("</td>")
+                .append("</tr>")
+                .append("<tr>")
+                    .append("<td>").append("Close:").append("</td>")
+                    .append("<td>").append(element.getClose()).append("</td>")
+                .append("<tr>")
+                    .append("<td>").append("High:").append("</td>")
+                    .append("<td>").append(element.getHigh()).append("</td>")
+                .append("</tr>")
+                .append("</table>");
+
+        return sb.toString();
     }
 
     private Date getChartElementEndDate(ChartElement chartElement) {

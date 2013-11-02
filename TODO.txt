@@ -9,7 +9,11 @@ Chart functionality=
     - ChartDataConverter.get10MinutesChartElements
     - ChartDataConverter.get1HourChartElements
 
+- for candlestick chart, leave only time intervals buttons and create the candlesticks according to those intervals
+  Don't make the range customizable
 
+
+DONE:
 !attention:
 - when adding new trades to the chart, they might not match with the already drawn chart. This is because some trade might fall in the 10 minutes
 interval which was already drawn on the chart.

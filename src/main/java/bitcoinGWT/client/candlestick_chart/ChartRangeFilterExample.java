@@ -1,7 +1,5 @@
 package bitcoinGWT.client.candlestick_chart;
 
-import java.util.Date;
-
 import bitcoinGWT.shared.model.Constants;
 import com.google.gwt.core.client.JsDate;
 import com.google.gwt.dom.client.Style.Unit;
@@ -9,15 +7,13 @@ import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.googlecode.gwt.charts.client.*;
 import com.googlecode.gwt.charts.client.controls.Dashboard;
-import com.googlecode.gwt.charts.client.controls.filter.ChartRangeFilter;
-import com.googlecode.gwt.charts.client.controls.filter.ChartRangeFilterOptions;
-import com.googlecode.gwt.charts.client.controls.filter.ChartRangeFilterState;
-import com.googlecode.gwt.charts.client.controls.filter.ChartRangeFilterStateRange;
-import com.googlecode.gwt.charts.client.controls.filter.ChartRangeFilterUi;
+import com.googlecode.gwt.charts.client.controls.filter.*;
 import com.googlecode.gwt.charts.client.corechart.CandlestickChartOptions;
 import com.googlecode.gwt.charts.client.options.ChartArea;
 import com.googlecode.gwt.charts.client.options.Legend;
 import com.googlecode.gwt.charts.client.options.LegendPosition;
+
+import java.util.Date;
 
 public class ChartRangeFilterExample extends DockLayoutPanel {
 	private Dashboard dashboard;
