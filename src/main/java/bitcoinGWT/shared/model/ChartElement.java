@@ -71,4 +71,18 @@ public class ChartElement implements IsSerializable {
     public Date getTimeOfLastTrade() {
         return timeOfLastTrade;
     }
+
+    @Override
+    public String toString() {
+        return "ChartElement{" +
+                "amount=" + amount +
+                ", high=" + high +
+                ", low=" + low +
+                ", open=" + open +
+                ", close=" + close +
+                ", elementDate=" + elementDate +
+                ", timeInterval=" + timeInterval +
+                ", timeOfLastTrade=" + timeOfLastTrade +
+                '}';
+    }
 }

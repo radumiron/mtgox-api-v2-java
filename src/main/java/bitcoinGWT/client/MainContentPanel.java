@@ -4,6 +4,7 @@ import bitcoinGWT.client.chart.CandleStickChart;
 import bitcoinGWT.client.chart.ChartComponent;
 import bitcoinGWT.client.candlestick_chart.ChartComponent2;
 import bitcoinGWT.client.controls.ControlsComponent;
+import bitcoinGWT.client.scatter_chart.ScatterChartComponent;
 import bitcoinGWT.client.ticker.TickerComponent;
 import bitcoinGWT.client.trades.TradesComponent;
 import com.google.gwt.visualization.client.VisualizationUtils;
@@ -50,6 +51,8 @@ public class MainContentPanel extends Viewport {
         mainContainer.setEastWidget(new TradesComponent(mainService), eastData);
 
         addChartComponent2(mainContainer);
+        //addChartComponent(mainContainer);
+        //addScatterChart(mainContainer);
 
         setWidget(mainContainer);
     }
@@ -78,6 +81,20 @@ public class MainContentPanel extends Viewport {
                 //getSimpleLayoutPanel().setWidget(getPieChart());
                 //drawPieChart();
                 mainContainer.setCenterWidget(new ChartComponent2());
+            }
+        });
+    }
+
+    private void addScatterChart(final BorderLayoutContainer mainContainer) {
+        // Create the API Loader
+        ChartLoader chartLoader = new ChartLoader(ChartPackage.CORECHART);
+        chartLoader.loadApi(new Runnable() {
+
+            @Override
+            public void run() {
+                //getSimpleLayoutPanel().setWidget(getPieChart());
+                //drawPieChart();
+                mainContainer.setCenterWidget(new ScatterChartComponent());
             }
         });
     }

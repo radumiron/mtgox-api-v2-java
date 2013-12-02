@@ -30,4 +30,12 @@ public class TimeWindow implements IsSerializable {
     public Date getStart() {
         return start;
     }
+
+    @Override
+    public String toString() {
+        return "TimeWindow{" +
+                "end=" + end +
+                ", start=" + start +
+                '}';
+    }
 }

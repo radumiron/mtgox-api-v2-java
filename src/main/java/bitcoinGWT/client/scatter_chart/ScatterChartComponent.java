@@ -1,32 +1,40 @@
-package bitcoinGWT.client.candlestick_chart;
+package bitcoinGWT.client.scatter_chart;
 
+/**
+ * Created with IntelliJ IDEA.
+ * User: Radu
+ * Date: 11/7/13
+ * Time: 12:13 AM
+ * To change this template use File | Settings | File Templates.
+ */
+
+import bitcoinGWT.client.candlestick_chart.CustomDataTable;
+import bitcoinGWT.client.candlestick_chart.CustomTooltip;
 import bitcoinGWT.client.util.UiUtils;
-import bitcoinGWT.shared.model.*;
+import bitcoinGWT.shared.model.ChartElement;
+import bitcoinGWT.shared.model.Currency;
+import bitcoinGWT.shared.model.TimeInterval;
+import bitcoinGWT.shared.model.TimeWindow;
 import com.google.gwt.core.client.JsArrayString;
-import com.google.gwt.core.client.JsDate;
 import com.google.gwt.core.client.JsonUtils;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.googlecode.gwt.charts.client.*;
-import com.googlecode.gwt.charts.client.controls.ControlType;
 import com.googlecode.gwt.charts.client.controls.Dashboard;
 import com.googlecode.gwt.charts.client.controls.filter.*;
-import com.googlecode.gwt.charts.client.corechart.CandlestickChartOptions;
-import com.googlecode.gwt.charts.client.corechart.LineChartOptions;
+import com.googlecode.gwt.charts.client.corechart.AreaChartOptions;
+import com.googlecode.gwt.charts.client.corechart.ScatterChartOptions;
 import com.googlecode.gwt.charts.client.options.*;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Random;
 import java.util.Set;
 
-public class ChartComponent2 extends BorderLayoutContainer {
+public class ScatterChartComponent extends BorderLayoutContainer {
     private Dashboard dashboard;
-    private ChartWrapper<CandlestickChartOptions> candlestickChart;
+    private ChartWrapper<AreaChartOptions> candlestickChart;
     private ChartRangeFilter numberRangeFilter;
     private CustomDataTable data;
     private ChartRangeFilterStateRange stateRange;
@@ -35,7 +43,7 @@ public class ChartComponent2 extends BorderLayoutContainer {
 
     private boolean initialLoad = true;
 
-    public ChartComponent2() {
+    public ScatterChartComponent() {
         //super(Unit.PX);
         initialize();
 
@@ -67,10 +75,10 @@ public class ChartComponent2 extends BorderLayoutContainer {
         return dashboard;
     }
 
-    private ChartWrapper<CandlestickChartOptions> getCandlestickChart() {
+    private ChartWrapper<AreaChartOptions> getCandlestickChart() {
         if (candlestickChart == null) {
-            candlestickChart = new ChartWrapper<CandlestickChartOptions>();
-            candlestickChart.setChartType(ChartType.CANDLESTICK);
+            candlestickChart = new ChartWrapper<AreaChartOptions>();
+            candlestickChart.setChartType(ChartType.AREA);
         }
         return candlestickChart;
     }
@@ -87,7 +95,7 @@ public class ChartComponent2 extends BorderLayoutContainer {
         ChartRangeFilterOptions chartRangeFilterOptions = ChartRangeFilterOptions.create();
         chartRangeFilterOptions.setFilterColumnIndex(0); // Filter by the date axis
 
-        LineChartOptions controlChartOptions = LineChartOptions.create();
+        AreaChartOptions controlChartOptions = AreaChartOptions.create();
         controlChartOptions.setHeight(100);
         /*BackgroundColor rising = BackgroundColor.create();
         rising.setFill("00CC00");
@@ -105,7 +113,7 @@ public class ChartComponent2 extends BorderLayoutContainer {
         controlChartOptions.setChartArea(chartArea);
 
         ChartRangeFilterUi chartRangeFilterUi = ChartRangeFilterUi.create();
-        chartRangeFilterUi.setChartType(ChartType.CANDLESTICK);
+        chartRangeFilterUi.setChartType(ChartType.AREA);
         chartRangeFilterUi.setChartOptions(controlChartOptions);
         //chartRangeFilterUi.setMinRangeSize(TimeInterval.ONE_HOUR.getMinutes() * 60 * 1000); //one hour
 
@@ -127,10 +135,10 @@ public class ChartComponent2 extends BorderLayoutContainer {
         numberRangeFilter.setOptions(chartRangeFilterOptions);
 
         // Set chart options
-        CandlestickChartOptions lineChartOptions = CandlestickChartOptions.create();
+        AreaChartOptions lineChartOptions = AreaChartOptions.create();
         lineChartOptions.setLegend(Legend.create(LegendPosition.NONE));
         lineChartOptions.setChartArea(chartArea);
-        setChartTooltip(lineChartOptions);
+        //setChartTooltip(lineChartOptions);
         //setAnimation(lineChartOptions);
         candlestickChart.setOptions(lineChartOptions);
 
@@ -141,13 +149,13 @@ public class ChartComponent2 extends BorderLayoutContainer {
         data.addColumn(ColumnType.NUMBER);
         data.addColumn(ColumnType.NUMBER);
         data.addColumn(ColumnType.NUMBER);
-        data.addTooltipColumn(data, true);
+        //data.addTooltipColumn(data, true);
 
         // Draw the chart
         dashboard.bind(numberRangeFilter, candlestickChart);
     }
 
-    private void setAnimation(CandlestickChartOptions lineChartOptions) {
+    private void setAnimation(ScatterChartOptions lineChartOptions) {
         Animation animation = Animation.create();
         animation.setDuration(100);
         animation.setEasing(AnimationEasing.OUT);
@@ -187,7 +195,7 @@ public class ChartComponent2 extends BorderLayoutContainer {
                     data.setValue(currentRow, 2, trade.getOpen());
                     data.setValue(currentRow, 3, trade.getClose());
                     data.setValue(currentRow, 4, trade.getHigh());
-                    data.setValue(currentRow, 5, getTooltipFromChartElement(trade));
+                    //data.setValue(currentRow, 5, getTooltipFromChartElement(trade));
 
                     //check if the current chart element is the last
                     if (!it.hasNext()) {
@@ -231,7 +239,7 @@ public class ChartComponent2 extends BorderLayoutContainer {
         }
     }
 
-    private void setChartTooltip(CandlestickChartOptions lineChartOptions) {
+    private void setChartTooltip(ScatterChartOptions lineChartOptions) {
         CustomTooltip tooltip = CustomTooltip.create();
         tooltip.setHtml(true);
         lineChartOptions.setTooltip(tooltip);
@@ -276,43 +284,35 @@ public class ChartComponent2 extends BorderLayoutContainer {
 
             //@Override
             public void run() {
-                setServerData();
-                //refreshChart();
+                //setServerData();
+                refreshChart();
             }
         };
-        timer.schedule(Constants.CANDLESTICK_CHART_TRADES_RETRIEVAL_INTERVAL);
+        //timer.schedule(Constants.CANDLESTICK_CHART_TRADES_RETRIEVAL_INTERVAL);
 
-        //timer.scheduleRepeating(5 * 1000);
+        timer.scheduleRepeating(5 * 1000);
     }
 
     public void refreshChart(){
         int originalRows = data.getNumberOfRows();
         data.addRows(1);
 
-        Random random = new Random();
+        double open, close = 190;
+        double low, high;
+        double change = (Math.sin(originalRows / 2.5 + Math.PI) + Math.sin(originalRows / 3) - Math.cos(originalRows * 0.7)) * 2;
+        change = change >= 0 ? change + 5 : change - 5;
+        open = close;
+        close = Math.max(50, open + change);
+        low = Math.min(open, close) - (Math.cos(originalRows * 1.7) + 1) * 2;
+        low = Math.max(0, low);
+        high = Math.max(open, close) + (Math.cos(originalRows * 1.3) + 1) * 2;
 
-        int high = random.nextInt(200);
-        int low = random.nextInt(high);
-        int open = low;
-        int close = low;
-        do {
-            //data.setValue(row_id, low, open, close, high)
-            high = random.nextInt(200);
-            low = random.nextInt(high);
-            open = low;
-            do {
-                open = random.nextInt(high);
-            }
-            while (open < low);
+        Date last = new Date();
+        ChartElement trade = new ChartElement(open, close, low, high, 100, new TimeWindow(new Date((new Date().getTime() - 5 * 1000)), last), last, TimeInterval.TEN_MINUTES);
 
-            do {
-                close = random.nextInt(high);
-            }
-            while (close < low);
-        }
-        while (!(open > 190 && open < 198) && !(close > 190 && close < 198));
+        System.out.println(trade);
 
-        data.setValue(originalRows, 0, new Date());
+        data.setValue(originalRows, 0, getChartElementEndDate(trade));
         data.setValue(originalRows, 1, low);
         data.setValue(originalRows, 2, open);
         data.setValue(originalRows, 3, close);
@@ -320,7 +320,7 @@ public class ChartComponent2 extends BorderLayoutContainer {
 
         dashboard.draw(data);
 
-        //createChartRangeWindow(trade, TimeInterval.TEN_MINUTES);
+        createChartRangeWindow(trade, TimeInterval.TEN_MINUTES);
 
         dashboard.redraw();
 
