@@ -206,6 +206,9 @@ public class ChartComponent2 extends BorderLayoutContainer {
                 //call the server again, after an interval.
                 startTimer();
                 System.out.println();
+
+                //draw the whole scene again
+                //forceLayout();
             }
         });
     }
@@ -219,14 +222,15 @@ public class ChartComponent2 extends BorderLayoutContainer {
             stateRange.setStart(new Date(getChartElementEndDate(lastTrade).getTime() - (interval.getMinutes() * 60 * 1000)));
             stateRange.setEnd(getChartElementEndDate(lastTrade));
         } else {
-            /*//calculate the difference between new trade time and current time
+            //TODO this still doesn't work
+            //calculate the difference between new trade time and current time
             long timeDifference = getChartElementEndDate(lastTrade).getTime() - currentEnd.getTime();
 
             //we have to "shift" the new window to display the last trade
 
             //the new start is the old start + time Difference
             stateRange.setStart(new Date(currentStart.getTime() + timeDifference));
-            //the new end is the time of the last trade*/
+            //the new end is the time of the last trade
             stateRange.setEnd(getChartElementEndDate(lastTrade));
         }
     }
@@ -280,9 +284,9 @@ public class ChartComponent2 extends BorderLayoutContainer {
                 //refreshChart();
             }
         };
-        timer.schedule(Constants.CANDLESTICK_CHART_TRADES_RETRIEVAL_INTERVAL);
+        //timer.schedule(Constants.CANDLESTICK_CHART_TRADES_RETRIEVAL_INTERVAL);
 
-        //timer.scheduleRepeating(5 * 1000);
+        timer.scheduleRepeating(30 * 1000);
     }
 
     public void refreshChart(){
