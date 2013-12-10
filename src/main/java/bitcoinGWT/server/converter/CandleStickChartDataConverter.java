@@ -4,6 +4,7 @@ import bitcoinGWT.shared.model.ChartElement;
 import bitcoinGWT.shared.model.TimeInterval;
 import bitcoinGWT.shared.model.TimeWindow;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
+import com.carrotsearch.sizeof.RamUsageEstimator;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -28,7 +29,11 @@ public class CandleStickChartDataConverter {
     private static Set<ChartElement> convert(Set<TradesFullLayoutObject> tradesResult, TimeInterval timeInterval) {
         Set<ChartElement> result = new LinkedHashSet<>();
         System.out.println(new Date() + ": converting " + tradesResult.size() + " trade items");
-        Map<TimeWindow, LinkedList<TradesFullLayoutObject>> partialResults = getPartialResults(new ConcurrentLinkedQueue<>(tradesResult), timeInterval.getMinutes());
+
+        Map<TimeWindow, LinkedList<TradesFullLayoutObject>> partialResults = new LinkedHashMap<>();
+        getPartialResults(partialResults, new ArrayDeque<>(tradesResult), timeInterval.getMinutes());
+        System.out.println(new Date() + ": size of partial results=" + RamUsageEstimator.humanSizeOf(partialResults));
+
         for (Map.Entry<TimeWindow, LinkedList<TradesFullLayoutObject>> entry : partialResults.entrySet()) {
             if (entry.getValue() != null && !entry.getValue().isEmpty()) {
                 double open, close, amount = 0; //initialize the values of the chart element
@@ -66,9 +71,14 @@ public class CandleStickChartDataConverter {
         return result;
     }
 
-    private static Map<TimeWindow, LinkedList<TradesFullLayoutObject>> getPartialResults(ConcurrentLinkedQueue<TradesFullLayoutObject> queue, int timeAmount) {
+    private static Map<TimeWindow, LinkedList<TradesFullLayoutObject>> getPartialResults(
+            Map<TimeWindow, LinkedList<TradesFullLayoutObject>> result,
+            ArrayDeque<TradesFullLayoutObject> queue,
+            int timeAmount) {
+        //System.out.println(new Date() + ": running getPartialResults");
+        //System.out.println(new Date() + ": queue size: " + RamUsageEstimator.humanSizeOf(queue));
         //take the first element out of the queue
-        TradesFullLayoutObject firstElement = queue.poll();
+        TradesFullLayoutObject firstElement = queue.pollLast();
 
         //if the queue is not empty
         if (firstElement != null) {
@@ -76,17 +86,11 @@ public class CandleStickChartDataConverter {
             //initialize the calendar with the trade date
             cal.setTime(firstElement.getDate());
 
-            //add 10 minutes
+            //add timeAmount minutes
             cal.add(Calendar.MINUTE, timeAmount);
 
             //create the corresponding time window for the current element
             TimeWindow window = new TimeWindow(firstElement.getDate(), cal.getTime());
-
-            Map<TimeWindow, LinkedList<TradesFullLayoutObject>> result = new LinkedHashMap<>();
-            //go over all the rest of the trade items, find partial results
-            result.putAll(getPartialResults(new ConcurrentLinkedQueue<>(queue), timeAmount));
-
-            //when getting here, the queue is empty, but all trade items are still to be split into time windows
 
             //try to find a time window corresponding to the current element
             TimeWindow matchingTimeWindow = getCorrespondingWindow(result.keySet(), firstElement);
@@ -100,6 +104,12 @@ public class CandleStickChartDataConverter {
                 matchingTrades.add(firstElement);
                 result.put(window, matchingTrades);
             }
+
+            //go over all the rest of the trade items, find partial results
+            //System.out.println(new Date() + ": size of tempQueue=" + RamUsageEstimator.humanSizeOf(queue));
+            getPartialResults(result, queue, timeAmount);
+
+            //when getting here, the queue is empty, but all trade items are still to be split into time windows
 
             //in any case, the result will either contain:
             // - single element with the current time window and current trade item
@@ -117,8 +127,10 @@ public class CandleStickChartDataConverter {
 
         for (TimeWindow window : partialResults) {
             //if the trade item is inside the time window
-            if (tradeItem.getDate().after(window.getStart())
-                    && tradeItem.getDate().before(window.getEnd())) {
+            if ((tradeItem.getDate().getTime() == window.getStart().getTime()
+                        || tradeItem.getDate().after(window.getStart()))
+                    && (tradeItem.getDate().getTime() == window.getEnd().getTime()
+                        || tradeItem.getDate().before(window.getEnd()))) {
                 return window;
             }
         }

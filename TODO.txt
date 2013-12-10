@@ -17,3 +17,14 @@ DONE:
 !attention:
 - when adding new trades to the chart, they might not match with the already drawn chart. This is because some trade might fall in the 10 minutes
 interval which was already drawn on the chart.
+
+Market data functionality=
+==========================
+- create list of markets supported by XChange
+- when application starts, for each market, run the R script to download each historical data
+- when historical data is downloaded for market, save the timestamp and use XChange to download new market data using the APIs
+
+
+OOM Error
+- total size of trades: 1.27 MB (3609 trades)
+-

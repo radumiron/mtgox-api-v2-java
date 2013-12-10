@@ -17,6 +17,7 @@ import com.googlecode.gwt.charts.client.controls.filter.*;
 import com.googlecode.gwt.charts.client.corechart.CandlestickChartOptions;
 import com.googlecode.gwt.charts.client.corechart.LineChartOptions;
 import com.googlecode.gwt.charts.client.options.*;
+import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 
 import java.util.Date;
@@ -24,7 +25,7 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
-public class ChartComponent2 extends BorderLayoutContainer {
+public class ChartComponent2 extends DockLayoutPanel {
     private Dashboard dashboard;
     private ChartWrapper<CandlestickChartOptions> candlestickChart;
     private ChartRangeFilter numberRangeFilter;
@@ -36,14 +37,14 @@ public class ChartComponent2 extends BorderLayoutContainer {
     private boolean initialLoad = true;
 
     public ChartComponent2() {
-        //super(Unit.PX);
+        super(Unit.PX);
         initialize();
 
         //trigger the chat init before the timer
         setServerData();
 
         //start the timer
-        //startTimer();
+        startTimer();
     }
 
     private void initialize() {
@@ -52,9 +53,17 @@ public class ChartComponent2 extends BorderLayoutContainer {
 
             @Override
             public void run() {
-                setNorthWidget(getDashboardWidget(), new BorderLayoutData(0));
+                addNorth(getDashboardWidget(), 0);
+                addSouth(getNumberRangeFilter(), 100);
+                add(getCandlestickChart());
+
+                forceLayout();
+               /* setNorthWidget(getDashboardWidget(), new BorderLayoutData(0));
                 setCenterWidget(getCandlestickChart());
-                setSouthWidget(getNumberRangeFilter(), new BorderLayoutData(100));
+
+                BorderLayoutData south = new BorderLayoutData(100);
+                south.setMargins(new Margins(10, 0, 20, 0));
+                setSouthWidget(getNumberRangeFilter(), south);*/
                 draw();
             }
         });
@@ -88,7 +97,7 @@ public class ChartComponent2 extends BorderLayoutContainer {
         chartRangeFilterOptions.setFilterColumnIndex(0); // Filter by the date axis
 
         LineChartOptions controlChartOptions = LineChartOptions.create();
-        controlChartOptions.setHeight(100);
+        controlChartOptions.setHeight(90);
         /*BackgroundColor rising = BackgroundColor.create();
         rising.setFill("00CC00");
         rising.setStroke("00CC00");
@@ -168,9 +177,14 @@ public class ChartComponent2 extends BorderLayoutContainer {
             @Override
             public void onSuccess(Set<ChartElement> result) {
                 System.out.println(new Date() + ": received " + result.size() + " chart elements");
-                if (initialLoad) {  //set the initial load to false, we just want diffs right now.
+
+                //we have to always redraw all chart items, not just diffs, because the diffs
+                // are problematic and don't draw correctly
+                /*if (initialLoad) {  //set the initial load to false, we just want diffs right now.
                     initialLoad = false;
-                }
+                }*/
+                data.removeRows(0, data.getNumberOfRows());
+                /* end of problematic diff code fix*/
 
                 //hold a reference to the last trade
                 ChartElement lastTrade = null;
@@ -179,7 +193,7 @@ public class ChartComponent2 extends BorderLayoutContainer {
                 Iterator<ChartElement> it = result.iterator();
                 while (it.hasNext()) {
                     ChartElement trade = it.next();
-                    System.out.println(trade);
+                    //System.out.println(trade);
                     int currentRow = data.getNumberOfRows();
                     data.addRows(1);
                     data.setValue(currentRow, 0, getChartElementEndDate(trade));
@@ -204,7 +218,7 @@ public class ChartComponent2 extends BorderLayoutContainer {
                 dashboard.draw(data);
 
                 //call the server again, after an interval.
-                startTimer();
+                //startTimer();
                 System.out.println();
 
                 //draw the whole scene again
@@ -284,9 +298,9 @@ public class ChartComponent2 extends BorderLayoutContainer {
                 //refreshChart();
             }
         };
-        //timer.schedule(Constants.CANDLESTICK_CHART_TRADES_RETRIEVAL_INTERVAL);
+        timer.scheduleRepeating(Constants.CANDLESTICK_CHART_TRADES_RETRIEVAL_INTERVAL);
 
-        timer.scheduleRepeating(30 * 1000);
+        //timer.scheduleRepeating(30 * 1000);
     }
 
     public void refreshChart(){
