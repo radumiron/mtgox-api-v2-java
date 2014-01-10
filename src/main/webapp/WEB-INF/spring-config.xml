@@ -12,7 +12,7 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
     </context:component-scan>
 
-    <context:component-scan base-package="mtgox_api.com.mtgox.api">
+    <context:component-scan base-package="trading">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
     </context:component-scan>
 

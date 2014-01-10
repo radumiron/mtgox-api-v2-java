@@ -1,7 +1,6 @@
 package bitcoinGWT.server.ticker;
 
-import mtgox_api.com.mtgox.api.MtGox;
-import mtgox_api.com.mtgox.api.TradeInterface;
+import trading.api_interfaces.TradeInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Timer;

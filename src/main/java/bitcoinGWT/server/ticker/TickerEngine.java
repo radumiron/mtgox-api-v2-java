@@ -4,7 +4,6 @@ import bitcoinGWT.shared.model.Constants;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.TickerFullLayoutObject;
 import bitcoinGWT.shared.model.TickerShallowObject;
-import mtgox_api.com.mtgox.api.MtGox;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;

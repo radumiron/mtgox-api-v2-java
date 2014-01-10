@@ -1,7 +1,6 @@
 package bitcoinGWT.shared.model;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-import mtgox_api.com.mtgox.api.MtGox;
 
 import java.util.Date;
 
@@ -98,6 +97,6 @@ public class TradesFullLayoutObject implements IsSerializable {
     }
 
     public enum TradeType {
-        bid, ask
+        BID, ASK
     }
 }

@@ -1,7 +1,7 @@
 package bitcoinGWT.server;
 
-import mtgox_api.com.mtgox.api.ApiKeys;
-import mtgox_api.com.mtgox.examples.utils.Utils;
+import trading.mtgox_api.com.mtgox.api.ApiKeys;
+import trading.mtgox_api.com.mtgox.examples.utils.Utils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;

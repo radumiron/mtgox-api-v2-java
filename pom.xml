@@ -157,7 +157,7 @@
             <version>0.9.9</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate</artifactId>
             <version>3.5.1-Final</version>
@@ -172,7 +172,80 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>3.5.5-Final</version>
+        </dependency>-->
+
+
+        <!--XChange dependencies-->
+        <dependency>
+            <groupId>com.xeiam.xchange</groupId>
+            <artifactId>xchange-core</artifactId>
+            <version>1.10.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.xeiam.xchange</groupId>
+            <artifactId>xchange-examples</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xeiam.xchange</groupId>
+            <artifactId>xchange-bitcoincharts</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xeiam.xchange</groupId>
+            <artifactId>xchange-bitcurex</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xeiam.xchange</groupId>
+            <artifactId>xchange-bitstamp</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xeiam.xchange</groupId>
+            <artifactId>xchange-blockchain</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xeiam.xchange</groupId>
+            <artifactId>xchange-btcchina</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xeiam.xchange</groupId>
+            <artifactId>xchange-btce</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xeiam.xchange</groupId>
+            <artifactId>xchange-campbx</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xeiam.xchange</groupId>
+            <artifactId>xchange-cavirtex</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xeiam.xchange</groupId>
+            <artifactId>xchange-kraken</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xeiam.xchange</groupId>
+            <artifactId>xchange-mtgox</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xeiam.xchange</groupId>
+            <artifactId>xchange-openexchangerates</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+        <!--<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.5</version>
+        </dependency>-->
     </dependencies>
     <build>
 
