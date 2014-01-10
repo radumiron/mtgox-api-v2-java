@@ -5,8 +5,10 @@ import bitcoinGWT.shared.model.*;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.core.client.JsDate;
 import com.google.gwt.core.client.JsonUtils;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
@@ -19,13 +21,14 @@ import com.googlecode.gwt.charts.client.corechart.LineChartOptions;
 import com.googlecode.gwt.charts.client.options.*;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.MarginData;
 
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
-public class ChartComponent2 extends DockLayoutPanel {
+public class ChartComponent2 extends BorderLayoutContainer {
     private Dashboard dashboard;
     private ChartWrapper<CandlestickChartOptions> candlestickChart;
     private ChartRangeFilter numberRangeFilter;
@@ -37,34 +40,23 @@ public class ChartComponent2 extends DockLayoutPanel {
     private boolean initialLoad = true;
 
     public ChartComponent2() {
-        super(Unit.PX);
-        initialize();
 
-        //trigger the chat init before the timer
-        setServerData();
-
-        //start the timer
-        startTimer();
     }
 
     private void initialize() {
         ChartLoader chartLoader = new ChartLoader(ChartPackage.CONTROLS);
+
         chartLoader.loadApi(new Runnable() {
 
             @Override
             public void run() {
-                addNorth(getDashboardWidget(), 0);
-                addSouth(getNumberRangeFilter(), 100);
-                add(getCandlestickChart());
+                setNorthWidget(getDashboardWidget(), new BorderLayoutData(0));
+                setSouthWidget(getNumberRangeFilter(), new BorderLayoutData(100));
+                setCenterWidget(getCandlestickChart(), new MarginData(2));
 
-                forceLayout();
-               /* setNorthWidget(getDashboardWidget(), new BorderLayoutData(0));
-                setCenterWidget(getCandlestickChart());
-
-                BorderLayoutData south = new BorderLayoutData(100);
-                south.setMargins(new Margins(10, 0, 20, 0));
-                setSouthWidget(getNumberRangeFilter(), south);*/
                 draw();
+                setServerData();
+                doLayout();
             }
         });
     }
@@ -219,10 +211,6 @@ public class ChartComponent2 extends DockLayoutPanel {
 
                 //call the server again, after an interval.
                 //startTimer();
-                System.out.println();
-
-                //draw the whole scene again
-                //forceLayout();
             }
         });
     }
@@ -303,7 +291,15 @@ public class ChartComponent2 extends DockLayoutPanel {
         //timer.scheduleRepeating(30 * 1000);
     }
 
-    public void refreshChart(){
+    @Override
+    protected void onAfterFirstAttach() {
+        initialize();
+
+        //start the timer
+        startTimer();
+    }
+
+    public void refreshChart() {
         int originalRows = data.getNumberOfRows();
         data.addRows(1);
 
@@ -344,4 +340,6 @@ public class ChartComponent2 extends DockLayoutPanel {
 
         //startTimer();
     }
+
+
 }

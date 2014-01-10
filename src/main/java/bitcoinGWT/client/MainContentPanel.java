@@ -73,16 +73,17 @@ public class MainContentPanel extends Viewport {
 
     private void addChartComponent2(final BorderLayoutContainer mainContainer) {
         // Create the API Loader
-        ChartLoader chartLoader = new ChartLoader(ChartPackage.CORECHART);
+       /* ChartLoader chartLoader = new ChartLoader(ChartPackage.CORECHART);
         chartLoader.loadApi(new Runnable() {
 
             @Override
-            public void run() {
+            public void run() {*/
                 //getSimpleLayoutPanel().setWidget(getPieChart());
                 //drawPieChart();
-                mainContainer.setCenterWidget(new ChartComponent2());
-            }
-        });
+                MarginData marginData = new MarginData(0, 0, 45, 0);
+                mainContainer.setCenterWidget(new ChartComponent2(), marginData);
+            /*}
+        });*/
     }
 
     private void addScatterChart(final BorderLayoutContainer mainContainer) {
