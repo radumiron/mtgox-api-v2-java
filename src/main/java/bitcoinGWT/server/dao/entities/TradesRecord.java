@@ -7,9 +7,9 @@ package bitcoinGWT.server.dao.entities;
  * Time: 11:30 PM
  * To change this template use File | Settings | File Templates.
  */
-public class TradesCSVRecord {
+public class TradesRecord {
 
-    public static final String TABLE_NAME = "trades";
+    public static final String TRADES_TABLE_SUFFIX = "_trades";
 
     public static final String COLUMN_TIME = "time";
     public static final String COLUMN_PRICE = "price";
@@ -19,7 +19,7 @@ public class TradesCSVRecord {
     private double price;
     private double amount;
 
-    public TradesCSVRecord(long time, double amount, double price) {
+    public TradesRecord(long time, double amount, double price) {
         this.amount = amount;
         this.price = price;
         this.time = time;
@@ -39,7 +39,7 @@ public class TradesCSVRecord {
 
     @Override
     public String toString() {
-        return "TradesCSVRecord{" +
+        return "TradesRecord{" +
                 "amount=" + amount +
                 ", time=" + time +
                 ", price=" + price +

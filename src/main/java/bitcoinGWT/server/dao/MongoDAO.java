@@ -1,16 +1,12 @@
 package bitcoinGWT.server.dao;
 
-import bitcoinGWT.server.dao.entities.TradesCSVRecord;
+import bitcoinGWT.server.dao.entities.TradesRecord;
 import com.mongodb.*;
-import history.HistoryDownloader;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.FileReader;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -56,37 +52,40 @@ public class MongoDAO {
         }
     }
 
-    public void saveCSVRecords(List<TradesCSVRecord> csvRecords, boolean saveLastRecord) {
+    public void saveTradesRecords(Map<String, List<TradesRecord>> csvRecords, boolean saveLastRecord) {
         DB db = mongoClient.getDB(connectionProperties.getProperty(MongoConnectionPropertyKeys.SCHEMA.getKey()));
-        DBCollection tradesTable = db.getCollection(TradesCSVRecord.TABLE_NAME);
 
-        Date before = new Date();
-        System.out.println("Start converting " + csvRecords.size() + " CSV records");
+        for (Map.Entry<String, List<TradesRecord>> entry : csvRecords.entrySet()) {
+            DBCollection tradesTable = db.getCollection(entry.getKey() + TradesRecord.TRADES_TABLE_SUFFIX);
 
-        //in case we don't want to save the last record, we can choose not to (this is useful in case the last record
-        //will in fact be the next record to be saved, but in a different records batch
-        int recordsSizeToSave = saveLastRecord ? csvRecords.size() : csvRecords.size() - 1;
+            Date before = new Date();
 
-        List<DBObject> dbRecords = new ArrayList<>();
-        for (int i = 0; i < recordsSizeToSave; i++) {
-            TradesCSVRecord csvRecord = csvRecords.get(i);
-            BasicDBObject document = new BasicDBObject();
-            document.put(TradesCSVRecord.COLUMN_TIME, csvRecord.getTime());
-            document.put(TradesCSVRecord.COLUMN_PRICE, csvRecord.getPrice());
-            document.put(TradesCSVRecord.COLUMN_AMOUNT, csvRecord.getAmount());
-            dbRecords.add(document);
+            //in case we don't want to save the last record, we can choose not to (this is useful in case the last record
+            //will in fact be the next record to be saved, but in a different records batch
+            int recordsSizeToSave = saveLastRecord ? entry.getValue().size() : entry.getValue().size() - 1;
+
+            System.out.println("Start converting " + entry.getValue().size() + " CSV records");
+
+            List<DBObject> dbRecords = new ArrayList<>();
+            for (int i = 0; i < recordsSizeToSave; i++) {
+                TradesRecord csvRecord = entry.getValue().get(i);
+                BasicDBObject document = new BasicDBObject();
+                document.put(TradesRecord.COLUMN_TIME, csvRecord.getTime());
+                document.put(TradesRecord.COLUMN_PRICE, csvRecord.getPrice());
+                document.put(TradesRecord.COLUMN_AMOUNT, csvRecord.getAmount());
+                dbRecords.add(document);
+            }
+            System.out.println("Done converting CSV records, operation took:" + + (new Date().getTime() - before.getTime()) + " ms");
+
+            before = new Date();
+            System.out.println("Start saving " + recordsSizeToSave + " CSV records");
+            try {
+                tradesTable.insert(dbRecords);
+                System.out.println("Done saving CSV records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Error occurred while saving CSV records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
+            }
         }
-        System.out.println("Done converting CSV records, operation took:" + + (new Date().getTime() - before.getTime()) + " ms");
-
-        before = new Date();
-        System.out.println("Start saving " + csvRecords.size() + " CSV records");
-        try {
-            tradesTable.insert(dbRecords);
-            System.out.println("Done saving CSV records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error occurred while saving CSV records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
-        }
-
     }
 }
