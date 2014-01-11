@@ -246,6 +246,25 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.5</version>
         </dependency>-->
+
+        <!--Guava libraries-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>15.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-gwt</artifactId>
+            <version>15.0</version>
+        </dependency>
+
+        <!--MongoDB-->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.10.1</version>
+        </dependency>
     </dependencies>
     <build>
 
@@ -341,6 +360,17 @@
                 <excludes>
                     <exclude>**/*</exclude>
                 </excludes>
+            </resource>
+            <resource>
+                <targetPath>${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/</targetPath>
+                <directory>${basedir}/src/main/resources/</directory>
+                <includes>
+                    <include>**.xml</include>
+                    <include>**.csv</include>
+                    <include>**/**.csv</include>
+                    <include>**.properties</include>
+                </includes>
+                <filtering>false</filtering>
             </resource>
         </resources>
     </build>

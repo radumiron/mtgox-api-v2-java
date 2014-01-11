@@ -1,12 +1,12 @@
 package bitcoinGWT.server.ticker;
 
+import bitcoinGWT.server.util.ObjectSizeCalculator;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 import com.carrotsearch.sizeof.RamUsageEstimator;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import static bitcoinGWT.shared.model.Constants.*;
 
@@ -24,12 +24,15 @@ public class TradesEngine extends AbstractTradeEngine {
 
     private LinkedHashMap<Long, TradesFullLayoutObject> allLoadedTrades;
 
+    private long largestTradeSize = Integer.MIN_VALUE;
+
     private boolean shouldLoadTrades;
 
     public TradesEngine() {
         allLoadedTrades = new LinkedHashMap<Long, TradesFullLayoutObject>() {
             @Override
             protected boolean removeEldestEntry(Map.Entry<Long, TradesFullLayoutObject> eldest) {
+                //todo think of a solution to remove trades based on trade date, not map size
                 return size() > TRADES_SIZE;
             }
         };
@@ -43,7 +46,11 @@ public class TradesEngine extends AbstractTradeEngine {
             //put the current trades at the current timestamp
 
             for (TradesFullLayoutObject trade : sortedTrades) {
-                System.out.println("trade size=" + RamUsageEstimator.humanSizeOf(trade) + "," + trade);
+                long tradeSize = RamUsageEstimator.sizeOf(trade);
+                if (tradeSize > largestTradeSize) {
+                    largestTradeSize = tradeSize;
+                }
+                System.out.println("trade size=" + RamUsageEstimator.humanReadableUnits(tradeSize) + "," + trade);
                 //add each trade to the map. Because the map holds only the last TRADES_SIZE, this method will also remove the oldest entries.
                 allLoadedTrades.put(trade.getTradeId(), trade);
             }
@@ -55,7 +62,10 @@ public class TradesEngine extends AbstractTradeEngine {
             //in case the list is empty,
             shouldLoadTrades = false;
         }
-        System.out.println(new Date() + " total size of cached trades=" + allLoadedTrades.size());
+        System.out.println(new Date() + " total size of cached trades=" + allLoadedTrades.size() + ", memoryConsumption=" + RamUsageEstimator.humanReadableUnits(allLoadedTrades.size() * largestTradeSize));
+        System.out.println(new Date() + " total size of cached trades=" + allLoadedTrades.size() + ", memoryConsumption=" + RamUsageEstimator.humanReadableUnits(RamUsageEstimator.sizeOfAll(allLoadedTrades)));
+        System.out.println(new Date() + " total size of cached trades=" + allLoadedTrades.size() + ", memoryConsumption=" + RamUsageEstimator.humanReadableUnits(ObjectSizeCalculator.getObjectSize(allLoadedTrades)));
+        System.out.println(new Date() + " total size of cached trades=" + allLoadedTrades.size() + ", memoryConsumption=" + RamUsageEstimator.humanReadableUnits(RamUsageEstimator.sizeOfAll(allLoadedTrades.values())));
         System.out.println();
     }
 

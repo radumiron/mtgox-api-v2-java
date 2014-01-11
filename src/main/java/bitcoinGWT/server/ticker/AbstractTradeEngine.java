@@ -3,6 +3,7 @@ package bitcoinGWT.server.ticker;
 import trading.api_interfaces.TradeInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,6 +21,7 @@ public abstract class AbstractTradeEngine {
     private Timer tickerTimer = new Timer();
 
     @Autowired
+    //protected List<TradeInterface> markets;
     protected TradeInterface trade;
 
     protected AbstractTradeEngine() {

@@ -1,8 +1,11 @@
 package trading.bitcoinXChange;
 
 import bitcoinGWT.shared.model.TickerFullLayoutObject;
+import com.xeiam.xchange.bitcoincharts.BitcoinChartsExchange;
+import com.xeiam.xchange.bitcoincharts.service.polling.BitcoinChartsPollingMarketDataService;
 import com.xeiam.xchange.dto.marketdata.Trade;
 import com.xeiam.xchange.dto.marketdata.Trades;
+import com.xeiam.xchange.mtgox.v2.MtGoxExchange;
 import trading.api_interfaces.TradeInterface;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.TickerShallowObject;
@@ -33,14 +36,18 @@ import java.util.List;
 public class XChangeTrading implements TradeInterface {
 
     private PollingMarketDataService mtGoxService;
+    private BitcoinChartsPollingMarketDataService bitcoinChartsService;
 
     @PostConstruct
     private void initTradingObject() {
         // Use the factory to get the version 2 MtGox exchange API using default settings
-        Exchange mtGox = ExchangeFactory.INSTANCE.createExchange("com.xeiam.xchange.mtgox.v2.MtGoxExchange");
+        Exchange mtGoxExchange = ExchangeFactory.INSTANCE.createExchange(MtGoxExchange.class.getName());
+        Exchange bitcoinChartsExchange = ExchangeFactory.INSTANCE.createExchange(BitcoinChartsExchange.class.getName());
+
 
         // Interested in the public polling market data feed (no authentication)
-        mtGoxService = mtGox.getPollingMarketDataService();
+        mtGoxService = mtGoxExchange.getPollingMarketDataService();
+        bitcoinChartsService = (BitcoinChartsPollingMarketDataService) bitcoinChartsExchange.getPollingMarketDataService();
     }
 
 
@@ -82,7 +89,7 @@ public class XChangeTrading implements TradeInterface {
         List<TradesFullLayoutObject> result = new ArrayList<>();
         try {
             //the SINCE parameter from the API can be sent here
-            Trades trades = mtGoxService.getTrades(Currencies.BTC, Currencies.EUR, Long.valueOf(Long.toString(previousTimestamp) + "000"));   //convert the timestamp to microsecond
+            Trades trades = mtGoxService.getTrades(Currencies.BTC, Currencies.EUR);//, Long.valueOf(Long.toString(previousTimestamp) + "000"));   //convert the timestamp to microsecond
             for (Trade trade : trades.getTrades()) {
                 //(long tradeId, Date dateDate, double tradePrice, double tradeAmount, Currency currency, Currency tradeItem, TradeType type)
                 TradesFullLayoutObject newTrade = new TradesFullLayoutObject(trade.getId(), trade.getTimestamp(),

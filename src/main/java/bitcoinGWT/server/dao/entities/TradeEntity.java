@@ -1,6 +1,6 @@
 package bitcoinGWT.server.dao.entities;
 
-import javax.persistence.*;
+/*import javax.persistence.*;*/
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,14 +9,14 @@ import javax.persistence.*;
  * Time: 10:17 PM
  * To change this template use File | Settings | File Templates.
  */
-@Entity
-@Table(name="TradeEntity")
+/*@Entity
+@Table(name="TradeEntity")*/
 public class TradeEntity {
 
-    @Id
+/*    @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
 
     @Column(name="column1")
-    private String property1;
+    private String property1;*/
 }

@@ -3,6 +3,8 @@
     <words>
       <w>bitcoin</w>
       <w>codec</w>
+      <w>mongo</w>
+      <w>mongodb</w>
       <w>springframework</w>
     </words>
   </dictionary>
