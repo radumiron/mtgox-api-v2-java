@@ -1,10 +1,10 @@
 package bitcoinGWT.server.ticker;
 
-import bitcoinGWT.shared.model.Constants;
-import bitcoinGWT.shared.model.Currency;
-import bitcoinGWT.shared.model.TickerFullLayoutObject;
-import bitcoinGWT.shared.model.TickerShallowObject;
+import bitcoinGWT.shared.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import trading.api_interfaces.MtGoxTradeInterface;
+import trading.api_interfaces.TradeInterface;
 
 import java.util.Date;
 
@@ -18,6 +18,9 @@ import java.util.Date;
 @Component
 public class TickerEngine extends AbstractTradeEngine {
 
+    @Autowired
+    protected TradeInterface trade;
+
     private TickerFullLayoutObject fullLayoutObject;
 
     @Override
@@ -25,7 +28,7 @@ public class TickerEngine extends AbstractTradeEngine {
         Date initialDate = new Date();
         System.out.println(initialDate + ": execute ticker task");
         //double price = trade.getPrice(MtGox.Currency.EUR).getPrice();
-        TickerShallowObject tradeObject = trade.getPrice(Currency.EUR);
+        TickerShallowObject tradeObject = trade.getPrice(Markets.MTGOX, Currency.EUR);
         if (tradeObject instanceof TickerFullLayoutObject) {
             //if all went well, we should have a full layout object
             fullLayoutObject = (TickerFullLayoutObject) tradeObject;

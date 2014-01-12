@@ -11,7 +11,7 @@ import java.util.Date;
  * Time: 9:48 PM
  * To change this template use File | Settings | File Templates.
  */
-public class TradesFullLayoutObject implements IsSerializable {
+public class TradesFullLayoutObject extends TradesShallowObject implements IsSerializable {
     //{"date":1364767201,"price":"92.65","amount":"0.47909825","price_int":"9265000","amount_int":"47909825","tid":"1364767201381791"
     // ,"price_currency":"USD","item":"BTC","trade_type":"bid","primary":"Y","pro
     private Currency currency;
@@ -24,9 +24,12 @@ public class TradesFullLayoutObject implements IsSerializable {
 
     static double PRICE = 0;
 
-    public TradesFullLayoutObject(long tradeId, Date dateDate, double tradePrice, double tradeAmount, Currency currency, Currency tradeItem, TradeType type) {
+    public TradesFullLayoutObject(long tradeId, Date tradeDate, double tradePrice,
+                                  double tradeAmount, Currency currency,
+                                  Currency tradeItem,
+                                  TradeType type) {
         this.tradeId = tradeId;
-        this.date = dateDate;
+        this.date = tradeDate;
         this.price = tradePrice;
         //this.price = ++PRICE;
         this.amount = tradeAmount;
@@ -70,12 +73,12 @@ public class TradesFullLayoutObject implements IsSerializable {
     public String toString() {
         return "TradesFullLayoutObject{" +
                 "tradeId=" + tradeId +
-                ", amount=" + amount +
+                ", amount=" + getAmount() +
                 ", currency=" + currency +
                 ", tradeItem=" + tradeItem +
                 ", type=" + type +
-                ", date=" + date +
-                ", price=" + price +
+                ", date=" + getDate() +
+                ", price=" + getPrice() +
                 '}';
     }
 
@@ -96,7 +99,5 @@ public class TradesFullLayoutObject implements IsSerializable {
         return (int) (tradeId ^ (tradeId >>> 32));
     }
 
-    public enum TradeType {
-        BID, ASK
-    }
+
 }

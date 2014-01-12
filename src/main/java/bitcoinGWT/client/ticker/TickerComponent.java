@@ -4,6 +4,7 @@ import bitcoinGWT.client.BitcoinGWTServiceAsync;
 import bitcoinGWT.client.CustomAsyncCallback;
 import bitcoinGWT.shared.model.Constants;
 import bitcoinGWT.shared.model.Currency;
+import bitcoinGWT.shared.model.Markets;
 import bitcoinGWT.shared.model.TickerFullLayoutObject;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Label;
@@ -53,7 +54,7 @@ public class TickerComponent extends ContentPanel {
 
             @Override
             public void run() {
-                mainService.getPrice(Currency.EUR, new CustomAsyncCallback<TickerFullLayoutObject>() {
+                mainService.getPrice(Markets.MTGOX, Currency.EUR, new CustomAsyncCallback<TickerFullLayoutObject>() {
 
                     @Override
                     public void onSuccess(TickerFullLayoutObject result) {

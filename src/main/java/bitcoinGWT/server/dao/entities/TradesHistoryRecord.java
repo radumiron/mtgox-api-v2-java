@@ -7,7 +7,7 @@ package bitcoinGWT.server.dao.entities;
  * Time: 11:30 PM
  * To change this template use File | Settings | File Templates.
  */
-public class TradesRecord {
+public class TradesHistoryRecord {
 
     public static final String TRADES_TABLE_SUFFIX = "_trades";
 
@@ -19,7 +19,7 @@ public class TradesRecord {
     private double price;
     private double amount;
 
-    public TradesRecord(long time, double amount, double price) {
+    public TradesHistoryRecord(long time, double amount, double price) {
         this.amount = amount;
         this.price = price;
         this.time = time;
@@ -39,7 +39,7 @@ public class TradesRecord {
 
     @Override
     public String toString() {
-        return "TradesRecord{" +
+        return "TradesHistoryRecord{" +
                 "amount=" + amount +
                 ", time=" + time +
                 ", price=" + price +

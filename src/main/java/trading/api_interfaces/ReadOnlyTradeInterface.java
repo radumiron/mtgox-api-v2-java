@@ -1,6 +1,7 @@
 package trading.api_interfaces;
 
 import bitcoinGWT.shared.model.Currency;
+import bitcoinGWT.shared.model.Markets;
 import bitcoinGWT.shared.model.TickerShallowObject;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 
@@ -29,16 +30,17 @@ public interface ReadOnlyTradeInterface {
      * Returns the current price of 1 BTC in given currency.
      * @return      a double value with the current price of 1 BTC in the Currency cur
      */
-    public <T extends TickerShallowObject> T getLastPrice(Currency cur);
+    public <T extends TickerShallowObject> T getLastPrice(Markets market, Currency cur);
 
-    public <T extends TickerShallowObject> T getPrice(Currency currency);
+    public <T extends TickerShallowObject> T getPrice(Markets market, Currency currency);
 
+    public List<Currency> getSupportedCurrencies(Markets market);
 
     /**
      * Returns the lag of the trading engine.
      * @return      a string with the lag
      */
-    public String getLag();
+    public String getLag(Markets market);
 
-    public List<TradesFullLayoutObject> getTrades(Currency currency, long previousTimestamp);
+    public List<TradesFullLayoutObject> getTrades(Markets market, Currency currency, long previousTimestamp);
 }

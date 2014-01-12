@@ -4,6 +4,7 @@ import bitcoinGWT.client.ExampleService;
 import bitcoinGWT.server.ticker.TickerEngine;
 import bitcoinGWT.server.ticker.TradesEngine;
 import bitcoinGWT.shared.model.Currency;
+import bitcoinGWT.shared.model.Markets;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.sencha.gxt.data.shared.SortDir;
@@ -52,7 +53,7 @@ public class ExampleServiceImpl extends RemoteServiceServlet implements ExampleS
         Random random = new Random();
         int tradesSize = random.nextInt(2);
 
-        List<TradesFullLayoutObject> trades = new ArrayList<>(tradesEngine.getTrades(Currency.EUR, null, initialLoad));
+        List<TradesFullLayoutObject> trades = new ArrayList<>(tradesEngine.getTrades(Markets.MTGOX, Currency.EUR, null, initialLoad));
 
         for (SortInfo sortField : config.getSortInfo()) {
             Comparator<TradesFullLayoutObject> comparator = getComparator(sortField);

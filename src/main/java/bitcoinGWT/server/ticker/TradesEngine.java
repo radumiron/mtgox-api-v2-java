@@ -2,9 +2,14 @@ package bitcoinGWT.server.ticker;
 
 import bitcoinGWT.server.util.ObjectSizeCalculator;
 import bitcoinGWT.shared.model.Currency;
+import bitcoinGWT.shared.model.Markets;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 import com.carrotsearch.sizeof.RamUsageEstimator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import trading.api_interfaces.MtGoxTradeInterface;
+import trading.api_interfaces.TradeInterface;
 
 import java.util.*;
 
@@ -18,7 +23,11 @@ import static bitcoinGWT.shared.model.Constants.*;
  * To change this template use File | Settings | File Templates.
  */
 @Component
+@Qualifier("MTGOX_EUR")
 public class TradesEngine extends AbstractTradeEngine {
+
+    @Autowired
+    protected MtGoxTradeInterface trade;
 
     private Long previousTimestamp;
 
@@ -39,7 +48,7 @@ public class TradesEngine extends AbstractTradeEngine {
     }
 
     @Override
-    protected void executeTradeTask() {
+    protected void executeTradeTask() {/*
         List<TradesFullLayoutObject> sortedTrades = new ArrayList<>(trade.getTrades(Currency.EUR, getPreviousTimestamp()));
 
         if (sortedTrades.size() > 0) {
@@ -67,6 +76,7 @@ public class TradesEngine extends AbstractTradeEngine {
         System.out.println(new Date() + " total size of cached trades=" + allLoadedTrades.size() + ", memoryConsumption=" + RamUsageEstimator.humanReadableUnits(ObjectSizeCalculator.getObjectSize(allLoadedTrades)));
         System.out.println(new Date() + " total size of cached trades=" + allLoadedTrades.size() + ", memoryConsumption=" + RamUsageEstimator.humanReadableUnits(RamUsageEstimator.sizeOfAll(allLoadedTrades.values())));
         System.out.println();
+        */
     }
 
    /* private void addTrade(TradesFullLayoutObject trade) {
@@ -111,7 +121,7 @@ public class TradesEngine extends AbstractTradeEngine {
         return calendar.getTimeInMillis();
     }
 
-    public Set<TradesFullLayoutObject> getTrades(Currency currency, Long timestamp, boolean initialLoad) {
+    public Set<TradesFullLayoutObject> getTrades(Markets markets, Currency currency, Long timestamp, boolean initialLoad) {
         if (initialLoad) {  //in case the client doesn't have any trades yet, give him all the trades
             return getAllTrades();
         } else {    //in case the client already has the initial trades, he loads just what what he doesn't yet have
@@ -141,7 +151,7 @@ public class TradesEngine extends AbstractTradeEngine {
         }
     }
 
-    public boolean shouldLoadTradesFromServer(Currency currency) {
+    public boolean shouldLoadTradesFromServer(Markets market, Currency currency) {
         return shouldLoadTrades;
     }
 

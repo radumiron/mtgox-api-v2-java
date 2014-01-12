@@ -11,6 +11,7 @@ package bitcoinGWT.shared.model.example;
 import java.util.Date;
 
 import bitcoinGWT.shared.model.Currency;
+import bitcoinGWT.shared.model.TradeType;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
@@ -27,7 +28,7 @@ public interface PostProperties extends PropertyAccess<TradesFullLayoutObject> {
 
     ValueProvider<TradesFullLayoutObject, Double> amount();
 
-    ValueProvider<TradesFullLayoutObject, TradesFullLayoutObject.TradeType> type();
+    ValueProvider<TradesFullLayoutObject, TradeType> type();
 
     ValueProvider<TradesFullLayoutObject, Currency> tradeItem();
 }

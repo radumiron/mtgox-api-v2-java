@@ -17,6 +17,7 @@ package bitcoinGWT.client;
  */
 
 import bitcoinGWT.shared.model.Currency;
+import bitcoinGWT.shared.model.TradeType;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 import bitcoinGWT.shared.model.example.PostProperties;
 import com.google.gwt.cell.client.DateCell;
@@ -79,7 +80,7 @@ public class LiveGridExample implements IsWidget, EntryPoint {
 
             ColumnConfig<TradesFullLayoutObject, Currency> currencyColumn = new ColumnConfig<TradesFullLayoutObject, Currency>(props.currency(), 150, "Currency");
             ColumnConfig<TradesFullLayoutObject, Currency> tradeItemColumn = new ColumnConfig<TradesFullLayoutObject, Currency>(props.tradeItem(), 150, "Trade item");
-            ColumnConfig<TradesFullLayoutObject, TradesFullLayoutObject.TradeType> typeColumn = new ColumnConfig<TradesFullLayoutObject, TradesFullLayoutObject.TradeType>(props.type(), 150, "Type");
+            ColumnConfig<TradesFullLayoutObject, TradeType> typeColumn = new ColumnConfig<TradesFullLayoutObject, TradeType>(props.type(), 150, "Type");
             ColumnConfig<TradesFullLayoutObject, Double> priceColumn = new ColumnConfig<TradesFullLayoutObject, Double>(props.price(), 150, "Price");
             ColumnConfig<TradesFullLayoutObject, Double> amountColumn = new ColumnConfig<TradesFullLayoutObject, Double>(props.amount(), 150, "Amount");
             ColumnConfig<TradesFullLayoutObject, Date> dateColumn = new ColumnConfig<TradesFullLayoutObject, Date>(props.date(), 150, "Date");

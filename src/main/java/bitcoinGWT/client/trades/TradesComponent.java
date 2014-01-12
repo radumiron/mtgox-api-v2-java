@@ -1,9 +1,7 @@
 package bitcoinGWT.client.trades;
 
 import bitcoinGWT.client.BitcoinGWTServiceAsync;
-import bitcoinGWT.shared.model.Constants;
-import bitcoinGWT.shared.model.Currency;
-import bitcoinGWT.shared.model.TradesFullLayoutObject;
+import bitcoinGWT.shared.model.*;
 import bitcoinGWT.shared.model.example.PostProperties;
 import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.core.client.GWT;
@@ -68,7 +66,7 @@ public class TradesComponent extends ContentPanel {
                     sortInfos.add(new SortInfoBean("date", SortDir.DESC));
                     loadConfig.setSortInfo(sortInfos);
                 }
-                mainService.getTradesForGrid(Currency.EUR, null, loadConfig, callback);
+                mainService.getTradesForGrid(Markets.MTGOX, Currency.EUR, null, loadConfig, callback);
 
                 if (initialLoad) {
                     initialLoad = false;
@@ -92,7 +90,7 @@ public class TradesComponent extends ContentPanel {
 
         //ColumnConfig<TradesFullLayoutObject, Currency> currencyColumn = new ColumnConfig<TradesFullLayoutObject, Currency>(props.currency(), 80, "Currency");
         //ColumnConfig<TradesFullLayoutObject, Currency> tradeItemColumn = new ColumnConfig<TradesFullLayoutObject, Currency>(props.tradeItem(), 80, "Trade item");
-        ColumnConfig<TradesFullLayoutObject, TradesFullLayoutObject.TradeType> typeColumn = new ColumnConfig<TradesFullLayoutObject, TradesFullLayoutObject.TradeType>(props.type(), 80, "Type");
+        ColumnConfig<TradesFullLayoutObject, TradeType> typeColumn = new ColumnConfig<TradesFullLayoutObject, TradeType>(props.type(), 80, "Type");
         ColumnConfig<TradesFullLayoutObject, Double> priceColumn = new ColumnConfig<TradesFullLayoutObject, Double>(props.price(), 150, "Price");
         ColumnConfig<TradesFullLayoutObject, Double> amountColumn = new ColumnConfig<TradesFullLayoutObject, Double>(props.amount(), 150, "Amount");
         ColumnConfig<TradesFullLayoutObject, Date> dateColumn = new ColumnConfig<TradesFullLayoutObject, Date>(props.date(), 250, "Date");
@@ -162,7 +160,7 @@ public class TradesComponent extends ContentPanel {
                 //if first time, load the initial grid size
                 System.out.println(new Date() + " run get trades task");
                 //check to see if there are any additional trades to load on the client
-                mainService.shouldLoadTradesFromServer(Currency.EUR, new AsyncCallback<Boolean>() {
+                mainService.shouldLoadTradesFromServer(Markets.MTGOX, Currency.EUR, new AsyncCallback<Boolean>() {
 
                     @Override
                     public void onFailure(Throwable caught) {

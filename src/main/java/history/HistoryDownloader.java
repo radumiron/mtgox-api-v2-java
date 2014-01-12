@@ -1,7 +1,7 @@
 package history;
 
 import bitcoinGWT.server.dao.MongoDAO;
-import bitcoinGWT.server.dao.entities.TradesRecord;
+import bitcoinGWT.server.dao.entities.TradesHistoryRecord;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.Markets;
 import com.google.common.io.Resources;
@@ -37,23 +37,23 @@ public class HistoryDownloader {
         //first, populate the MongoDB schema with historical data read from the CSV file
         MongoDAO dao = new MongoDAO();
 
-        List<TradesRecord> csvRecords = readCSV(demoMarket, demoCurrency);
-        Map<String, List<TradesRecord>> marketToCSVRecords = new HashMap<>();
+        List<TradesHistoryRecord> csvRecords = readCSV(demoMarket, demoCurrency);
+        Map<String, List<TradesHistoryRecord>> marketToCSVRecords = new HashMap<>();
         marketToCSVRecords.put(getMarketIdentifierName(demoMarket, demoCurrency), csvRecords);
-        dao.saveTradesRecords(marketToCSVRecords, false);
+        dao.saveTradesHistoryRecords(marketToCSVRecords, false);
 
         //last record got from the CSV, this will be the threshold of getting the trades from the bitcoincharts API
-        TradesRecord latestCSVRecord = csvRecords.get(csvRecords.size() - 1);
+        TradesHistoryRecord latestCSVRecord = csvRecords.get(csvRecords.size() - 1);
 
 
         //then, try to load all the trades from bitcoincharts, which happened between the last record in the DB and
         //as close as possible to the current time (the bitcoincharts API returns trades with a latency of ~ 15 minutes)
 
-        List<TradesRecord> apiCSVRecords = executeQuery(demoMarket, demoCurrency, latestCSVRecord.getTime());
+        List<TradesHistoryRecord> apiCSVRecords = executeQuery(demoMarket, demoCurrency, latestCSVRecord.getTime());
         marketToCSVRecords = new HashMap<>();
         marketToCSVRecords.put(getMarketIdentifierName(demoMarket, demoCurrency), apiCSVRecords);
         //save the API records in the DB
-        dao.saveTradesRecords(marketToCSVRecords, true);
+        dao.saveTradesHistoryRecords(marketToCSVRecords, true);
 
         //then, we'll have to use the XChange machine to load the latest data into the MongoDB schema
         //todo
@@ -62,7 +62,7 @@ public class HistoryDownloader {
         //todo
     }
 
-    private List<TradesRecord> readCSV(Markets market, Currency currency) {
+    private List<TradesHistoryRecord> readCSV(Markets market, Currency currency) {
         Date before = new Date();
 
         //create the name of the CSV out of the market and currency
@@ -72,13 +72,13 @@ public class HistoryDownloader {
         BufferedReader br = null;
         String output = "";
 
-        List<TradesRecord> result = new ArrayList<>();
+        List<TradesHistoryRecord> result = new ArrayList<>();
 
         try {
 
             br = new BufferedReader(new FileReader(new File(Resources.getResource(csvFile).getFile())));
             while ((output = br.readLine()) != null) {
-                TradesRecord csvRecord = extractCSVRecord(output);
+                TradesHistoryRecord csvRecord = extractCSVRecord(output);
                 if (csvRecord != null) {
                     result.add(csvRecord);
                 }
@@ -103,11 +103,11 @@ public class HistoryDownloader {
         return result;
     }
 
-    private TradesRecord extractCSVRecord(String line) {
+    private TradesHistoryRecord extractCSVRecord(String line) {
         try {
             // use comma as separator
             String[] tradeLine = line.split(CSV_SPLITTER);
-            TradesRecord trade = new TradesRecord(Long.valueOf(tradeLine[0]), Double.valueOf(tradeLine[1]), Double.valueOf(tradeLine[2]));
+            TradesHistoryRecord trade = new TradesHistoryRecord(Long.valueOf(tradeLine[0]), Double.valueOf(tradeLine[1]), Double.valueOf(tradeLine[2]));
             return trade;
         } catch (Exception e) {
             System.out.println("ignoring malformed line:" + line);
@@ -117,10 +117,10 @@ public class HistoryDownloader {
         return null;
     }
 
-    private List<TradesRecord> executeQuery(Markets market, Currency currency, Long initialDate) {
+    private List<TradesHistoryRecord> executeQuery(Markets market, Currency currency, Long initialDate) {
         HttpURLConnection connection = null;
 
-        List<TradesRecord> result = new ArrayList<>();
+        List<TradesHistoryRecord> result = new ArrayList<>();
 
         try {
             result = executeGetRequest(connection, market, currency, initialDate);
@@ -142,7 +142,7 @@ public class HistoryDownloader {
         return result;
     }
 
-    private List<TradesRecord> executeGetRequest(HttpURLConnection connection, Markets market, Currency currency, Long initialDate) throws IOException {
+    private List<TradesHistoryRecord> executeGetRequest(HttpURLConnection connection, Markets market, Currency currency, Long initialDate) throws IOException {
         boolean httpError = false;
 
         HashMap<String, String> args = new LinkedHashMap<>();
@@ -160,8 +160,8 @@ public class HistoryDownloader {
         return printErrorOrReturnResult(connection, httpError, getData);
     }
 
-    private List<TradesRecord> printErrorOrReturnResult(HttpURLConnection connection, boolean httpError, String post_data) throws IOException {
-        List<TradesRecord> result = new ArrayList<>();
+    private List<TradesHistoryRecord> printErrorOrReturnResult(HttpURLConnection connection, boolean httpError, String post_data) throws IOException {
+        List<TradesHistoryRecord> result = new ArrayList<>();
         BufferedReader br;
         if (connection.getResponseCode() >= 400) {
             httpError = true;//TODO , if HTTP error, do something else with output!
@@ -177,7 +177,7 @@ public class HistoryDownloader {
         if (printHttpResponse)
             System.out.println("HTTP response : \n"); //do not log unless is error > 400
         while ((output = br.readLine()) != null) {
-            TradesRecord csvRecord = extractCSVRecord(output);
+            TradesHistoryRecord csvRecord = extractCSVRecord(output);
             if (csvRecord != null) {
                 result.add(csvRecord);
             }

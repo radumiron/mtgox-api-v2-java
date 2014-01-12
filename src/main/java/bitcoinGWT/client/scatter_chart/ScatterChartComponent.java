@@ -11,10 +11,7 @@ package bitcoinGWT.client.scatter_chart;
 import bitcoinGWT.client.candlestick_chart.CustomDataTable;
 import bitcoinGWT.client.candlestick_chart.CustomTooltip;
 import bitcoinGWT.client.util.UiUtils;
-import bitcoinGWT.shared.model.ChartElement;
-import bitcoinGWT.shared.model.Currency;
-import bitcoinGWT.shared.model.TimeInterval;
-import bitcoinGWT.shared.model.TimeWindow;
+import bitcoinGWT.shared.model.*;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.core.client.JsonUtils;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -167,7 +164,7 @@ public class ScatterChartComponent extends BorderLayoutContainer {
         System.out.println(new Date() + ": get chart elements");
 
         //the first time this happens, initialLoad = true, timeOfLastTrade = null.
-        UiUtils.getAsyncService().getTradesForChart(Currency.EUR, timeOfLastTrade, initialLoad, TimeInterval.TEN_MINUTES, new AsyncCallback<Set<ChartElement>>() {
+        UiUtils.getAsyncService().getTradesForChart(Markets.MTGOX, Currency.EUR, timeOfLastTrade, initialLoad, TimeInterval.TEN_MINUTES, new AsyncCallback<Set<ChartElement>>() {
             @Override
             public void onFailure(Throwable caught) {
                 //To change body of implemented methods use File | Settings | File Templates.

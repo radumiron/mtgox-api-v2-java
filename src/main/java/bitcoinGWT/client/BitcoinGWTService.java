@@ -15,11 +15,11 @@ public interface BitcoinGWTService extends RemoteService {
     String getMessage(String msg);
 
 
-    TickerFullLayoutObject getPrice(Currency currency);
+    TickerFullLayoutObject getPrice(Markets market, Currency currency);
 
-    PagingLoadResult<TradesFullLayoutObject> getTradesForGrid(Currency currency, Long timestamp, PagingLoadConfig config);
+    PagingLoadResult<TradesFullLayoutObject> getTradesForGrid(Markets market, Currency currency, Long timestamp, PagingLoadConfig config);
 
-    Set<ChartElement> getTradesForChart(Currency currency, Long timestamp, boolean initialLoad, TimeInterval interval);
+    Set<ChartElement> getTradesForChart(Markets market, Currency currency, Long timestamp, boolean initialLoad, TimeInterval interval);
 
-    boolean shouldLoadTradesFromServer(Currency currency);
+    boolean shouldLoadTradesFromServer(Markets market, Currency currency);
 }

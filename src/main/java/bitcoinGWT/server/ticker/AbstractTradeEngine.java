@@ -20,10 +20,6 @@ public abstract class AbstractTradeEngine {
 
     private Timer tickerTimer = new Timer();
 
-    @Autowired
-    //protected List<TradeInterface> markets;
-    protected TradeInterface trade;
-
     protected AbstractTradeEngine() {
         tickerTimer.scheduleAtFixedRate(new TickerTask(), getInitialDelay(), getTimerInterval());
     }

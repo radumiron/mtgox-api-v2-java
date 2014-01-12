@@ -20,11 +20,10 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import trading.api_interfaces.TradeInterface;
+import bitcoinGWT.shared.model.*;
 import bitcoinGWT.shared.model.Currency;
-import bitcoinGWT.shared.model.TickerFullLayoutObject;
-import bitcoinGWT.shared.model.TickerShallowObject;
-import bitcoinGWT.shared.model.TradesFullLayoutObject;
+import trading.api_interfaces.MtGoxTradeInterface;
+import trading.api_interfaces.TradeInterface;
 import trading.mtgox_api.com.mtgox.api.constants.TradeParams;
 import trading.mtgox_api.com.mtgox.examples.utils.Utils;
 import org.apache.commons.codec.binary.Base64;
@@ -44,13 +43,11 @@ import org.springframework.stereotype.Component;
  *         unofficial documentation by nitrous https://bitbucket.org/nitrous/mtgox-api/overview
  */
 @Component
-public class MtGox implements TradeInterface {
+public class MtGox extends MtGoxTradeInterface {
 
     public static final String MONEY_TICKER = "/MONEY/TICKER";
 
-    public enum RequestType {GET, POST}
-
-    ;
+    public enum RequestType {GET, POST};
 
     private ApiKeys keys;
 
@@ -471,7 +468,7 @@ public class MtGox implements TradeInterface {
                 Double amount = Double.parseDouble((String) jsonTrade.get(TradeParams.Trades.amount.toString()));
                 Currency priceCurrency = Currency.valueOf((String) jsonTrade.get(TradeParams.Trades.price_currency.toString()));
                 Currency item = Currency.valueOf((String) jsonTrade.get(TradeParams.Trades.item.toString()));
-                TradesFullLayoutObject.TradeType tradeType = TradesFullLayoutObject.TradeType
+                TradeType tradeType = TradeType
                         .valueOf((String) jsonTrade.get(TradeParams.Trades.trade_type.toString()));
 
                 TradesFullLayoutObject trade = new TradesFullLayoutObject(tradeId, new Date(date), price, amount, priceCurrency, item, tradeType);
