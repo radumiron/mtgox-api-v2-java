@@ -58,7 +58,7 @@ public class TradesConverter {
     }
 
     public static List<TradesHistoryRecord> convertTradesShallowObjectsToTradesHistoryRecords(
-            List<TradesShallowObject> shallowObjects) {
+            List<? extends TradesShallowObject> shallowObjects) {
         List<TradesHistoryRecord> result = new ArrayList<>();
         for (TradesShallowObject trade : shallowObjects) {
             TradesHistoryRecord record = new TradesHistoryRecord(trade.getDate().getTime(), trade.getAmount(), trade.getPrice());

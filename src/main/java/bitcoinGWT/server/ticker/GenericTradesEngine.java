@@ -3,6 +3,7 @@ package bitcoinGWT.server.ticker;
 import bitcoinGWT.server.converter.TradesConverter;
 import bitcoinGWT.server.dao.GenericDAO;
 import bitcoinGWT.server.dao.entities.TradesFullLayoutRecord;
+import bitcoinGWT.server.dao.entities.TradesHistoryRecord;
 import bitcoinGWT.server.util.ObjectSizeCalculator;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.Markets;
@@ -89,6 +90,12 @@ public class GenericTradesEngine extends TradesEngine {
             recordsToSave.put(HistoryDownloader.getMarketIdentifierName(market, currency),
                     TradesConverter.convertTradesFullLayoutObjectsToTradesFullLayoutRecords(sortedTrades));
             dao.saveTradesFullLayoutRecords(recordsToSave, true);
+
+            //save also data for the history (for the chart)
+            Map<String, List<TradesHistoryRecord>> historyRecordsToSave = new HashMap<>();
+            historyRecordsToSave.put(HistoryDownloader.getMarketIdentifierName(market, currency),
+                    TradesConverter.convertTradesShallowObjectsToTradesHistoryRecords(sortedTrades));
+            dao.saveTradesHistoryRecords(historyRecordsToSave, true);
 
             System.out.println(new Date() + " new trades loaded, size of loaded trades=" + sortedTrades.size());
             //in case the list downloaded is NOT empty, mark that all who will ask for trades will be able to download the new list

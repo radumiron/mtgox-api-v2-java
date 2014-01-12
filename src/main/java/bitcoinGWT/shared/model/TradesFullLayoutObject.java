@@ -28,6 +28,7 @@ public class TradesFullLayoutObject extends TradesShallowObject implements IsSer
                                   double tradeAmount, Currency currency,
                                   Currency tradeItem,
                                   TradeType type) {
+        super(tradeDate, tradeAmount, tradePrice);
         this.tradeId = tradeId;
         this.date = tradeDate;
         this.price = tradePrice;
