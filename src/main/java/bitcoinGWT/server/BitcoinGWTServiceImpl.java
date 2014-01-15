@@ -51,6 +51,11 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
     }
 
     @Override
+    public List<Currency> getSupportedCurrencies(Markets market) {
+        return tradesEngine.getSupportedCurrencies(market);
+    }
+
+    @Override
     public TickerFullLayoutObject getPrice(Markets market, Currency currency) {
         return ticker.getPrice(currency);
     }

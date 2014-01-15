@@ -48,6 +48,25 @@ public class MongoDAO implements GenericDAO {
         }
     }
 
+    private void parseDBRecords(List<TradesFullLayoutRecord> result, DBCursor cursor) {
+        while(cursor.hasNext()) {
+            DBObject obj = cursor.next();
+            try {
+                Long date = (Long) obj.get(TradesFullLayoutRecord.COLUMN_DATE);
+                Double price = (Double) obj.get(TradesFullLayoutRecord.COLUMN_PRICE);
+                Double amount = (Double) obj.get(TradesFullLayoutRecord.COLUMN_AMOUNT);
+                Currency currency = Currency.valueOf(String.valueOf(obj.get(TradesFullLayoutRecord.COLUMN_CURRENCY)));
+                Currency tradeItem = Currency.valueOf(String.valueOf(obj.get(TradesFullLayoutRecord.COLUMN_TRADE_ITEM)));
+                Long tradeId = (Long) obj.get(TradesFullLayoutRecord.COLUMN_TRADE_ID);
+                TradeType type = TradeType.valueOf(String.valueOf(obj.get(TradesFullLayoutRecord.COLUMN_TRADE_TYPE)));
+                TradesFullLayoutRecord record = new TradesFullLayoutRecord(tradeId, date, price, amount, currency, tradeItem, type);
+                result.add(record);
+            } catch (Exception e) {
+                System.out.println("Cannot parse JSON for record:" + obj);
+            }
+        }
+    }
+
     public void saveTradesHistoryRecords(Map<String, List<TradesHistoryRecord>> csvRecords, boolean saveLastRecord) {
         DB db = mongoClient.getDB(connectionProperties.getProperty(MongoConnectionPropertyKeys.SCHEMA.getKey()));
 
@@ -90,6 +109,7 @@ public class MongoDAO implements GenericDAO {
 
         for (Map.Entry<String, List<TradesFullLayoutRecord>> entry : csvRecords.entrySet()) {
             DBCollection tradesTable = db.getCollection(entry.getKey() + TradesFullLayoutRecord.TRADES_TABLE_SUFFIX);
+            changeFullTradesTableDefinition(tradesTable);
 
             Date before = new Date();
 
@@ -118,13 +138,26 @@ public class MongoDAO implements GenericDAO {
             before = new Date();
             System.out.println("Start saving " + recordsSizeToSave + " CSV records");
             try {
-                tradesTable.insert(dbRecords);
+                for (DBObject document: dbRecords) {
+                    try {
+                        tradesTable.insert(document);
+                    } catch (MongoException.DuplicateKey dup) {
+                        System.err.println("Trying to insert duplicate record, skipping...(" + document + ")");
+                    }
+                }
                 System.out.println("Done saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Error occurred while saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
             }
         }
+    }
+
+    private void changeFullTradesTableDefinition(DBCollection tradesTable) {
+        BasicDBObject indexProperties = new BasicDBObject();
+        indexProperties.put("unique", true);
+        indexProperties.put("dropDups", true);
+        tradesTable.ensureIndex(new BasicDBObject(TradesFullLayoutRecord.COLUMN_TRADE_ID, 1), indexProperties);
     }
 
     @Override
@@ -156,25 +189,6 @@ public class MongoDAO implements GenericDAO {
 
 
         return result;
-    }
-
-    private void parseDBRecords(List<TradesFullLayoutRecord> result, DBCursor cursor) {
-        while(cursor.hasNext()) {
-            DBObject obj = cursor.next();
-            try {
-                Long date = (Long) obj.get(TradesFullLayoutRecord.COLUMN_DATE);
-                Double price = (Double) obj.get(TradesFullLayoutRecord.COLUMN_PRICE);
-                Double amount = (Double) obj.get(TradesFullLayoutRecord.COLUMN_AMOUNT);
-                Currency currency = Currency.valueOf(String.valueOf(obj.get(TradesFullLayoutRecord.COLUMN_CURRENCY)));
-                Currency tradeItem = Currency.valueOf(String.valueOf(obj.get(TradesFullLayoutRecord.COLUMN_TRADE_ITEM)));
-                Long tradeId = (Long) obj.get(TradesFullLayoutRecord.COLUMN_TRADE_ID);
-                TradeType type = TradeType.valueOf(String.valueOf(obj.get(TradesFullLayoutRecord.COLUMN_TRADE_TYPE)));
-                TradesFullLayoutRecord record = new TradesFullLayoutRecord(tradeId, date, price, amount, currency, tradeItem, type);
-                result.add(record);
-            } catch (Exception e) {
-                System.out.println("Cannot parse JSON for record:" + obj);
-            }
-        }
     }
 
     private enum MongoConnectionPropertyKeys {

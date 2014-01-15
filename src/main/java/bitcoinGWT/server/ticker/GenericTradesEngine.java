@@ -49,12 +49,14 @@ public class GenericTradesEngine extends TradesEngine {
 
     private Table<Markets, Currency, Boolean> shouldLoadTradesMap;
 
-    private Long previousTimestamp;
+    private Table<Markets, Currency, Long> previousTimestampMap;
 
     @PostConstruct
     private void init() {
-        executor = Executors.newFixedThreadPool(20);
+        //executor = Executors.newFixedThreadPool();
+        executor = Executors.newSingleThreadExecutor();
         shouldLoadTradesMap = HashBasedTable.create();
+        previousTimestampMap = HashBasedTable.create();
     }
 
     @Override
@@ -64,9 +66,12 @@ public class GenericTradesEngine extends TradesEngine {
 
     private void loadAndSaveTrades() {
         //go over all supported markets
-        for (Markets market : Markets.values()) {
-            loadAndSaveTradesPerMarket(market);
-        }
+        //for (Markets market : Markets.values()) {
+        //    loadAndSaveTradesPerMarket(market);
+        //}
+        //todo currently we load just for MTGOX
+        loadAndSaveTradesPerMarket(Markets.MTGOX);
+
     }
 
     private void loadAndSaveTradesPerMarket(Markets market) {
@@ -82,7 +87,7 @@ public class GenericTradesEngine extends TradesEngine {
 
     private void loadAndSaveTradesPerMarketAndCurrency(Markets market, Currency currency) {
         //todo in case previousTimestamp is more recent than the latest record in the DB, save new trades
-        List<TradesFullLayoutObject> sortedTrades = new ArrayList<>(trade.getTrades(market, currency, getPreviousTimestamp()));
+        List<TradesFullLayoutObject> sortedTrades = new ArrayList<>(trade.getTrades(market, currency, getPreviousTimestamp(market, currency)));
 
         if (sortedTrades.size() > 0) {
             //save the new trades in the database
@@ -106,6 +111,49 @@ public class GenericTradesEngine extends TradesEngine {
         }
     }
 
+    private List<TradesFullLayoutObject> getAllTrades(Markets market, Currency currency) {
+        return getTrades(market, currency, null);
+    }
+
+    private List<TradesFullLayoutObject> getTrades(Markets market, Currency currency, Long timestamp) {
+        List<TradesFullLayoutRecord> records = dao.getTradesFullLayoutRecords(HistoryDownloader.getMarketIdentifierName(market, currency), timestamp, true);
+        return TradesConverter.convertTradesFullLayoutRecordsToTradesFullLayoutObjects(records);
+    }
+
+    private long getPreviousTimestamp(Markets market, Currency currency) {
+        Long previousTimestamp = previousTimestampMap.get(market, currency);
+        Calendar calendar = GregorianCalendar.getInstance();
+        //set the time when this method was previously executed
+        if (previousTimestamp == null) {    //if first download of trades
+            //initialize previousTimestamp with the current time
+            previousTimestamp = calendar.getTimeInMillis();
+            previousTimestampMap.put(market, currency, previousTimestamp);
+            System.out.println("first time trades");
+
+            System.out.println("current time: " + new Date(previousTimestamp));
+            //go back the specified amount of seconds
+            calendar.add(Calendar.MILLISECOND, (-1) * INITIAL_TRADES_INTERVAL);
+
+            return calendar.getTimeInMillis();
+        } else {
+            //save the current run time as a reference for the next run time.
+            Long currentExecutionTime = calendar.getTimeInMillis();
+            previousTimestampMap.put(market, currency, currentExecutionTime);
+            System.out.println("getting trades from: " + new Date(previousTimestamp) + " to " + new Date(currentExecutionTime));
+            return previousTimestamp;
+        }
+    }
+
+    @Override
+    protected int getTimerInterval() {
+        return TRADES_RETRIEVAL_INTERVAL;
+    }
+
+    @Override
+    public List<Currency> getSupportedCurrencies(Markets market) {
+        return trade.getSupportedCurrencies(market);
+    }
+
     public boolean shouldLoadTradesFromServer(Markets market, Currency currency) {
         return shouldLoadTradesMap.get(market, currency);
     }
@@ -121,44 +169,6 @@ public class GenericTradesEngine extends TradesEngine {
 
         //Collections.reverse(result);
         return new LinkedHashSet<>(result);
-    }
-
-    private List<TradesFullLayoutObject> getAllTrades(Markets market, Currency currency) {
-        return getTrades(market, currency, null);
-    }
-
-    private List<TradesFullLayoutObject> getTrades(Markets market, Currency currency, Long timestamp) {
-        List<TradesFullLayoutRecord> records = dao.getTradesFullLayoutRecords(HistoryDownloader.getMarketIdentifierName(market, currency), timestamp, true);
-        return TradesConverter.convertTradesFullLayoutRecordsToTradesFullLayoutObjects(records);
-    }
-
-    private long getPreviousTimestamp() {
-        Calendar calendar = GregorianCalendar.getInstance();
-        //set the time when this method was previously executed
-        if (previousTimestamp == null) {    //if first download of trades
-            System.out.println("first time trades");
-            previousTimestamp = calendar.getTimeInMillis();
-            System.out.println("current time: " + new Date(previousTimestamp));
-            //go back the specified amount of seconds
-            calendar.add(Calendar.MILLISECOND, (-1) * INITIAL_TRADES_INTERVAL);
-            System.out.println("getting trades since: " + calendar.getTime());
-        } else {
-            long temporaryTimestamp = calendar.getTimeInMillis();   //save the current execution time to a temp variable
-            //roll back the calendar with the amount of milliseconds passed since the last run.
-            calendar.add(Calendar.MILLISECOND, (-1) * (int) (calendar.getTimeInMillis() - previousTimestamp));
-
-            System.out.println("getting trades from: " + new Date(previousTimestamp) + " to " + new Date(temporaryTimestamp));
-            //save the current run time as a reference for the next run time.
-            previousTimestamp = temporaryTimestamp;
-        }
-
-        //return the actual time since when to return the trades.
-        return calendar.getTimeInMillis();
-    }
-
-    @Override
-    protected int getTimerInterval() {
-        return TRADES_RETRIEVAL_INTERVAL;
     }
 
     class TradesEngineRunnable implements Runnable {

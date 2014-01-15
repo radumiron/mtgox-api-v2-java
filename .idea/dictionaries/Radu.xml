@@ -2,7 +2,16 @@
   <dictionary name="Radu">
     <words>
       <w>bitcoin</w>
+      <w>bitcoincharts</w>
+      <w>bitcurex</w>
+      <w>bitstamp</w>
+      <w>blockchain</w>
+      <w>btcchina</w>
+      <w>btce</w>
+      <w>campbx</w>
+      <w>cavirtex</w>
       <w>codec</w>
+      <w>kraken</w>
       <w>mongo</w>
       <w>mongodb</w>
       <w>mtgox</w>

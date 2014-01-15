@@ -121,6 +121,16 @@ public class TradesEngine extends AbstractTradeEngine {
         return calendar.getTimeInMillis();
     }
 
+    private Set<TradesFullLayoutObject> getAllTrades() {
+        LinkedHashSet<TradesFullLayoutObject> result = new LinkedHashSet<>();
+        //first copy the map
+        List<TradesFullLayoutObject> allTradesCopy = new ArrayList<>(allLoadedTrades.values());
+        //reverse the result list in order to have it "oldest first"
+        Collections.reverse(allTradesCopy);
+        result.addAll(allTradesCopy);
+        return result;
+    }
+
     public Set<TradesFullLayoutObject> getTrades(Markets markets, Currency currency, Long timestamp, boolean initialLoad) {
         if (initialLoad) {  //in case the client doesn't have any trades yet, give him all the trades
             return getAllTrades();
@@ -155,13 +165,7 @@ public class TradesEngine extends AbstractTradeEngine {
         return shouldLoadTrades;
     }
 
-    private Set<TradesFullLayoutObject> getAllTrades() {
-        LinkedHashSet<TradesFullLayoutObject> result = new LinkedHashSet<>();
-        //first copy the map
-        List<TradesFullLayoutObject> allTradesCopy = new ArrayList<>(allLoadedTrades.values());
-        //reverse the result list in order to have it "oldest first"
-        Collections.reverse(allTradesCopy);
-        result.addAll(allTradesCopy);
-        return result;
+    public List<Currency> getSupportedCurrencies(Markets market) {
+        return trade.getSupportedCurrencies(market);
     }
 }

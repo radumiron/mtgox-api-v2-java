@@ -2,6 +2,7 @@ package bitcoinGWT.server.ticker;
 
 import bitcoinGWT.shared.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import trading.api_interfaces.MtGoxTradeInterface;
 import trading.api_interfaces.TradeInterface;
@@ -20,6 +21,10 @@ public class TickerEngine extends AbstractTradeEngine {
 
     @Autowired
     protected TradeInterface trade;
+
+    @Autowired
+    @Qualifier("GENERIC")
+    private TradesEngine tradesEngine;
 
     private TickerFullLayoutObject fullLayoutObject;
 

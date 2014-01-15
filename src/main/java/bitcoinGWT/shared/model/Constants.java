@@ -13,7 +13,7 @@ public class Constants {
     public static int TRADES_INTERVAL = 30000;
     //TODO increase this to 7 days (1 week)
     public static final int INITIAL_TRADES_INTERVAL = /*24*//*12*//*3*/  60 * 60 * 1000; //last 1 hour
-    public static final int TRADES_RETRIEVAL_INTERVAL = 5 * 1000;//5 seconds
+    public static final int TRADES_RETRIEVAL_INTERVAL = 60 * 1000;//5 seconds
 
     public static final int CANDLESTICK_CHART_TRADES_RETRIEVAL_INTERVAL = 1 * 60 * 1000;//1 minute
 

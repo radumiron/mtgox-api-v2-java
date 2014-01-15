@@ -9,5 +9,14 @@ package bitcoinGWT.shared.model;
  */
 public enum Markets {
 
+    BITCOINCHARTS,
+    BITCUREX,
+    BITSTAMP,
+    /*BLOCKCHAIN,*/
+    BTCCHINA,
+    BTCE,
+    CAMPBX,
+    CAVIRTEX,
+    KRAKEN,
     MTGOX;
 }

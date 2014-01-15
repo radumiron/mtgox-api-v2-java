@@ -5,15 +5,23 @@ import com.xeiam.xchange.Exchange;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.bitcoincharts.BitcoinChartsExchange;
 import com.xeiam.xchange.bitcoincharts.service.polling.BitcoinChartsPollingMarketDataService;
+import com.xeiam.xchange.bitcurex.BitcurexExchange;
+import com.xeiam.xchange.bitstamp.BitstampExchange;
+import com.xeiam.xchange.blockchain.BlockchainExchange;
+import com.xeiam.xchange.btcchina.BTCChinaExchange;
+import com.xeiam.xchange.btce.BTCEExchange;
+import com.xeiam.xchange.campbx.CampBXExchange;
 import com.xeiam.xchange.currency.Currencies;
 import com.xeiam.xchange.currency.CurrencyPair;
 import com.xeiam.xchange.dto.marketdata.Ticker;
 import com.xeiam.xchange.dto.marketdata.Trade;
 import com.xeiam.xchange.dto.marketdata.Trades;
+import com.xeiam.xchange.kraken.KrakenExchange;
 import com.xeiam.xchange.mtgox.v2.MtGoxExchange;
 import com.xeiam.xchange.mtgox.v2.MtGoxV2;
 import com.xeiam.xchange.mtgox.v2.dto.trade.polling.MtGoxLagWrapper;
 import com.xeiam.xchange.service.polling.PollingMarketDataService;
+import com.xeiam.xchange.virtex.VirtExExchange;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import si.mazi.rescu.RestProxyFactory;
@@ -37,9 +45,6 @@ import java.util.Map;
 @Primary
 public class XChangeTrading implements TradeInterface {
 
-    private PollingMarketDataService mtGoxService;
-    private BitcoinChartsPollingMarketDataService bitcoinChartsService;
-
     private Map<Markets, PollingMarketDataService> marketsServiceMap;
     private Map<Markets, Exchange> marketsExchangeMap;
 
@@ -53,19 +58,49 @@ public class XChangeTrading implements TradeInterface {
 
     private void initServices() {
         // Use the factory to get the version 2 MtGox exchange API using default settings
-        Exchange mtGoxExchange = ExchangeFactory.INSTANCE.createExchange(MtGoxExchange.class.getName());
         Exchange bitcoinChartsExchange = ExchangeFactory.INSTANCE.createExchange(BitcoinChartsExchange.class.getName());
+        Exchange bitcurexExchange = ExchangeFactory.INSTANCE.createExchange(BitcurexExchange.class.getName());
+        Exchange bitstampExchange = ExchangeFactory.INSTANCE.createExchange(BitstampExchange.class.getName());
+        Exchange blockchainExchange = ExchangeFactory.INSTANCE.createExchange(BlockchainExchange.class.getName());
+        Exchange btcchinaExchange = ExchangeFactory.INSTANCE.createExchange(BTCChinaExchange.class.getName());
+        Exchange btceExchange = ExchangeFactory.INSTANCE.createExchange(BTCEExchange.class.getName());
+        Exchange campBxExchange = ExchangeFactory.INSTANCE.createExchange(CampBXExchange.class.getName());
+        Exchange cavirtexExchange = ExchangeFactory.INSTANCE.createExchange(VirtExExchange.class.getName());
+        Exchange krakenExchange = ExchangeFactory.INSTANCE.createExchange(KrakenExchange.class.getName());
+        Exchange mtGoxExchange = ExchangeFactory.INSTANCE.createExchange(MtGoxExchange.class.getName());
 
+        marketsExchangeMap.put(Markets.BITCOINCHARTS, bitcoinChartsExchange);
+        marketsExchangeMap.put(Markets.BITCUREX, bitcurexExchange);
+        marketsExchangeMap.put(Markets.BITSTAMP, bitstampExchange);
+        marketsExchangeMap.put(Markets.BTCCHINA, btcchinaExchange);
+        marketsExchangeMap.put(Markets.BTCE, btceExchange);
+        marketsExchangeMap.put(Markets.CAMPBX, campBxExchange);
+        marketsExchangeMap.put(Markets.CAVIRTEX, cavirtexExchange);
+        marketsExchangeMap.put(Markets.KRAKEN, krakenExchange);
         marketsExchangeMap.put(Markets.MTGOX, mtGoxExchange);
-        //marketsExchangeMap.put(Markets.BITCOIN_CHARTS, bitcoinChartsExchange);
 
         // Interested in the public polling market data feed (no authentication)
-        mtGoxService = mtGoxExchange.getPollingMarketDataService();
 
-        bitcoinChartsService = (BitcoinChartsPollingMarketDataService) bitcoinChartsExchange.getPollingMarketDataService();
+        PollingMarketDataService bitcurexService = bitcurexExchange.getPollingMarketDataService();
+        PollingMarketDataService bitstampService = bitstampExchange.getPollingMarketDataService();
+        PollingMarketDataService blockchainService = blockchainExchange.getPollingMarketDataService();
+        PollingMarketDataService btcchinaService = btcchinaExchange.getPollingMarketDataService();
+        PollingMarketDataService btceService = btceExchange.getPollingMarketDataService();
+        PollingMarketDataService campBxService = campBxExchange.getPollingMarketDataService();
+        PollingMarketDataService cavirtexService = cavirtexExchange.getPollingMarketDataService();
+        PollingMarketDataService krakenService = krakenExchange.getPollingMarketDataService();
+        PollingMarketDataService mtGoxService = mtGoxExchange.getPollingMarketDataService();
+        PollingMarketDataService bitcoinChartsService = bitcoinChartsExchange.getPollingMarketDataService();
 
+        marketsServiceMap.put(Markets.BITCOINCHARTS, bitcoinChartsService);
+        marketsServiceMap.put(Markets.BITCUREX, bitcurexService);
+        marketsServiceMap.put(Markets.BITSTAMP, bitstampService);
+        marketsServiceMap.put(Markets.BTCCHINA, btcchinaService);
+        marketsServiceMap.put(Markets.BTCE, btceService);
+        marketsServiceMap.put(Markets.CAMPBX, campBxService);
+        marketsServiceMap.put(Markets.CAVIRTEX, cavirtexService);
+        marketsServiceMap.put(Markets.KRAKEN, krakenService);
         marketsServiceMap.put(Markets.MTGOX, mtGoxService);
-        //marketsServiceMap.put(Markets.BITCOIN_CHARTS, bitcoinChartsService);
     }
 
 

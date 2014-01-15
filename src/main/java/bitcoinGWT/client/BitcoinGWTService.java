@@ -14,6 +14,7 @@ public interface BitcoinGWTService extends RemoteService {
     // Sample interface method of remote interface
     String getMessage(String msg);
 
+    List<Currency> getSupportedCurrencies(Markets market);
 
     TickerFullLayoutObject getPrice(Markets market, Currency currency);
 
