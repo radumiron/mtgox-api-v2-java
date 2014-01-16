@@ -15,8 +15,8 @@ public enum Markets {
     /*BLOCKCHAIN,*/
     BTCCHINA,
     BTCE,
-    CAMPBX,
-    CAVIRTEX,
+    /*CAMPBX,*/
+    /*CAVIRTEX,*/
     KRAKEN,
     MTGOX;
 }

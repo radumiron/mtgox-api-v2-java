@@ -43,6 +43,7 @@ public class GenericTradesEngine extends TradesEngine {
     private GenericDAO dao;
 
     @Autowired
+    @Qualifier("XChange")
     private TradeInterface trade;
 
     private ExecutorService executor;
@@ -53,6 +54,7 @@ public class GenericTradesEngine extends TradesEngine {
 
     @PostConstruct
     private void init() {
+        //todo put more threads here
         //executor = Executors.newFixedThreadPool();
         executor = Executors.newSingleThreadExecutor();
         shouldLoadTradesMap = HashBasedTable.create();
@@ -81,7 +83,7 @@ public class GenericTradesEngine extends TradesEngine {
         //todo currently we load just for EUR
         executor.execute(new TradesEngineRunnable(market, Currency.EUR));
         /*for (Currency currency : supportedCurrencies) {
-            executor.execute(new TradesEngineRunnable(market, currency));
+            executor.execute(new TickerEngineRunnable(market, currency));
         }*/
     }
 
@@ -147,6 +149,10 @@ public class GenericTradesEngine extends TradesEngine {
     @Override
     protected int getTimerInterval() {
         return TRADES_RETRIEVAL_INTERVAL;
+    }
+
+    protected String getTradeName() {
+        return this.getClass().getName();
     }
 
     @Override

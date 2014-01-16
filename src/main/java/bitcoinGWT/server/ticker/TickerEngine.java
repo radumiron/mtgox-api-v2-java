@@ -20,17 +20,13 @@ import java.util.Date;
 public class TickerEngine extends AbstractTradeEngine {
 
     @Autowired
-    protected TradeInterface trade;
-
-    @Autowired
-    @Qualifier("GENERIC")
-    private TradesEngine tradesEngine;
+    private TradeInterface trade;
 
     private TickerFullLayoutObject fullLayoutObject;
 
     @Override
     protected void executeTradeTask() {
-        Date initialDate = new Date();
+        /*Date initialDate = new Date();
         System.out.println(initialDate + ": execute ticker task");
         //double price = trade.getPrice(MtGox.Currency.EUR).getPrice();
         TickerShallowObject tradeObject = trade.getPrice(Markets.MTGOX, Currency.EUR);
@@ -46,16 +42,20 @@ public class TickerEngine extends AbstractTradeEngine {
             //String lag = trade.getLag();
             System.out.println(new Date() + ": last price: " + tradeObject.getPrice());// + ", lag: " + lag);
             System.out.println();
-        }
+        }*/
     }
 
-    public TickerFullLayoutObject getPrice(Currency currency) {
+    public TickerFullLayoutObject getPrice(Markets market, Currency currency) {
         return fullLayoutObject;
     }
 
     @Override
     protected int getTimerInterval() {
         return Constants.TICKER_INTERVAL;
+    }
+
+    protected String getTradeName() {
+        return this.getClass().getName();
     }
 
 

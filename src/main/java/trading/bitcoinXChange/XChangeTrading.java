@@ -22,6 +22,8 @@ import com.xeiam.xchange.mtgox.v2.MtGoxV2;
 import com.xeiam.xchange.mtgox.v2.dto.trade.polling.MtGoxLagWrapper;
 import com.xeiam.xchange.service.polling.PollingMarketDataService;
 import com.xeiam.xchange.virtex.VirtExExchange;
+import history.HistoryDownloader;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import si.mazi.rescu.RestProxyFactory;
@@ -43,6 +45,7 @@ import java.util.Map;
  */
 @Component
 @Primary
+@Qualifier("XChange")
 public class XChangeTrading implements TradeInterface {
 
     private Map<Markets, PollingMarketDataService> marketsServiceMap;
@@ -74,8 +77,8 @@ public class XChangeTrading implements TradeInterface {
         marketsExchangeMap.put(Markets.BITSTAMP, bitstampExchange);
         marketsExchangeMap.put(Markets.BTCCHINA, btcchinaExchange);
         marketsExchangeMap.put(Markets.BTCE, btceExchange);
-        marketsExchangeMap.put(Markets.CAMPBX, campBxExchange);
-        marketsExchangeMap.put(Markets.CAVIRTEX, cavirtexExchange);
+        /*marketsExchangeMap.put(Markets.CAMPBX, campBxExchange);*/
+        //marketsExchangeMap.put(Markets.CAVIRTEX, cavirtexExchange);
         marketsExchangeMap.put(Markets.KRAKEN, krakenExchange);
         marketsExchangeMap.put(Markets.MTGOX, mtGoxExchange);
 
@@ -97,8 +100,8 @@ public class XChangeTrading implements TradeInterface {
         marketsServiceMap.put(Markets.BITSTAMP, bitstampService);
         marketsServiceMap.put(Markets.BTCCHINA, btcchinaService);
         marketsServiceMap.put(Markets.BTCE, btceService);
-        marketsServiceMap.put(Markets.CAMPBX, campBxService);
-        marketsServiceMap.put(Markets.CAVIRTEX, cavirtexService);
+        /*marketsServiceMap.put(Markets.CAMPBX, campBxService);*/
+        //marketsServiceMap.put(Markets.CAVIRTEX, cavirtexService);
         marketsServiceMap.put(Markets.KRAKEN, krakenService);
         marketsServiceMap.put(Markets.MTGOX, mtGoxService);
     }
@@ -125,7 +128,8 @@ public class XChangeTrading implements TradeInterface {
                     ticker.getTimestamp(), ticker.getAsk().getAmount().doubleValue(), -1d,
                     ticker.getBid().getAmount().doubleValue(), ticker.getHigh().getAmount().doubleValue(), -1d, -1d, -1d,
                     ticker.getLow().getAmount().doubleValue(), ticker.getVolume().doubleValue(), -1d);
-        } catch (IOException e) {
+        } catch (Throwable e) {
+            System.out.println("error while invoking ticker service for:" + HistoryDownloader.getMarketIdentifierName(market, currency));
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
@@ -138,8 +142,11 @@ public class XChangeTrading implements TradeInterface {
         List<CurrencyPair> supportedCurrencies = marketsServiceMap.get(market).getExchangeSymbols();
         for (CurrencyPair pair : supportedCurrencies) {
             try {
-                result.add(Currency.valueOf(pair.counterCurrency));
-            } catch (Exception e) {
+                Currency currency = Currency.valueOf(pair.counterCurrency);
+                if (currency != Currency.BTC) {
+                    result.add(currency);
+                }
+            } catch (Throwable e) {
                 System.out.println("Cannot convert unknown currency: " + pair.toString());
             }
         }

@@ -97,6 +97,10 @@ public class TradesEngine extends AbstractTradeEngine {
         return TRADES_RETRIEVAL_INTERVAL;
     }
 
+    protected String getTradeName() {
+        return this.getClass().getName();
+    }
+
     private long getPreviousTimestamp() {
         Calendar calendar = GregorianCalendar.getInstance();
         //set the time when this method was previously executed

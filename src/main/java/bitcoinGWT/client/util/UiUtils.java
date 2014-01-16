@@ -46,10 +46,10 @@ public class UiUtils {
                 return MyImages.INSTANCE.btcchina();
             case BTCE:
                 return MyImages.INSTANCE.btce();
-            case CAMPBX:
-                return MyImages.INSTANCE.campbx();
-            case CAVIRTEX:
-                return MyImages.INSTANCE.cavirtex();
+            /*case CAMPBX:
+                return MyImages.INSTANCE.campbx();*/
+            /*case CAVIRTEX:
+                return MyImages.INSTANCE.cavirtex();*/
             case KRAKEN:
                 return MyImages.INSTANCE.kraken();
             case MTGOX: default:
