@@ -23,11 +23,11 @@ public abstract class AbstractTradeEngine {
 
     protected static int INITIAL_DELAY = 5000;
 
-    private ScheduledExecutorService timer = Executors.newScheduledThreadPool(1);
+    private Timer tickerTimer = new Timer(getTradeName());
 
     protected AbstractTradeEngine() {
         System.out.println("Initializing AbstractTradeEngine for trade: " + getTradeName());
-        timer.scheduleWithFixedDelay(new TickerTask(), getInitialDelay(), getTimerInterval(), TimeUnit.MILLISECONDS);
+        tickerTimer.scheduleAtFixedRate(new TickerTask(), getInitialDelay(), getTimerInterval());
     }
 
     protected abstract void executeTradeTask();

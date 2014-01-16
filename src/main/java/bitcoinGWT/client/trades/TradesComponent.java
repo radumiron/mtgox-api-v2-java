@@ -109,6 +109,8 @@ public class TradesComponent extends ContentPanel {
         liveGridView.setCacheSize(Constants.TRADES_GRID_UI_BUFFER);
         //liveGridView.setCacheSize(30);
         liveGridView.setForceFit(true);
+        liveGridView.setStripeRows(true);
+        liveGridView.setColumnLines(true);
 
         ColumnModel<TradesFullLayoutObject> cm = new ColumnModel<TradesFullLayoutObject>(l);
 

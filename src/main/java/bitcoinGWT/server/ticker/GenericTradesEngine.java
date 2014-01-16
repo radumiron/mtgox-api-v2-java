@@ -63,10 +63,10 @@ public class GenericTradesEngine extends TradesEngine {
 
     @Override
     protected void executeTradeTask() {
-        loadAndSaveTrades();
+
     }
 
-    private void loadAndSaveTrades() {
+    public void loadAndSaveTrades() {
         //go over all supported markets
         //for (Markets market : Markets.values()) {
         //    loadAndSaveTradesPerMarket(market);
@@ -76,8 +76,8 @@ public class GenericTradesEngine extends TradesEngine {
 
     }
 
-    private void loadAndSaveTradesPerMarket(Markets market) {
-        List<Currency> supportedCurrencies = trade.getSupportedCurrencies(market);
+    public void loadAndSaveTradesPerMarket(Markets market) {
+        Set<Currency> supportedCurrencies = trade.getSupportedCurrencies(market);
 
         //go over all supported currencies for the current market
         //todo currently we load just for EUR
@@ -87,7 +87,7 @@ public class GenericTradesEngine extends TradesEngine {
         }*/
     }
 
-    private void loadAndSaveTradesPerMarketAndCurrency(Markets market, Currency currency) {
+    public void loadAndSaveTradesPerMarketAndCurrency(Markets market, Currency currency) {
         //todo in case previousTimestamp is more recent than the latest record in the DB, save new trades
         List<TradesFullLayoutObject> sortedTrades = new ArrayList<>(trade.getTrades(market, currency, getPreviousTimestamp(market, currency)));
 
@@ -156,7 +156,7 @@ public class GenericTradesEngine extends TradesEngine {
     }
 
     @Override
-    public List<Currency> getSupportedCurrencies(Markets market) {
+    public Set<Currency> getSupportedCurrencies(Markets market) {
         return trade.getSupportedCurrencies(market);
     }
 

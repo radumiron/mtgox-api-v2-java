@@ -1,10 +1,10 @@
 package trading.bitcoinXChange;
 
 import bitcoinGWT.shared.model.*;
+import bitcoinGWT.shared.model.Currency;
 import com.xeiam.xchange.Exchange;
 import com.xeiam.xchange.ExchangeFactory;
 import com.xeiam.xchange.bitcoincharts.BitcoinChartsExchange;
-import com.xeiam.xchange.bitcoincharts.service.polling.BitcoinChartsPollingMarketDataService;
 import com.xeiam.xchange.bitcurex.BitcurexExchange;
 import com.xeiam.xchange.bitstamp.BitstampExchange;
 import com.xeiam.xchange.blockchain.BlockchainExchange;
@@ -31,10 +31,7 @@ import trading.api_interfaces.TradeInterface;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -72,14 +69,14 @@ public class XChangeTrading implements TradeInterface {
         Exchange krakenExchange = ExchangeFactory.INSTANCE.createExchange(KrakenExchange.class.getName());
         Exchange mtGoxExchange = ExchangeFactory.INSTANCE.createExchange(MtGoxExchange.class.getName());
 
-        marketsExchangeMap.put(Markets.BITCOINCHARTS, bitcoinChartsExchange);
+        /*marketsExchangeMap.put(Markets.BITCOINCHARTS, bitcoinChartsExchange);
         marketsExchangeMap.put(Markets.BITCUREX, bitcurexExchange);
         marketsExchangeMap.put(Markets.BITSTAMP, bitstampExchange);
-        marketsExchangeMap.put(Markets.BTCCHINA, btcchinaExchange);
+        marketsExchangeMap.put(Markets.BTCCHINA, btcchinaExchange);*/
         marketsExchangeMap.put(Markets.BTCE, btceExchange);
-        /*marketsExchangeMap.put(Markets.CAMPBX, campBxExchange);*/
+        /*marketsExchangeMap.put(Markets.CAMPBX, campBxExchange);
         //marketsExchangeMap.put(Markets.CAVIRTEX, cavirtexExchange);
-        marketsExchangeMap.put(Markets.KRAKEN, krakenExchange);
+        marketsExchangeMap.put(Markets.KRAKEN, krakenExchange);*/
         marketsExchangeMap.put(Markets.MTGOX, mtGoxExchange);
 
         // Interested in the public polling market data feed (no authentication)
@@ -95,14 +92,14 @@ public class XChangeTrading implements TradeInterface {
         PollingMarketDataService mtGoxService = mtGoxExchange.getPollingMarketDataService();
         PollingMarketDataService bitcoinChartsService = bitcoinChartsExchange.getPollingMarketDataService();
 
-        marketsServiceMap.put(Markets.BITCOINCHARTS, bitcoinChartsService);
+        /*marketsServiceMap.put(Markets.BITCOINCHARTS, bitcoinChartsService);
         marketsServiceMap.put(Markets.BITCUREX, bitcurexService);
         marketsServiceMap.put(Markets.BITSTAMP, bitstampService);
-        marketsServiceMap.put(Markets.BTCCHINA, btcchinaService);
+        marketsServiceMap.put(Markets.BTCCHINA, btcchinaService);*/
         marketsServiceMap.put(Markets.BTCE, btceService);
         /*marketsServiceMap.put(Markets.CAMPBX, campBxService);*/
         //marketsServiceMap.put(Markets.CAVIRTEX, cavirtexService);
-        marketsServiceMap.put(Markets.KRAKEN, krakenService);
+        /*marketsServiceMap.put(Markets.KRAKEN, krakenService);*/
         marketsServiceMap.put(Markets.MTGOX, mtGoxService);
     }
 
@@ -137,8 +134,8 @@ public class XChangeTrading implements TradeInterface {
     }
 
     @Override
-    public List<Currency> getSupportedCurrencies(Markets market) {
-        List<Currency> result = new ArrayList<>();
+    public Set<Currency> getSupportedCurrencies(Markets market) {
+        Set<Currency> result = new LinkedHashSet<>();
         List<CurrencyPair> supportedCurrencies = marketsServiceMap.get(market).getExchangeSymbols();
         for (CurrencyPair pair : supportedCurrencies) {
             try {

@@ -12,6 +12,7 @@ Chart functionality=
 - for candlestick chart, leave only time intervals buttons and create the candlesticks according to those intervals
   Don't make the range customizable
 
+- change layout to PortalLayout
 
 DONE:
 !attention:

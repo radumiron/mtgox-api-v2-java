@@ -18,8 +18,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.*;
 
 @Service
@@ -41,6 +47,28 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
         AutowireCapableBeanFactory beanFactory = ctx
                 .getAutowireCapableBeanFactory();
         beanFactory.autowireBean(this);
+
+        //ugly hack, trust all certificates
+        TrustManager[] trustAllCerts = new TrustManager[1];
+
+        trustAllCerts[0] = new X509TrustManager() {
+            public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+            }
+
+            public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+            }
+
+            public X509Certificate[] getAcceptedIssuers() {
+                return null;
+            }
+        };
+
+        try {
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (Exception e) {
+        }
     }
 
     @Override
@@ -50,7 +78,7 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
 
     @Override
     public List<Currency> getSupportedCurrencies(Markets market) {
-        return tradesEngine.getSupportedCurrencies(market);
+        return new ArrayList<>(tradesEngine.getSupportedCurrencies(market));
     }
 
     @Override
@@ -105,6 +133,21 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
     @Override
     public boolean shouldLoadTradesFromServer(Markets market, Currency currency) {
         return tradesEngine.shouldLoadTradesFromServer(market, currency);
+    }
+
+    public Map<Currency, String> getSymbolForCurrency(List<Currency> currencies) {
+        Map<Currency, String> result = new HashMap<>();
+
+        Set<java.util.Currency> availableCurrencies = java.util.Currency.getAvailableCurrencies();
+        for (java.util.Currency javaCurrency : availableCurrencies) {
+            for (Currency localCurrency : currencies) {
+                if (javaCurrency.getCurrencyCode().equalsIgnoreCase(localCurrency.name())) {
+                    result.put(localCurrency, javaCurrency.getSymbol());
+                }
+            }
+        }
+
+        return result;
     }
 
     private Comparator<TradesFullLayoutObject> getComparator(final SortInfo sortParams) {

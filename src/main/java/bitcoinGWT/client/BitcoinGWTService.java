@@ -7,6 +7,7 @@ import com.sencha.gxt.data.shared.loader.PagingLoadConfig;
 import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @RemoteServiceRelativePath("bit")

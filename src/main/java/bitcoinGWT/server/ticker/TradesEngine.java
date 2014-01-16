@@ -169,7 +169,7 @@ public class TradesEngine extends AbstractTradeEngine {
         return shouldLoadTrades;
     }
 
-    public List<Currency> getSupportedCurrencies(Markets market) {
+    public Set<Currency> getSupportedCurrencies(Markets market) {
         return trade.getSupportedCurrencies(market);
     }
 }

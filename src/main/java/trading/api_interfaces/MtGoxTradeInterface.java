@@ -6,7 +6,9 @@ import bitcoinGWT.shared.model.TickerShallowObject;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,8 +35,8 @@ public abstract class MtGoxTradeInterface implements TradeInterface {
     }
 
     @Override
-    public List<Currency> getSupportedCurrencies(Markets market) {
-        List<Currency> result = new ArrayList<>();
+    public Set<Currency> getSupportedCurrencies(Markets market) {
+        Set<Currency> result = new LinkedHashSet<>();
         result.add(Currency.EUR);
         return result;
     }

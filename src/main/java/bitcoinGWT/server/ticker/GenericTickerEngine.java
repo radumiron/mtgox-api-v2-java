@@ -14,6 +14,7 @@ import trading.api_interfaces.TradeInterface;
 import javax.annotation.PostConstruct;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,7 +33,7 @@ public class GenericTickerEngine extends TickerEngine {
 
     @Autowired
     @Qualifier("GENERIC")
-    private TradesEngine tradesEngine;
+    private GenericTradesEngine tradesEngine;
 
     @Autowired
     @Qualifier("XChange")
@@ -53,6 +54,7 @@ public class GenericTickerEngine extends TickerEngine {
     protected void executeTradeTask() {
         getTicker();
     }
+
     @Override
     protected int getTimerInterval() {
         return Constants.TICKER_INTERVAL;
@@ -76,28 +78,38 @@ public class GenericTickerEngine extends TickerEngine {
     }
 
     private void getTickerPerMarket(Markets market) {
-        List<Currency> supportedCurrencies = trade.getSupportedCurrencies(market);
+        Set<Currency> supportedCurrencies = trade.getSupportedCurrencies(market);
 
         //go over all supported currencies for the current market
         for (Currency currency : supportedCurrencies) {
-            executor.execute(new TickerEngineRunnable(market, currency));
+            executor.submit(new TickerEngineRunnable(market, currency));
         }
     }
 
     private void getTickerPerMarketAndCurrency(Markets market, Currency currency) {
         Date initialDate = new Date();
         String marketIdentifier = HistoryDownloader.getMarketIdentifierName(market, currency);
-        System.out.println(initialDate + ": execute ticker task for: " +marketIdentifier);
+        System.out.println(initialDate + ": execute ticker task for: " + marketIdentifier);
         //double price = trade.getPrice(MtGox.Currency.EUR).getPrice();
         TickerShallowObject tradeObject = trade.getPrice(market, currency);
         if (tradeObject instanceof TickerFullLayoutObject) {
             //if all went well, we should have a full layout object
-            TickerFullLayoutObject fullLayoutObject = (TickerFullLayoutObject) tradeObject;
+            TickerFullLayoutObject currentTicker = (TickerFullLayoutObject) tradeObject;
+
+            //get old value from the cache
+            TickerFullLayoutObject oldTicker = tickerMap.get(new MultiKey(market, currency));
+            if (oldTicker != null) {    //if we already have a ticker
+                //check if there is a difference between the tickers, and load the trades only then
+                //the difference between the tickers is most probably caused by some trades
+                if (oldTicker.getPrice() != currentTicker.getPrice()) {
+                    tradesEngine.loadAndSaveTradesPerMarketAndCurrency(market, currency);
+                }
+            }
 
             //put this object in the cache
-            tickerMap.put(new MultiKey(market, currency), fullLayoutObject);
+            tickerMap.put(new MultiKey(market, currency), currentTicker);
 
-            double price = fullLayoutObject.getPrice();
+            double price = currentTicker.getPrice();
             //String lag = trade.getLag();
             System.out.println(new Date() + ": last price=" + price + " for:" + marketIdentifier);// + ", lag: " + lag);
             System.out.println();
@@ -107,6 +119,7 @@ public class GenericTickerEngine extends TickerEngine {
             System.out.println(new Date() + ": last price=" + tradeObject.getPrice() + " for:" + marketIdentifier);// + ", lag: " + lag);
             System.out.println();
         }
+        System.out.println("after each ticker task, " + HistoryDownloader.getMarketIdentifierName(market, currency));
     }
 
     class TickerEngineRunnable implements Runnable {
@@ -123,6 +136,7 @@ public class GenericTickerEngine extends TickerEngine {
         public void run() {
             System.out.println("Running ticker thread for:" + HistoryDownloader.getMarketIdentifierName(market, currency));
             getTickerPerMarketAndCurrency(market, currency);
+            System.out.println("After running ticker thread for:" + HistoryDownloader.getMarketIdentifierName(market, currency));
         }
     }
 }

@@ -6,6 +6,7 @@ import bitcoinGWT.shared.model.TickerShallowObject;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,7 +35,7 @@ public interface ReadOnlyTradeInterface {
 
     public <T extends TickerShallowObject> T getPrice(Markets market, Currency currency);
 
-    public List<Currency> getSupportedCurrencies(Markets market);
+    public Set<Currency> getSupportedCurrencies(Markets market);
 
     /**
      * Returns the lag of the trading engine.

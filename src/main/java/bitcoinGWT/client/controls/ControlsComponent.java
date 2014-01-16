@@ -5,14 +5,20 @@ import bitcoinGWT.client.util.UiUtils;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.Markets;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.rpc.server.Pair;
+import com.google.gwt.user.client.ui.IndexedPanel;
+import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.core.client.util.ToggleGroup;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.button.ToggleButton;
 import com.sencha.gxt.widget.core.client.container.AccordionLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.SimpleContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,8 +43,8 @@ public class ControlsComponent extends ContentPanel {
         setAnimCollapse(true);
         setTitleCollapse(true);
 
-        setHeadingText("Controls");
-        setTitle("Controls");
+        //setHeadingText("Controls");
+        //setTitle("Controls");
 
         AccordionLayoutContainer con = new AccordionLayoutContainer();
         con.setExpandMode(AccordionLayoutContainer.ExpandMode.MULTI);
@@ -86,9 +92,18 @@ public class ControlsComponent extends ContentPanel {
                     });
                 }
             });
-            container.add(marketButton, new VerticalLayoutContainer.VerticalLayoutData(1, 32));
+            container.add(marketButton, new VerticalLayoutContainer.VerticalLayoutData(1, 32, new Margins(1)));
             group.add(marketButton);
+
+            //set default selected button
+            if (market == Markets.MTGOX) {
+                marketButton.setValue(true);
+                marketButton.fireEvent(new SelectEvent());
+            }
         }
+        //add a spacing at the end
+        container.add(new SimpleContainer(), new VerticalLayoutContainer.VerticalLayoutData(1, 2));
+
 
         marketsContentPanel.setWidget(container);
     }
@@ -96,28 +111,53 @@ public class ControlsComponent extends ContentPanel {
     public void createCurrenciesComponent(ContentPanel currenciesPanel, List<Currency> currenciesList) {
         VerticalLayoutContainer container = new VerticalLayoutContainer();
 
-        currencies.clear();
+        removeAllComponents(currenciesPanel);
         ToggleGroup group = new ToggleGroup();
-        for (Currency currency : currenciesList) {
+
+        Map<Currency, ToggleButton> previousSelectedCurrencyToButton = new HashMap<Currency, ToggleButton>();
+        for (final Currency currency : currenciesList) {
             ToggleButton currencyButton = new ToggleButton(currency.name());
             currencyButton.addSelectHandler(new SelectEvent.SelectHandler() {
                 @Override
                 public void onSelect(SelectEvent event) {
-
+                    selectedCurrency = currency;
+                    //send event on EventBus to the chart & trades components
+                    //....
                 }
             });
-            //this means we already have a currency selected, which is also valid for the current selected currency
-            if ((selectedCurrency != null && currency.equals(selectedCurrency))
-                    || currenciesList.indexOf(currency) == 0) {
-                //send event on EventBus to the chart & trades components
-                //....
-                currencyButton.setValue(true, true);
-            }
-            container.add(currencyButton, new VerticalLayoutContainer.VerticalLayoutData(-1, 28));
+            previousSelectedCurrencyToButton.put(currency, currencyButton);
+
+            container.add(currencyButton, new VerticalLayoutContainer.VerticalLayoutData(32, 32, new Margins(2)));
             group.add(currencyButton);
         }
 
-        currenciesPanel.setWidget(container);
+        //add a spacing at the end
+        container.add(new SimpleContainer(), new VerticalLayoutContainer.VerticalLayoutData(1, 2));
 
+        //this means we already have a currency selected, which is also valid for the current selected currency
+        if (selectedCurrency != null) {
+            ToggleButton button = previousSelectedCurrencyToButton.get(selectedCurrency);
+            //if the selected currency is valid for the current market
+            if (button != null) {
+                toggleButton(button);
+            } else { //if we don't have any previously selected currency, select the first one
+                toggleButton(previousSelectedCurrencyToButton.get(currenciesList.get(0)));
+            }
+        } else {
+            toggleButton(previousSelectedCurrencyToButton.get(currenciesList.get(0)));
+        }
+
+        currenciesPanel.setWidget(container);
+    }
+
+    private void toggleButton(ToggleButton toggleButton) {
+        toggleButton.setValue(true);
+        toggleButton.fireEvent(new SelectEvent());
+    }
+
+    private void removeAllComponents(IndexedPanel panel) {
+        for (int i = 0; i < panel.getWidgetCount(); i++) {
+            panel.remove(i);
+        }
     }
 }
