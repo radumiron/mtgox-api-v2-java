@@ -1,6 +1,7 @@
 package bitcoinGWT.client.controls;
 
 import bitcoinGWT.client.CustomAsyncCallback;
+import bitcoinGWT.client.events.CurrencyChangeEvent;
 import bitcoinGWT.client.util.UiUtils;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.Markets;
@@ -122,7 +123,7 @@ public class ControlsComponent extends ContentPanel {
                 public void onSelect(SelectEvent event) {
                     selectedCurrency = currency;
                     //send event on EventBus to the chart & trades components
-                    //....
+                    UiUtils.EVENT_BUS.fireEvent(new CurrencyChangeEvent(selectedMarket, selectedCurrency));
                 }
             });
             previousSelectedCurrencyToButton.put(currency, currencyButton);
