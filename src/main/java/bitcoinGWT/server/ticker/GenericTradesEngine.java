@@ -12,6 +12,7 @@ import com.carrotsearch.sizeof.RamUsageEstimator;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import history.HistoryDownloader;
+import org.apache.commons.collections.keyvalue.MultiKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
@@ -20,6 +21,7 @@ import trading.api_interfaces.TradeInterface;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -48,43 +50,22 @@ public class GenericTradesEngine extends TradesEngine {
 
     private ExecutorService executor;
 
-    private Table<Markets, Currency, Boolean> shouldLoadTradesMap;
+    private ConcurrentHashMap<MultiKey, Boolean> shouldLoadTradesMap;
 
-    private Table<Markets, Currency, Long> previousTimestampMap;
+    private ConcurrentHashMap<MultiKey, Long> previousTimestampMap;
 
     @PostConstruct
     private void init() {
         //todo put more threads here
         //executor = Executors.newFixedThreadPool();
         executor = Executors.newSingleThreadExecutor();
-        shouldLoadTradesMap = HashBasedTable.create();
-        previousTimestampMap = HashBasedTable.create();
+        shouldLoadTradesMap = new ConcurrentHashMap<>();
+        previousTimestampMap = new ConcurrentHashMap<>();
     }
 
     @Override
     protected void executeTradeTask() {
-
-    }
-
-    public void loadAndSaveTrades() {
-        //go over all supported markets
-        //for (Markets market : Markets.values()) {
-        //    loadAndSaveTradesPerMarket(market);
-        //}
-        //todo currently we load just for MTGOX
-        loadAndSaveTradesPerMarket(Markets.MTGOX);
-
-    }
-
-    public void loadAndSaveTradesPerMarket(Markets market) {
-        Set<Currency> supportedCurrencies = trade.getSupportedCurrencies(market);
-
-        //go over all supported currencies for the current market
-        //todo currently we load just for EUR
-        executor.execute(new TradesEngineRunnable(market, Currency.EUR));
-        /*for (Currency currency : supportedCurrencies) {
-            executor.execute(new TickerEngineRunnable(market, currency));
-        }*/
+        //empty, since the load of the trades will happen only when the ticker changes
     }
 
     public void loadAndSaveTradesPerMarketAndCurrency(Markets market, Currency currency) {
@@ -106,10 +87,10 @@ public class GenericTradesEngine extends TradesEngine {
 
             System.out.println(new Date() + " new trades loaded, size of loaded trades=" + sortedTrades.size());
             //in case the list downloaded is NOT empty, mark that all who will ask for trades will be able to download the new list
-            shouldLoadTradesMap.put(market, currency, true);
+            shouldLoadTradesMap.put(new MultiKey(market, currency), true);
         } else {
             //in case the list is empty,
-            shouldLoadTradesMap.put(market, currency, false);
+            shouldLoadTradesMap.put(new MultiKey(market, currency), false);
         }
     }
 
@@ -123,13 +104,13 @@ public class GenericTradesEngine extends TradesEngine {
     }
 
     private long getPreviousTimestamp(Markets market, Currency currency) {
-        Long previousTimestamp = previousTimestampMap.get(market, currency);
+        Long previousTimestamp = previousTimestampMap.get(new MultiKey(market, currency));
         Calendar calendar = GregorianCalendar.getInstance();
         //set the time when this method was previously executed
         if (previousTimestamp == null) {    //if first download of trades
             //initialize previousTimestamp with the current time
             previousTimestamp = calendar.getTimeInMillis();
-            previousTimestampMap.put(market, currency, previousTimestamp);
+            previousTimestampMap.put(new MultiKey(market, currency), previousTimestamp);
             System.out.println("first time trades");
 
             System.out.println("current time: " + new Date(previousTimestamp));
@@ -140,7 +121,7 @@ public class GenericTradesEngine extends TradesEngine {
         } else {
             //save the current run time as a reference for the next run time.
             Long currentExecutionTime = calendar.getTimeInMillis();
-            previousTimestampMap.put(market, currency, currentExecutionTime);
+            previousTimestampMap.put(new MultiKey(market, currency), currentExecutionTime);
             System.out.println("getting trades from: " + new Date(previousTimestamp) + " to " + new Date(currentExecutionTime));
             return previousTimestamp;
         }
@@ -161,7 +142,7 @@ public class GenericTradesEngine extends TradesEngine {
     }
 
     public boolean shouldLoadTradesFromServer(Markets market, Currency currency) {
-        return shouldLoadTradesMap.get(market, currency);
+        return shouldLoadTradesMap.get(new MultiKey(market, currency));
     }
 
     @Override

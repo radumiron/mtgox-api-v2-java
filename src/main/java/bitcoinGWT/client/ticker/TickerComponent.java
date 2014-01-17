@@ -31,8 +31,8 @@ public class TickerComponent extends ContentPanel {
     private Label tickerCurrency;
     private BitcoinGWTServiceAsync mainService;
 
-    private Markets market;
-    private Currency currency;
+    private Markets selectedMarket;
+    private Currency selectedCurrency;
     private HorizontalLayoutContainer northContainer;
 
     public TickerComponent(BitcoinGWTServiceAsync mainService) {
@@ -46,10 +46,10 @@ public class TickerComponent extends ContentPanel {
         UiUtils.EVENT_BUS.addHandler(CurrencyChangeEvent.TYPE, new CurrencyChangeEventHandler()     {
             @Override
             public void onCurrencyChanged(CurrencyChangeEvent currencyChangeEvent) {
-                market = currencyChangeEvent.getMarket();
-                currency = currencyChangeEvent.getCurrency();
+                selectedMarket = currencyChangeEvent.getMarket();
+                selectedCurrency = currencyChangeEvent.getCurrency();
 
-                tickerCurrency.setText(Currency.BTC.name() + "/" + currency.name());
+                tickerCurrency.setText(selectedCurrency.name() + "/" + Currency.BTC.name());
                 //hide the label until the ticker comes from the server
                 tickerCurrency.setVisible(false);
 
@@ -86,16 +86,18 @@ public class TickerComponent extends ContentPanel {
 
             @Override
             public void run() {
-                if (market != null && currency != null) {
-                    mainService.getPrice(market, currency, new CustomAsyncCallback<TickerFullLayoutObject>() {
-                        @Override
-                        public void onSuccess(TickerFullLayoutObject result) {
-                            tickerLabel.setText(String.valueOf(result.getPrice()));
-                            tickerCurrency.setVisible(true);
-                            northContainer.forceLayout();
-                        }
-                    });
+                //while we don't have a market/currency selected, don't load anything
+                if (selectedMarket == null && selectedCurrency == null) {
+                    return;
                 }
+                mainService.getPrice(selectedMarket, selectedCurrency, new CustomAsyncCallback<TickerFullLayoutObject>() {
+                    @Override
+                    public void onSuccess(TickerFullLayoutObject result) {
+                        tickerLabel.setText(String.valueOf(result.getPrice()));
+                        tickerCurrency.setVisible(true);
+                        northContainer.forceLayout();
+                    }
+                });
             }
         };
 

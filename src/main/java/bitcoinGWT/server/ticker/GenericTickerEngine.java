@@ -104,6 +104,8 @@ public class GenericTickerEngine extends TickerEngine {
                 if (oldTicker.getPrice() != currentTicker.getPrice()) {
                     tradesEngine.loadAndSaveTradesPerMarketAndCurrency(market, currency);
                 }
+            } else {    //in case the old ticker is null, then it's the first time we load the ticker, hence also load the trades
+                tradesEngine.loadAndSaveTradesPerMarketAndCurrency(market, currency);
             }
 
             //put this object in the cache

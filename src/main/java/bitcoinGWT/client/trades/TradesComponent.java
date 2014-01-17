@@ -1,6 +1,9 @@
 package bitcoinGWT.client.trades;
 
 import bitcoinGWT.client.BitcoinGWTServiceAsync;
+import bitcoinGWT.client.events.CurrencyChangeEvent;
+import bitcoinGWT.client.events.CurrencyChangeEventHandler;
+import bitcoinGWT.client.util.UiUtils;
 import bitcoinGWT.shared.model.*;
 import bitcoinGWT.shared.model.example.PostProperties;
 import com.google.gwt.cell.client.DateCell;
@@ -43,11 +46,13 @@ public class TradesComponent extends ContentPanel {
     private boolean initialLoad = true;
     private LiveGridView<TradesFullLayoutObject> liveGridView;
 
-    private int lastLoadedTradesListSize = 0;
+    private Markets selectedMarket;
+    private Currency selectedCurrency;
 
     public TradesComponent(BitcoinGWTServiceAsync mainService) {
         this.mainService = mainService;
         initComponent();
+        initListeners();
         initTradesTimer();
     }
 
@@ -66,7 +71,10 @@ public class TradesComponent extends ContentPanel {
                     sortInfos.add(new SortInfoBean("date", SortDir.DESC));
                     loadConfig.setSortInfo(sortInfos);
                 }
-                mainService.getTradesForGrid(Markets.MTGOX, Currency.EUR, null, loadConfig, callback);
+
+                if(selectedMarket != null && selectedCurrency != null) {
+                    mainService.getTradesForGrid(selectedMarket, selectedCurrency, null, loadConfig, callback);
+                }
 
                 if (initialLoad) {
                     initialLoad = false;
@@ -159,10 +167,14 @@ public class TradesComponent extends ContentPanel {
 
             //@Override
             public void run() {
+                //while we don't have a market/currency selected, don't load anything
+                if (selectedMarket == null && selectedCurrency == null) {
+                    return;
+                }
                 //if first time, load the initial grid size
                 System.out.println(new Date() + " run get trades task");
                 //check to see if there are any additional trades to load on the client
-                mainService.shouldLoadTradesFromServer(Markets.MTGOX, Currency.EUR, new AsyncCallback<Boolean>() {
+                mainService.shouldLoadTradesFromServer(selectedMarket, selectedCurrency, new AsyncCallback<Boolean>() {
 
                     @Override
                     public void onFailure(Throwable caught) {
@@ -180,6 +192,19 @@ public class TradesComponent extends ContentPanel {
         };
         //timer.schedule(Constants.INITIAL_UI_TRADES_DELAY);
         timer.scheduleRepeating(Constants.TRADES_RETRIEVAL_INTERVAL);
+    }
+
+    private void initListeners() {
+        UiUtils.EVENT_BUS.addHandler(CurrencyChangeEvent.TYPE, new CurrencyChangeEventHandler() {
+            @Override
+            public void onCurrencyChanged(CurrencyChangeEvent currencyChangeEvent) {
+                selectedMarket = currencyChangeEvent.getMarket();
+                selectedCurrency = currencyChangeEvent.getCurrency();
+
+                //clear the grid
+                loadGrid(true);
+            }
+        });
     }
 
     private void loadGrid(boolean shouldLoadTradesFromServer) {
