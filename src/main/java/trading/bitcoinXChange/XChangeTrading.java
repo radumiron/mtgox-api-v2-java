@@ -22,7 +22,7 @@ import com.xeiam.xchange.mtgox.v2.MtGoxV2;
 import com.xeiam.xchange.mtgox.v2.dto.trade.polling.MtGoxLagWrapper;
 import com.xeiam.xchange.service.polling.PollingMarketDataService;
 import com.xeiam.xchange.virtex.VirtExExchange;
-import history.HistoryDownloader;
+import bitcoinGWT.server.history.HistoryDownloader;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -173,6 +173,7 @@ public class XChangeTrading implements TradeInterface {
 
     @Override
     public List<TradesFullLayoutObject> getTrades(Markets market, Currency currency, long previousTimestamp) {
+        System.out.println("Getting all the trades since:" + previousTimestamp + " for market:" + HistoryDownloader.getMarketIdentifierName(market, currency));
         List<TradesFullLayoutObject> result = new ArrayList<>();
         try {
             //the SINCE parameter from the API can be sent here
@@ -188,6 +189,7 @@ public class XChangeTrading implements TradeInterface {
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+        System.out.println("Got " + result.size() + " trades for market:" + HistoryDownloader.getMarketIdentifierName(market, currency));
         return result;
     }
 

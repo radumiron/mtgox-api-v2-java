@@ -17,7 +17,7 @@ public class Constants {
 
     public static final int CANDLESTICK_CHART_TRADES_RETRIEVAL_INTERVAL = 1 * 60 * 1000;//1 minute
 
-    public static final int TRADES_SIZE = 20;
+    public static final int TRADES_SIZE = 1000;
 
     public static int INITIAL_UI_TRADES_DELAY = 5000;
     public static int TRADES_GRID_UI_BUFFER = 200;

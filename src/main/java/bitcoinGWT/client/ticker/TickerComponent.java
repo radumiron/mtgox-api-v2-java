@@ -93,9 +93,13 @@ public class TickerComponent extends ContentPanel {
                 mainService.getPrice(selectedMarket, selectedCurrency, new CustomAsyncCallback<TickerFullLayoutObject>() {
                     @Override
                     public void onSuccess(TickerFullLayoutObject result) {
-                        tickerLabel.setText(String.valueOf(result.getPrice()));
-                        tickerCurrency.setVisible(true);
-                        northContainer.forceLayout();
+                        if (result != null) {
+                            tickerLabel.setText(String.valueOf(result.getPrice()));
+                            tickerCurrency.setVisible(true);
+                            northContainer.forceLayout();
+                        } else {
+                            System.out.println("No ticker");
+                        }
                     }
                 });
             }

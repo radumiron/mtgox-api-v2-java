@@ -18,6 +18,11 @@ public interface GenericDAO {
     public void saveTradesHistoryRecords(Map<String, List<TradesHistoryRecord>> csvRecords, boolean saveLastRecord);
     public void saveTradesFullLayoutRecords(Map<String, List<TradesFullLayoutRecord>> fullLayoutRecords, boolean saveLastRecord);
 
-    public List<TradesHistoryRecord> getTradesHistoryRecords(String marketIdentifier, Long timestamp, boolean loadLastRecord);
+    List<TradesHistoryRecord> getTradesHistoryRecords(String marketIdentifier, Long start, Long end, boolean loadLastRecord);
     public List<TradesFullLayoutRecord> getTradesFullLayoutRecords(String marketIdentifier, Long timestamp, boolean loadLastRecord);
+
+    public List<TradesFullLayoutRecord> getLatestFullLayoutRecords(String marketIdentifier);
+    public List<TradesHistoryRecord> getLatestHistoryTrades(String marketIdentifier);
+
+
 }

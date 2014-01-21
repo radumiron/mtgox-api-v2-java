@@ -3,6 +3,7 @@ package bitcoinGWT.server.ticker;
 import trading.api_interfaces.TradeInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -25,7 +26,8 @@ public abstract class AbstractTradeEngine {
 
     private Timer tickerTimer = new Timer(getTradeName());
 
-    protected AbstractTradeEngine() {
+    @PostConstruct
+    private void init() {
         System.out.println("Initializing AbstractTradeEngine for trade: " + getTradeName());
         tickerTimer.scheduleAtFixedRate(new TickerTask(), getInitialDelay(), getTimerInterval());
     }

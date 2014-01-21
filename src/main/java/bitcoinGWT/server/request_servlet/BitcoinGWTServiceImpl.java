@@ -1,4 +1,4 @@
-package bitcoinGWT.server;
+package bitcoinGWT.server.request_servlet;
 
 import bitcoinGWT.client.BitcoinGWTService;
 import bitcoinGWT.server.ticker.TickerEngine;

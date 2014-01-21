@@ -4,14 +4,10 @@ import bitcoinGWT.server.converter.TradesConverter;
 import bitcoinGWT.server.dao.GenericDAO;
 import bitcoinGWT.server.dao.entities.TradesFullLayoutRecord;
 import bitcoinGWT.server.dao.entities.TradesHistoryRecord;
-import bitcoinGWT.server.util.ObjectSizeCalculator;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.Markets;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
-import com.carrotsearch.sizeof.RamUsageEstimator;
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
-import history.HistoryDownloader;
+import bitcoinGWT.server.history.HistoryDownloader;
 import org.apache.commons.collections.keyvalue.MultiKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -48,6 +44,9 @@ public class GenericTradesEngine extends TradesEngine {
     @Qualifier("XChange")
     private TradeInterface trade;
 
+    @Autowired
+    HistoryDownloader historyDownloader;
+
     private ExecutorService executor;
 
     private ConcurrentHashMap<MultiKey, Boolean> shouldLoadTradesMap;
@@ -56,11 +55,12 @@ public class GenericTradesEngine extends TradesEngine {
 
     @PostConstruct
     private void init() {
+        System.out.println("init of GenericTradeEngine");
         //todo put more threads here
         //executor = Executors.newFixedThreadPool();
         executor = Executors.newSingleThreadExecutor();
         shouldLoadTradesMap = new ConcurrentHashMap<>();
-        previousTimestampMap = new ConcurrentHashMap<>();
+        previousTimestampMap = historyDownloader.getPreviousTimestampMap();
     }
 
     @Override
@@ -99,7 +99,7 @@ public class GenericTradesEngine extends TradesEngine {
     }
 
     private List<TradesFullLayoutObject> getTrades(Markets market, Currency currency, Long timestamp) {
-        List<TradesFullLayoutRecord> records = dao.getTradesFullLayoutRecords(HistoryDownloader.getMarketIdentifierName(market, currency), timestamp, true);
+        List<TradesFullLayoutRecord> records = dao.getTradesFullLayoutRecords(HistoryDownloader.getMarketIdentifierName(market, currency), timestamp, false);
         return TradesConverter.convertTradesFullLayoutRecordsToTradesFullLayoutObjects(records);
     }
 
@@ -142,7 +142,12 @@ public class GenericTradesEngine extends TradesEngine {
     }
 
     public boolean shouldLoadTradesFromServer(Markets market, Currency currency) {
-        return shouldLoadTradesMap.get(new MultiKey(market, currency));
+        Boolean shouldLoadTrades = shouldLoadTradesMap.get(new MultiKey(market, currency));
+        if (shouldLoadTrades == null) {
+            System.out.println("There is no trades information for market: " + HistoryDownloader.getMarketIdentifierName(market, currency));
+            return false;
+        }
+        return shouldLoadTrades;
     }
 
     @Override

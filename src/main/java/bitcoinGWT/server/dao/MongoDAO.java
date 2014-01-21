@@ -48,30 +48,13 @@ public class MongoDAO implements GenericDAO {
         }
     }
 
-    private void parseDBRecords(List<TradesFullLayoutRecord> result, DBCursor cursor) {
-        while(cursor.hasNext()) {
-            DBObject obj = cursor.next();
-            try {
-                Long date = (Long) obj.get(TradesFullLayoutRecord.COLUMN_DATE);
-                Double price = (Double) obj.get(TradesFullLayoutRecord.COLUMN_PRICE);
-                Double amount = (Double) obj.get(TradesFullLayoutRecord.COLUMN_AMOUNT);
-                Currency currency = Currency.valueOf(String.valueOf(obj.get(TradesFullLayoutRecord.COLUMN_CURRENCY)));
-                Currency tradeItem = Currency.valueOf(String.valueOf(obj.get(TradesFullLayoutRecord.COLUMN_TRADE_ITEM)));
-                Long tradeId = (Long) obj.get(TradesFullLayoutRecord.COLUMN_TRADE_ID);
-                TradeType type = TradeType.valueOf(String.valueOf(obj.get(TradesFullLayoutRecord.COLUMN_TRADE_TYPE)));
-                TradesFullLayoutRecord record = new TradesFullLayoutRecord(tradeId, date, price, amount, currency, tradeItem, type);
-                result.add(record);
-            } catch (Exception e) {
-                System.out.println("Cannot parse JSON for record:" + obj);
-            }
-        }
-    }
-
     public void saveTradesHistoryRecords(Map<String, List<TradesHistoryRecord>> csvRecords, boolean saveLastRecord) {
         DB db = mongoClient.getDB(connectionProperties.getProperty(MongoConnectionPropertyKeys.SCHEMA.getKey()));
 
         for (Map.Entry<String, List<TradesHistoryRecord>> entry : csvRecords.entrySet()) {
             DBCollection tradesTable = db.getCollection(entry.getKey() + TradesHistoryRecord.TRADES_TABLE_SUFFIX);
+            //ensure the trades table has the needed indexes
+            //changeHistoryTradesTableDefinition(tradesTable);
 
             Date before = new Date();
 
@@ -90,16 +73,22 @@ public class MongoDAO implements GenericDAO {
                 document.put(TradesHistoryRecord.COLUMN_AMOUNT, csvRecord.getAmount());
                 dbRecords.add(document);
             }
-            System.out.println("Done converting CSV records, operation took:" + + (new Date().getTime() - before.getTime()) + " ms");
+            System.out.println("Done converting CSV records, operation took:" + +(new Date().getTime() - before.getTime()) + " ms");
 
             before = new Date();
             System.out.println("Start saving " + recordsSizeToSave + " CSV records");
             try {
-                tradesTable.insert(dbRecords);
-                System.out.println("Done saving CSV records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
+                //for (DBObject document : dbRecords) {
+                    //try {
+                        tradesTable.insert(dbRecords);
+                    //} catch (MongoException.DuplicateKey dup) {
+                        //System.err.println("Trying to insert duplicate record, skipping...(" + document + ")");
+                    //}
+                //}
+                System.out.println("Done saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("Error occurred while saving CSV records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
+                System.out.println("Error occurred while saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
             }
         }
     }
@@ -122,6 +111,9 @@ public class MongoDAO implements GenericDAO {
             List<DBObject> dbRecords = new ArrayList<>();
             for (int i = 0; i < recordsSizeToSave; i++) {
                 TradesFullLayoutRecord fullRecord = entry.getValue().get(i);
+                if (fullRecord.getAmount() < 0.0001) {
+                    return; //don't save any record with a transaction amount less than 0.01 BTC
+                }
                 BasicDBObject document = new BasicDBObject();
                 document.put(TradesFullLayoutRecord.COLUMN_DATE, fullRecord.getTimestamp());
                 document.put(TradesFullLayoutRecord.COLUMN_PRICE, fullRecord.getPrice());
@@ -133,12 +125,12 @@ public class MongoDAO implements GenericDAO {
 
                 dbRecords.add(document);
             }
-            System.out.println("Done converting full layout records, operation took:" + + (new Date().getTime() - before.getTime()) + " ms");
+            System.out.println("Done converting full layout records, operation took:" + +(new Date().getTime() - before.getTime()) + " ms");
 
             before = new Date();
             System.out.println("Start saving " + recordsSizeToSave + " CSV records");
             try {
-                for (DBObject document: dbRecords) {
+                for (DBObject document : dbRecords) {
                     try {
                         tradesTable.insert(document);
                     } catch (MongoException.DuplicateKey dup) {
@@ -153,21 +145,49 @@ public class MongoDAO implements GenericDAO {
         }
     }
 
-    private void changeFullTradesTableDefinition(DBCollection tradesTable) {
-        BasicDBObject indexProperties = new BasicDBObject();
-        indexProperties.put("unique", true);
-        indexProperties.put("dropDups", true);
-        tradesTable.ensureIndex(new BasicDBObject(TradesFullLayoutRecord.COLUMN_TRADE_ID, 1), indexProperties);
-    }
-
     @Override
-    public List<TradesHistoryRecord> getTradesHistoryRecords(String marketIdentifier, Long timestamp, boolean loadLastRecord) {
-        return null;
+    public List<TradesHistoryRecord> getTradesHistoryRecords(String marketIdentifier, Long start, Long end, boolean loadLastRecord) {
+        DB db = mongoClient.getDB(connectionProperties.getProperty(MongoConnectionPropertyKeys.SCHEMA.getKey()));
+        DBCollection tradesTable = db.getCollection(marketIdentifier + TradesHistoryRecord.TRADES_TABLE_SUFFIX);
+
+        List<TradesHistoryRecord> result = new ArrayList<>();
+
+        BasicDBObject sortQuery = new BasicDBObject();
+        //sort descending
+        sortQuery.put(TradesHistoryRecord.COLUMN_TIME, -1);
+        if (start == null && end == null && loadLastRecord && tradesTable.count() > 0) {    //have to return the last records of the same timestamp
+            //try to identify if there are any more records at the same timestamp
+            BasicDBObject objectsAtTimestampQuery = new BasicDBObject();
+            objectsAtTimestampQuery.put(TradesHistoryRecord.COLUMN_TIME,
+                    tradesTable.find().sort(sortQuery).limit(1).next().get(TradesHistoryRecord.COLUMN_TIME));
+            //load just one record, in order to see the latest timestamp
+            DBCursor cursor = tradesTable.find(objectsAtTimestampQuery).sort(sortQuery);
+
+            //take just one element and add it to the partial results
+            parseHistoryTradesDBRecords(result, cursor);
+
+           /* //we should have only one record here:
+            if (partialResults.size() == 1) {
+                //try to identify if there are any more records at the same timestamp
+                BasicDBObject objectsAtTimestampQuery = BasicDBObject();
+                objectsAtTimestampQuery.put(TradesHistoryRecord.COLUMN_TIME, new BasicDBObject(""))
+                DBCursor cursor = tradesTable.find().sort(sortQuery).limit(1);
+            }*/
+        } else {    //have to return all the records since "timestamp"
+            BasicDBObject gteQuery = new BasicDBObject();
+            gteQuery.put(TradesHistoryRecord.COLUMN_TIME, new BasicDBObject("$gte", start)); //all records with date greater than or equal with timestamp
+            if (end != null) {  //this means we have a time interval specified
+                gteQuery.put(TradesHistoryRecord.COLUMN_TIME, new BasicDBObject("$lte", end)); //all records with date greater than or equal with timestamp
+            }
+            DBCursor cursor = tradesTable.find(gteQuery).sort(sortQuery);
+            parseHistoryTradesDBRecords(result, cursor);
+        }
+
+        return result;
     }
 
     @Override
     public List<TradesFullLayoutRecord> getTradesFullLayoutRecords(String marketIdentifier, Long timestamp, boolean loadLastRecord) {
-        //db.foo.find().sort({_id:1}).limit(50);
         DB db = mongoClient.getDB(connectionProperties.getProperty(MongoConnectionPropertyKeys.SCHEMA.getKey()));
         DBCollection tradesTable = db.getCollection(marketIdentifier + TradesFullLayoutRecord.TRADES_TABLE_SUFFIX);
 
@@ -177,18 +197,80 @@ public class MongoDAO implements GenericDAO {
         //sort descending
         sortQuery.put(TradesFullLayoutRecord.COLUMN_DATE, -1);
         if (timestamp == null) {    //have to return the last TRADE_SIZE records
-            DBCursor cursor = tradesTable.find().sort(sortQuery).limit(TRADES_SIZE);
-            parseDBRecords(result, cursor);
+            int tradesSize = loadLastRecord ? 1 : TRADES_SIZE;  //if load just the last record, then load just one record
+            DBCursor cursor = tradesTable.find().sort(sortQuery).limit(tradesSize);
+            parseFullLayoutTradesDBRecords(result, cursor);
         } else {    //have to return all the records since "timestamp"
             BasicDBObject gteQuery = new BasicDBObject();
             gteQuery.put(TradesFullLayoutRecord.COLUMN_DATE, new BasicDBObject("$gte", timestamp)); //all records with date greater than or equal with timestamp
             DBCursor cursor = tradesTable.find(gteQuery).sort(sortQuery);
-            parseDBRecords(result, cursor);
+            parseFullLayoutTradesDBRecords(result, cursor);
         }
 
-
-
         return result;
+    }
+
+    @Override
+    public List<TradesFullLayoutRecord> getLatestFullLayoutRecords(String marketIdentifier) {
+        return getTradesFullLayoutRecords(marketIdentifier, null, true);
+    }
+
+    @Override
+    public List<TradesHistoryRecord> getLatestHistoryTrades(String marketIdentifier) {
+        return getTradesHistoryRecords(marketIdentifier, null, null, true);
+    }
+
+    private void parseFullLayoutTradesDBRecords(List<TradesFullLayoutRecord> result, DBCursor cursor) {
+        while (cursor.hasNext()) {
+            DBObject obj = cursor.next();
+            try {
+                Long date = (Long) obj.get(TradesFullLayoutRecord.COLUMN_DATE);
+                Double price = (Double) obj.get(TradesFullLayoutRecord.COLUMN_PRICE);
+                Double amount = (Double) obj.get(TradesFullLayoutRecord.COLUMN_AMOUNT);
+                Currency currency = Currency.valueOf(String.valueOf(obj.get(TradesFullLayoutRecord.COLUMN_CURRENCY)));
+                Currency tradeItem = Currency.valueOf(String.valueOf(obj.get(TradesFullLayoutRecord.COLUMN_TRADE_ITEM)));
+                Long tradeId = (Long) obj.get(TradesFullLayoutRecord.COLUMN_TRADE_ID);
+                TradeType type = TradeType.valueOf(String.valueOf(obj.get(TradesFullLayoutRecord.COLUMN_TRADE_TYPE)));
+                TradesFullLayoutRecord record = new TradesFullLayoutRecord(tradeId, date, price, amount, currency, tradeItem, type);
+                result.add(record);
+            } catch (Exception e) {
+                System.out.println("Cannot parse JSON for record:" + obj);
+            }
+        }
+    }
+
+    private void changeFullTradesTableDefinition(DBCollection tradesTable) {
+        BasicDBObject indexProperties = new BasicDBObject();
+        indexProperties.put("unique", true);
+        indexProperties.put("dropDups", true);
+        tradesTable.ensureIndex(new BasicDBObject(TradesFullLayoutRecord.COLUMN_TRADE_ID, 1), indexProperties);
+    }
+
+    private void parseHistoryTradesDBRecords(List<TradesHistoryRecord> result, DBCursor cursor) {
+        while (cursor.hasNext()) {
+            DBObject obj = cursor.next();
+            try {
+                Long date = (Long) obj.get(TradesHistoryRecord.COLUMN_TIME);
+                Double price = (Double) obj.get(TradesHistoryRecord.COLUMN_PRICE);
+                Double amount = (Double) obj.get(TradesHistoryRecord.COLUMN_AMOUNT);
+                TradesHistoryRecord record = new TradesHistoryRecord(date, amount, price);
+                result.add(record);
+            } catch (Exception e) {
+                System.out.println("Cannot parse JSON for record:" + obj);
+            }
+        }
+    }
+
+    private void changeHistoryTradesTableDefinition(DBCollection historyTable) {
+        BasicDBObject indexProperties = new BasicDBObject();
+        indexProperties.put("unique", true);
+        indexProperties.put("dropDups", true);
+
+        BasicDBObject indexColumns = new BasicDBObject();
+        indexColumns.put(TradesHistoryRecord.COLUMN_TIME, 1);
+        indexColumns.put(TradesHistoryRecord.COLUMN_AMOUNT, 1);
+        indexColumns.put(TradesHistoryRecord.COLUMN_PRICE, 1);
+        historyTable.ensureIndex(indexColumns, indexProperties);
     }
 
     private enum MongoConnectionPropertyKeys {

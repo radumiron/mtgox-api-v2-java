@@ -11,7 +11,7 @@
 
     <servlet>
         <servlet-name>bitcoinServlet</servlet-name>
-        <servlet-class>bitcoinGWT.server.BitcoinGWTServiceImpl</servlet-class>
+        <servlet-class>bitcoinGWT.server.request_servlet.BitcoinGWTServiceImpl</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>bitcoinServlet</servlet-name>

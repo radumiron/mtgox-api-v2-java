@@ -15,7 +15,8 @@ public enum TimeInterval implements IsSerializable{
     HALF_HOUR(30),
     ONE_HOUR(60),
     THREE_HOURS(3 * 60),
-    SIX_HOURS(6 * 60);
+    SIX_HOURS(6 * 60),
+    ONE_DAY(24 * 60);
 
     private int minutes;
 
@@ -28,6 +29,14 @@ public enum TimeInterval implements IsSerializable{
 
     public int getMinutes() {
         return minutes;
+    }
+
+    public int getSeconds() {
+        return minutes * 60;
+    }
+
+    public Long getMilliseconds() {
+        return new Long(minutes * getSeconds() * 1000);
     }
 
 }

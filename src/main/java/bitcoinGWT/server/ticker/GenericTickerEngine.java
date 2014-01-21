@@ -1,9 +1,7 @@
 package bitcoinGWT.server.ticker;
 
 import bitcoinGWT.shared.model.*;
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
-import history.HistoryDownloader;
+import bitcoinGWT.server.history.HistoryDownloader;
 import org.apache.commons.collections.keyvalue.MultiKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,7 +11,6 @@ import trading.api_interfaces.TradeInterface;
 
 import javax.annotation.PostConstruct;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -45,6 +42,7 @@ public class GenericTickerEngine extends TickerEngine {
 
     @PostConstruct
     private void init() {
+        System.out.println("init of GenericTickerEngine");
         //executor = Executors.newFixedThreadPool(Currency.values().length);
         executor = Executors.newSingleThreadExecutor();
         tickerMap = new ConcurrentHashMap<>();
