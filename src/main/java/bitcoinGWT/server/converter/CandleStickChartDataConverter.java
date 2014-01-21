@@ -5,6 +5,7 @@ import bitcoinGWT.shared.model.TimeInterval;
 import bitcoinGWT.shared.model.TimeWindow;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 import com.carrotsearch.sizeof.RamUsageEstimator;
+import org.apache.log4j.Logger;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -17,6 +18,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * To change this template use File | Settings | File Templates.
  */
 public class CandleStickChartDataConverter {
+    
+    private static final Logger LOG = Logger.getLogger(CandleStickChartDataConverter.class);
 
     public static Set<ChartElement> get10MinutesChartElements(Set<TradesFullLayoutObject> tradesResult) {
         return convert(tradesResult, TimeInterval.TEN_MINUTES);
@@ -28,11 +31,11 @@ public class CandleStickChartDataConverter {
 
     private static Set<ChartElement> convert(Set<TradesFullLayoutObject> tradesResult, TimeInterval timeInterval) {
         Set<ChartElement> result = new LinkedHashSet<>();
-        System.out.println(new Date() + ": converting " + tradesResult.size() + " trade items");
+        LOG.info(new Date() + ": converting " + tradesResult.size() + " trade items");
 
         Map<TimeWindow, LinkedList<TradesFullLayoutObject>> partialResults = new LinkedHashMap<>();
         getPartialResults(partialResults, new ArrayDeque<>(tradesResult), timeInterval.getMinutes());
-        System.out.println(new Date() + ": size of partial results=" + RamUsageEstimator.humanSizeOf(partialResults));
+        LOG.info(new Date() + ": size of partial results=" + RamUsageEstimator.humanSizeOf(partialResults));
 
         for (Map.Entry<TimeWindow, LinkedList<TradesFullLayoutObject>> entry : partialResults.entrySet()) {
             if (entry.getValue() != null && !entry.getValue().isEmpty()) {
@@ -67,7 +70,7 @@ public class CandleStickChartDataConverter {
             }
 
         }
-        System.out.println(new Date() + ": converted " + tradesResult.size() + " trade items into " + result.size() + " chart elements");
+        LOG.info(new Date() + ": converted " + tradesResult.size() + " trade items into " + result.size() + " chart elements");
         return result;
     }
 
@@ -75,8 +78,8 @@ public class CandleStickChartDataConverter {
             Map<TimeWindow, LinkedList<TradesFullLayoutObject>> result,
             ArrayDeque<TradesFullLayoutObject> queue,
             int timeAmount) {
-        //System.out.println(new Date() + ": running getPartialResults");
-        //System.out.println(new Date() + ": queue size: " + RamUsageEstimator.humanSizeOf(queue));
+        //LOG.info(new Date() + ": running getPartialResults");
+        //LOG.info(new Date() + ": queue size: " + RamUsageEstimator.humanSizeOf(queue));
         //take the first element out of the queue
         TradesFullLayoutObject firstElement = queue.pollLast();
 
@@ -106,7 +109,7 @@ public class CandleStickChartDataConverter {
             }
 
             //go over all the rest of the trade items, find partial results
-            //System.out.println(new Date() + ": size of tempQueue=" + RamUsageEstimator.humanSizeOf(queue));
+            //LOG.info(new Date() + ": size of tempQueue=" + RamUsageEstimator.humanSizeOf(queue));
             getPartialResults(result, queue, timeAmount);
 
             //when getting here, the queue is empty, but all trade items are still to be split into time windows
