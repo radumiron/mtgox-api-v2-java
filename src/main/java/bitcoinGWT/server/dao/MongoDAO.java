@@ -5,6 +5,7 @@ import bitcoinGWT.server.dao.entities.TradesHistoryRecord;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.TradeType;
 import com.mongodb.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,8 @@ import static bitcoinGWT.shared.model.Constants.*;
 @Qualifier("MONGO")
 public class MongoDAO implements GenericDAO {
 
+    private static final Logger LOG = Logger.getLogger(MongoDAO.class);
+
     private static String MONGO_PROPERTIES_FILE = "mongo.properties";
 
     private Properties connectionProperties;
@@ -36,7 +39,7 @@ public class MongoDAO implements GenericDAO {
         try {
             connectionProperties.load(new FileReader(new ClassPathResource(MONGO_PROPERTIES_FILE).getFile()));
         } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            LOG.error(e);
         }
 
         try {
@@ -44,7 +47,7 @@ public class MongoDAO implements GenericDAO {
             mongoClient = new MongoClient(connectionProperties.getProperty(MongoConnectionPropertyKeys.ADDRESS.getKey())
                     , Integer.valueOf(connectionProperties.getProperty(MongoConnectionPropertyKeys.PORT.getKey())));
         } catch (UnknownHostException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            LOG.error(e);
         }
     }
 
@@ -62,7 +65,7 @@ public class MongoDAO implements GenericDAO {
             //will in fact be the next record to be saved, but in a different records batch
             int recordsSizeToSave = saveLastRecord ? entry.getValue().size() : entry.getValue().size() - 1;
 
-            System.out.println("Start converting " + entry.getValue().size() + " CSV records");
+            LOG.info("Start converting " + entry.getValue().size() + " CSV records");
 
             List<DBObject> dbRecords = new ArrayList<>();
             for (int i = 0; i < recordsSizeToSave; i++) {
@@ -73,10 +76,10 @@ public class MongoDAO implements GenericDAO {
                 document.put(TradesHistoryRecord.COLUMN_AMOUNT, csvRecord.getAmount());
                 dbRecords.add(document);
             }
-            System.out.println("Done converting CSV records, operation took:" + +(new Date().getTime() - before.getTime()) + " ms");
+            LOG.info("Done converting CSV records, operation took:" + +(new Date().getTime() - before.getTime()) + " ms");
 
             before = new Date();
-            System.out.println("Start saving " + recordsSizeToSave + " CSV records");
+            LOG.info("Start saving " + recordsSizeToSave + " CSV records");
             try {
                 //for (DBObject document : dbRecords) {
                     //try {
@@ -85,10 +88,9 @@ public class MongoDAO implements GenericDAO {
                         //System.err.println("Trying to insert duplicate record, skipping...(" + document + ")");
                     //}
                 //}
-                System.out.println("Done saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
+                LOG.info("Done saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
             } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Error occurred while saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
+                LOG.error("Error occurred while saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
             }
         }
     }
@@ -106,7 +108,7 @@ public class MongoDAO implements GenericDAO {
             //will in fact be the next record to be saved, but in a different records batch
             int recordsSizeToSave = saveLastRecord ? entry.getValue().size() : entry.getValue().size() - 1;
 
-            System.out.println("Start converting " + entry.getValue().size() + " full layout records");
+            LOG.info("Start converting " + entry.getValue().size() + " full layout records");
 
             List<DBObject> dbRecords = new ArrayList<>();
             for (int i = 0; i < recordsSizeToSave; i++) {
@@ -125,22 +127,21 @@ public class MongoDAO implements GenericDAO {
 
                 dbRecords.add(document);
             }
-            System.out.println("Done converting full layout records, operation took:" + +(new Date().getTime() - before.getTime()) + " ms");
+            LOG.info("Done converting full layout records, operation took:" + +(new Date().getTime() - before.getTime()) + " ms");
 
             before = new Date();
-            System.out.println("Start saving " + recordsSizeToSave + " CSV records");
+            LOG.info("Start saving " + recordsSizeToSave + " CSV records");
             try {
                 for (DBObject document : dbRecords) {
                     try {
                         tradesTable.insert(document);
                     } catch (MongoException.DuplicateKey dup) {
-                        System.err.println("Trying to insert duplicate record, skipping...(" + document + ")");
+                        LOG.warn("Trying to insert duplicate record, skipping...(" + document + ")", dup);
                     }
                 }
-                System.out.println("Done saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
+                LOG.info("Done saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
             } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Error occurred while saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
+                LOG.error("Error occurred while saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
             }
         }
     }
@@ -234,7 +235,7 @@ public class MongoDAO implements GenericDAO {
                 TradesFullLayoutRecord record = new TradesFullLayoutRecord(tradeId, date, price, amount, currency, tradeItem, type);
                 result.add(record);
             } catch (Exception e) {
-                System.out.println("Cannot parse JSON for record:" + obj);
+                LOG.info("Cannot parse JSON for record:" + obj);
             }
         }
     }
@@ -256,7 +257,7 @@ public class MongoDAO implements GenericDAO {
                 TradesHistoryRecord record = new TradesHistoryRecord(date, amount, price);
                 result.add(record);
             } catch (Exception e) {
-                System.out.println("Cannot parse JSON for record:" + obj);
+                LOG.info("Cannot parse JSON for record:" + obj);
             }
         }
     }

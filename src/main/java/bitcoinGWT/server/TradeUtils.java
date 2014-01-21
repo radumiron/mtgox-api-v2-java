@@ -1,5 +1,6 @@
 package bitcoinGWT.server;
 
+import org.apache.log4j.Logger;
 import trading.mtgox_api.com.mtgox.api.ApiKeys;
 import trading.mtgox_api.com.mtgox.examples.utils.Utils;
 import org.json.simple.JSONObject;
@@ -15,6 +16,7 @@ import org.json.simple.parser.ParseException;
  */
 public class TradeUtils {
 
+    private static final Logger LOG = Logger.getLogger(TradeUtils.class);
 
 
     //readApiKeysFromFile
@@ -27,7 +29,7 @@ public class TradeUtils {
             JSONObject obj2=(JSONObject)(parser.parse(apiStr));
             apiKeys= new ApiKeys((String)obj2.get("mtgox_secret_key"), (String)obj2.get("mtgox_api_key"));
         } catch (ParseException ex) {
-            System.err.println(ex);
+            LOG.error(ex);
         }
         return apiKeys;
     }

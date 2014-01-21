@@ -11,6 +11,7 @@ import bitcoinGWT.shared.model.TimeInterval;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 import com.google.common.io.Resources;
 import org.apache.commons.collections.keyvalue.MultiKey;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -36,6 +37,8 @@ import static bitcoinGWT.shared.model.Constants.INITIAL_TRADES_INTERVAL;
 @Component
 public class HistoryDownloader {
 
+    private static final Logger LOG = Logger.getLogger(HistoryDownloader.class);
+
     private static final String ENCODING = "UTF-8";
     private static final String CSV_SPLITTER = ",";
 
@@ -53,7 +56,7 @@ public class HistoryDownloader {
 
     @PostConstruct
     private void init() {
-        System.out.println("init History downloader");
+        LOG.info("init History downloader");
         previousTimestampMap = new ConcurrentHashMap<>();
         performTradesImport();
     }
@@ -66,50 +69,50 @@ public class HistoryDownloader {
         Markets demoMarket = Markets.MTGOX;
         Currency demoCurrency = Currency.EUR;
 
-        System.out.println(new Date() + " - Start initializing trades & history for market:" + getMarketIdentifierName(demoMarket, demoCurrency));
+        LOG.info("Start initializing trades & history for market:" + getMarketIdentifierName(demoMarket, demoCurrency));
 
         long bigTimestamp = new Date().getTime();
 
         //#POINT1
         long timestamp = new Date().getTime();
-        System.out.println("Parsing CSV records");
+        LOG.info("Parsing CSV records");
         TradesHistoryRecord latestCSVRecord = processCSVRecords(demoMarket, demoCurrency);
-        System.out.println("Done parsing CSV records, operation took:" + (new Date().getTime() - timestamp) + " ms");
-        System.out.println("Latest CSV record is:" + latestCSVRecord);
+        LOG.info("Done parsing CSV records, operation took:" + (new Date().getTime() - timestamp) + " ms");
+        LOG.info("Latest CSV record is:" + latestCSVRecord);
 
         timestamp = new Date().getTime();
-        System.out.println("Parsing API CSV records");
+        LOG.info("Parsing API CSV records");
         latestCSVRecord = processAPICSVRecords(demoMarket, demoCurrency, latestCSVRecord);
-        System.out.println("Done parsing CSV records, operation took:" + (new Date().getTime() - timestamp) + " ms");
-        System.out.println("Latest API CSV record is:" + latestCSVRecord);
+        LOG.info("Done parsing CSV records, operation took:" + (new Date().getTime() - timestamp) + " ms");
+        LOG.info("Latest API CSV record is:" + latestCSVRecord);
 
         timestamp = new Date().getTime();
-        System.out.println("Getting full layout trades");
+        LOG.info("Getting full layout trades");
         List<TradesFullLayoutObject> trades = getFullLayoutTrades(demoMarket, demoCurrency);
-        System.out.println("Done getting full layout trades (size = " + trades.size() + "), operation took:" + (new Date().getTime() - timestamp) + " ms");
+        LOG.info("Done getting full layout trades (size = " + trades.size() + "), operation took:" + (new Date().getTime() - timestamp) + " ms");
 
         timestamp = new Date().getTime();
-        System.out.println("Saving full layout trades into the DB");
+        LOG.info("Saving full layout trades into the DB");
         saveFullLayoutTrades(demoMarket, demoCurrency, trades);
-        System.out.println("Done saving full layout trades into the DB, operation took:" + (new Date().getTime() - timestamp) + " ms");
+        LOG.info("Done saving full layout trades into the DB, operation took:" + (new Date().getTime() - timestamp) + " ms");
 
         timestamp = new Date().getTime();
-        System.out.println("Saving history trades into the DB");
+        LOG.info("Saving history trades into the DB");
         saveHistoryTrades(demoMarket, demoCurrency, latestCSVRecord, trades);
-        System.out.println("Done saving history trades into the DB, operation took:" + (new Date().getTime() - timestamp) + " ms");
+        LOG.info("Done saving history trades into the DB, operation took:" + (new Date().getTime() - timestamp) + " ms");
 
-        System.out.println(new Date() + " - Finished initializing trades & history for market: " + getMarketIdentifierName(demoMarket, demoCurrency)
+        LOG.info("Finished initializing trades & history for market: " + getMarketIdentifierName(demoMarket, demoCurrency)
                 + ", operation took:" + (new Date().getTime() - bigTimestamp) + " ms");
     }
 
     private void saveHistoryTrades(Markets demoMarket, Currency demoCurrency, TradesHistoryRecord latestCSVRecord, List<TradesFullLayoutObject> trades) {
-        System.out.println("Have to save " + trades.size() + " history records");
+        LOG.info("Have to save " + trades.size() + " history records");
         //#POINT5
         //save also data for the history (for the chart), but only the ones between POINT2 & current time
         Map<String, List<TradesHistoryRecord>> historyRecordsToSave = new HashMap<>();
         List<TradesHistoryRecord> filteredRecords = filterOutOldHistoryTrades(latestCSVRecord, TradesConverter.convertTradesShallowObjectsToTradesHistoryRecords(trades), true);
 
-        System.out.println("After filtering the records, there are " + filteredRecords.size() + " history records which are newer than the latest trade in the history: " + latestCSVRecord);
+        LOG.info("After filtering the records, there are " + filteredRecords.size() + " history records which are newer than the latest trade in the history: " + latestCSVRecord);
         historyRecordsToSave.put(HistoryDownloader.getMarketIdentifierName(demoMarket, demoCurrency),
                 filteredRecords);//filter out the trades which are older than the latest history trades loaded from bitcoin-charts (POINT2)
         dao.saveTradesHistoryRecords(historyRecordsToSave, true);
@@ -141,7 +144,7 @@ public class HistoryDownloader {
         //#POINT2
         List<TradesHistoryRecord> apiCSVRecords = executeQuery(demoMarket, demoCurrency, latestCSVRecord.getTime());
 
-        System.out.println("Got " + apiCSVRecords.size() + " history trades from the API");
+        LOG.info("Got " + apiCSVRecords.size() + " history trades from the API");
         Map<String, List<TradesHistoryRecord>> marketToCSVRecords = new HashMap<>();
         marketToCSVRecords.put(getMarketIdentifierName(demoMarket, demoCurrency), apiCSVRecords);
         //save the API records in the DB
@@ -151,7 +154,7 @@ public class HistoryDownloader {
             latestCSVRecord = apiCSVRecords.get(apiCSVRecords.size() - 1);
         }
 
-        System.out.println("Latest API CSV record, which was saved in the DB:" + latestCSVRecord);
+        LOG.info("Latest API CSV record, which was saved in the DB:" + latestCSVRecord);
         return latestCSVRecord;
     }
 
@@ -159,17 +162,17 @@ public class HistoryDownloader {
         //first, populate the MongoDB schema with historical data read from the CSV file
         List<TradesHistoryRecord> csvRecords = readCSV(demoMarket, demoCurrency);
 
-        System.out.println("There are " + csvRecords.size() + " CSV records to be saved");
+        LOG.info("There are " + csvRecords.size() + " CSV records to be saved");
 
         List<TradesHistoryRecord> historyRecords = dao.getLatestHistoryTrades(getMarketIdentifierName(demoMarket, demoCurrency));
         TradesHistoryRecord latestHistoryRecord = null;
         if (!historyRecords.isEmpty()) {
             //all records will have the same timestamp, since they're all the trades from the latest timestamp
             latestHistoryRecord = historyRecords.get(0);
-            System.out.println("Already have some data in the DB, latest history trade: " + latestHistoryRecord);
+            LOG.info("Already have some data in the DB, latest history trade: " + latestHistoryRecord);
 
             csvRecords = filterOutOldHistoryTrades(latestHistoryRecord, csvRecords, false);
-            System.out.println("After filtering the CSV history trades, still have to save " + csvRecords.size() + " records in the DB");
+            LOG.info("After filtering the CSV history trades, still have to save " + csvRecords.size() + " records in the DB");
         }
 
         Map<String, List<TradesHistoryRecord>> marketToCSVRecords = new HashMap<>();
@@ -178,10 +181,10 @@ public class HistoryDownloader {
 
         //last record got from the CSV, this will be the threshold of getting the trades from the bitcoincharts API
         if (csvRecords.isEmpty() && latestHistoryRecord != null) {
-            System.out.println("No records were to be saved in the DB, since we've got all the necessary trades in the history");
+            LOG.info("No records were to be saved in the DB, since we've got all the necessary trades in the history");
             return latestHistoryRecord; //this is the last record from the history DB
         } else {
-            System.out.println("Returning last trade from the CSV, which was not saved in the DB:" + csvRecords.get(csvRecords.size() - 1));
+            LOG.info("Returning last trade from the CSV, which was not saved in the DB:" + csvRecords.get(csvRecords.size() - 1));
             return csvRecords.get(csvRecords.size() - 1);   //this is the last record from the CSV file
         }
     }
@@ -213,15 +216,15 @@ public class HistoryDownloader {
         // - timestamp of latest trade in DB
         if (!latestDBObjects.isEmpty()) {
             TradesFullLayoutRecord latestFullLayoutRecord =  latestDBObjects.get(0);
-            System.out.println("Got latest full layout trade from the DB: " + latestFullLayoutRecord);
+            LOG.info("Got latest full layout trade from the DB: " + latestFullLayoutRecord);
             if (calendar.getTimeInMillis() > latestFullLayoutRecord.getTimestamp()) {
-                System.out.println("Last trade is more than 1 day old, returning -ONE_DAY timestamp");
+                LOG.info("Last trade is more than 1 day old, returning -ONE_DAY timestamp");
             } else {
-                System.out.println("Last trade is less that 1 day old, returning the time of the last trade");
+                LOG.info("Last trade is less that 1 day old, returning the time of the last trade");
             }
             return Math.max(calendar.getTimeInMillis(), latestDBObjects.get(0).getTimestamp());
         } else {
-            System.out.println("There are no trades in the DB, returning -ONE_DAY timestamp");
+            LOG.info("There are no trades in the DB, returning -ONE_DAY timestamp");
             return calendar.getTimeInMillis();
         }
     }
@@ -231,7 +234,7 @@ public class HistoryDownloader {
 
         //create the name of the CSV out of the market and currency
         String csvFile = "historical_data/" + getMarketIdentifierName(market, currency) + ".csv";
-        System.out.println("Start reading CSV file: " + csvFile);
+        LOG.info("Start reading CSV file: " + csvFile);
 
         BufferedReader br = null;
         String output = "";
@@ -249,20 +252,20 @@ public class HistoryDownloader {
             }
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOG.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e);
         } finally {
             if (br != null) {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOG.error(e);
                 }
             }
         }
 
-        System.out.println("Done reading CSV:" + csvFile + ", operation took: " + (new Date().getTime() - before.getTime()) + " ms");
+        LOG.info("Done reading CSV:" + csvFile + ", operation took: " + (new Date().getTime() - before.getTime()) + " ms");
 
         return result;
     }
@@ -274,8 +277,7 @@ public class HistoryDownloader {
             TradesHistoryRecord trade = new TradesHistoryRecord(Long.valueOf(tradeLine[0]), Double.valueOf(tradeLine[1]), Double.valueOf(tradeLine[2]));
             return trade;
         } catch (Exception e) {
-            System.out.println("ignoring malformed line:" + line);
-            e.printStackTrace();
+            LOG.warn("ignoring malformed line:" + line);
         }
 
         return null;
@@ -291,11 +293,9 @@ public class HistoryDownloader {
         }
         //Capture Exceptions
         catch (IllegalStateException ex) {
-            ex.printStackTrace();
-            //System.err.println(ex);
+            LOG.error(ex);
         } catch (IOException ex) {
-            //System.err.println(ex);
-            ex.printStackTrace();
+            LOG.error(ex);
         } finally {
             //close the connection, set all objects to null
             if (connection != null) {
@@ -337,9 +337,9 @@ public class HistoryDownloader {
         String output;
 
         if (httpError)
-            System.err.println("Post Data: " + post_data);
+            LOG.error("Post Data: " + post_data);
         if (printHttpResponse)
-            System.out.println("HTTP response : \n"); //do not log unless is error > 400
+            LOG.info("HTTP response : \n"); //do not log unless is error > 400
         while ((output = br.readLine()) != null) {
             TradesHistoryRecord csvRecord = extractCSVRecord(output);
             if (csvRecord != null) {
@@ -366,7 +366,7 @@ public class HistoryDownloader {
                 result += URLEncoder.encode(hashkey, ENCODING) + "="
                         + URLEncoder.encode(args.get(hashkey), ENCODING);
             } catch (Exception ex) {
-                ex.printStackTrace();
+                LOG.error(ex);
             }
         }
         return result;

@@ -31,11 +31,11 @@ public class CandleStickChartDataConverter {
 
     private static Set<ChartElement> convert(Set<TradesFullLayoutObject> tradesResult, TimeInterval timeInterval) {
         Set<ChartElement> result = new LinkedHashSet<>();
-        LOG.info(new Date() + ": converting " + tradesResult.size() + " trade items");
+        LOG.info("Converting " + tradesResult.size() + " trade items");
 
         Map<TimeWindow, LinkedList<TradesFullLayoutObject>> partialResults = new LinkedHashMap<>();
         getPartialResults(partialResults, new ArrayDeque<>(tradesResult), timeInterval.getMinutes());
-        LOG.info(new Date() + ": size of partial results=" + RamUsageEstimator.humanSizeOf(partialResults));
+        LOG.info("Size of partial results=" + RamUsageEstimator.humanSizeOf(partialResults));
 
         for (Map.Entry<TimeWindow, LinkedList<TradesFullLayoutObject>> entry : partialResults.entrySet()) {
             if (entry.getValue() != null && !entry.getValue().isEmpty()) {
@@ -70,7 +70,7 @@ public class CandleStickChartDataConverter {
             }
 
         }
-        LOG.info(new Date() + ": converted " + tradesResult.size() + " trade items into " + result.size() + " chart elements");
+        LOG.info("Converted " + tradesResult.size() + " trade items into " + result.size() + " chart elements");
         return result;
     }
 

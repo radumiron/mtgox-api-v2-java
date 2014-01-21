@@ -45,6 +45,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class MtGox extends MtGoxTradeInterface {
 
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(MtGox.class);
+
     public static final String MONEY_TICKER = "/MONEY/TICKER";
 
     public enum RequestType {GET, POST};
@@ -594,9 +596,9 @@ public class MtGox extends MtGoxTradeInterface {
             String output;
 
             if (httpError)
-                System.err.println("Post Data: " + post_data);
+                LOG.error("Post Data: " + post_data);
             if (printHttpResponse)
-                System.out.println("Query to :" + path + " , HTTP response : \n"); //do not log unless is error > 400
+                LOG.error("Query to :" + path + " , HTTP response : \n"); //do not log unless is error > 400
             while ((output = br.readLine()) != null) {
                 if (printHttpResponse)
                     System.out.println(output);

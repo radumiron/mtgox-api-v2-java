@@ -1,6 +1,7 @@
 package bitcoinGWT.server.request_servlet;
 
 import bitcoinGWT.client.BitcoinGWTService;
+import bitcoinGWT.server.history.HistoryDownloader;
 import bitcoinGWT.server.ticker.TickerEngine;
 import bitcoinGWT.server.ticker.TradesEngine;
 import bitcoinGWT.shared.model.*;
@@ -11,6 +12,7 @@ import com.sencha.gxt.data.shared.SortInfo;
 import com.sencha.gxt.data.shared.loader.PagingLoadConfig;
 import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 import com.sencha.gxt.data.shared.loader.PagingLoadResultBean;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -30,6 +32,8 @@ import java.util.*;
 
 @Service
 public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements BitcoinGWTService {
+
+    private static final Logger LOG = Logger.getLogger(BitcoinGWTServiceImpl.class);
 
     @Autowired
     @Qualifier("GENERIC")
@@ -83,11 +87,17 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
 
     @Override
     public TickerFullLayoutObject getPrice(Markets market, Currency currency) {
-        return ticker.getPrice(market, currency);
+        Date before = new Date();
+        LOG.info("Getting ticker for market:" + HistoryDownloader.getMarketIdentifierName(market, currency));
+        TickerFullLayoutObject price = ticker.getPrice(market, currency);
+        LOG.info("Finished getting trades for market:" + HistoryDownloader.getMarketIdentifierName(market, currency)  + ", operation took:" + (new Date().getTime() - before.getTime()) + " ms");
+        return price;
     }
 
     @Override
     public PagingLoadResult<TradesFullLayoutObject> getTradesForGrid(Markets market, Currency currency, Long timestamp, PagingLoadConfig config) {
+        Date before = new Date();
+        LOG.info("Getting trades for market:" + HistoryDownloader.getMarketIdentifierName(market, currency) + ", since " + timestamp);
         //always take the whole list of retrieved trades: we will return to the UI just part of it, according to the PagingLoadConfig
         List<TradesFullLayoutObject> trades = new ArrayList<>(tradesEngine.getTrades(market, currency, timestamp, true));
 
@@ -109,7 +119,8 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
         for (int i = config.getOffset(); i < limit; i++) {  //put the paged trades inside the sublist
             sublist.add(trades.get(i));
         }
-
+        LOG.info("Finished getting trades for market:" + HistoryDownloader.getMarketIdentifierName(market, currency) + ", since "
+                + timestamp + ", operation took:" + (new Date().getTime() - before.getTime()) + " ms");
         //return the paged trades, also sending the no. of total results (trades.size) and the offset from the start point of the list for which the sublist corresponds.
         return new PagingLoadResultBean<TradesFullLayoutObject>(sublist, trades.size(), config.getOffset());
     }

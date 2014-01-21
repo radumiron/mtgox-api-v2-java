@@ -15,6 +15,9 @@ import trading.mtgox_api.com.mtgox.api.ApiKeys;
  * @author advanced
  */
 public class Utils {
+
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(Utils.class);
+
      
     public static String readFromFile(String path) {
          
@@ -69,7 +72,7 @@ public class Utils {
             JSONObject obj2=(JSONObject)(parser.parse(apiStr));
             apiKeys= new ApiKeys((String)obj2.get("mtgox_secret_key"), (String)obj2.get("mtgox_api_key"));
         } catch (ParseException ex) {
-            System.err.println(ex);
+            LOG.error(ex);
         }
         return apiKeys;    
     }

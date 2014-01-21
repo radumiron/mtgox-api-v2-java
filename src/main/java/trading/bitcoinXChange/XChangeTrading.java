@@ -23,6 +23,7 @@ import com.xeiam.xchange.mtgox.v2.dto.trade.polling.MtGoxLagWrapper;
 import com.xeiam.xchange.service.polling.PollingMarketDataService;
 import com.xeiam.xchange.virtex.VirtExExchange;
 import bitcoinGWT.server.history.HistoryDownloader;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -44,6 +45,8 @@ import java.util.*;
 @Primary
 @Qualifier("XChange")
 public class XChangeTrading implements TradeInterface {
+
+    private static final Logger LOG = Logger.getLogger(XChangeTrading.class);
 
     private Map<Markets, PollingMarketDataService> marketsServiceMap;
     private Map<Markets, Exchange> marketsExchangeMap;
@@ -126,8 +129,7 @@ public class XChangeTrading implements TradeInterface {
                     ticker.getBid().getAmount().doubleValue(), ticker.getHigh().getAmount().doubleValue(), -1d, -1d, -1d,
                     ticker.getLow().getAmount().doubleValue(), ticker.getVolume().doubleValue(), -1d);
         } catch (Throwable e) {
-            System.out.println("error while invoking ticker service for:" + HistoryDownloader.getMarketIdentifierName(market, currency));
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            LOG.error("error while invoking ticker service for:" + HistoryDownloader.getMarketIdentifierName(market, currency));
         }
 
         return (T) (result != null ? result : new TickerShallowObject(currency, 0, null));
@@ -144,7 +146,7 @@ public class XChangeTrading implements TradeInterface {
                     result.add(currency);
                 }
             } catch (Throwable e) {
-                System.out.println("Cannot convert unknown currency: " + pair.toString());
+                LOG.warn("Cannot convert unknown currency: " + pair.toString());
             }
         }
 
@@ -164,7 +166,7 @@ public class XChangeTrading implements TradeInterface {
                 mtGoxLagWrapper = mtGoxV2.getLag();
                 return mtGoxLagWrapper.getResult();
             } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                LOG.error(e);
             }
         }
 
@@ -173,7 +175,7 @@ public class XChangeTrading implements TradeInterface {
 
     @Override
     public List<TradesFullLayoutObject> getTrades(Markets market, Currency currency, long previousTimestamp) {
-        System.out.println("Getting all the trades since:" + previousTimestamp + " for market:" + HistoryDownloader.getMarketIdentifierName(market, currency));
+        LOG.info("Getting all the trades since:" + previousTimestamp + " for market:" + HistoryDownloader.getMarketIdentifierName(market, currency));
         List<TradesFullLayoutObject> result = new ArrayList<>();
         try {
             //the SINCE parameter from the API can be sent here
@@ -187,9 +189,9 @@ public class XChangeTrading implements TradeInterface {
                 result.add(newTrade);
             }
         } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            LOG.error("Could not retrieve trades for market: " + HistoryDownloader.getMarketIdentifierName(market, currency), e);
         }
-        System.out.println("Got " + result.size() + " trades for market:" + HistoryDownloader.getMarketIdentifierName(market, currency));
+        LOG.info("Got " + result.size() + " trades for market:" + HistoryDownloader.getMarketIdentifierName(market, currency));
         return result;
     }
 

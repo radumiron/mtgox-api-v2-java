@@ -9,6 +9,7 @@ import bitcoinGWT.shared.model.Markets;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 import bitcoinGWT.server.history.HistoryDownloader;
 import org.apache.commons.collections.keyvalue.MultiKey;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
@@ -36,6 +37,8 @@ import static bitcoinGWT.shared.model.Constants.TRADES_RETRIEVAL_INTERVAL;
 @Qualifier("GENERIC")
 public class GenericTradesEngine extends TradesEngine {
 
+    private static final Logger LOG = Logger.getLogger(GenericTradesEngine.class);
+
     @Autowired
     @Qualifier("MONGO")
     private GenericDAO dao;
@@ -55,7 +58,7 @@ public class GenericTradesEngine extends TradesEngine {
 
     @PostConstruct
     private void init() {
-        System.out.println("init of GenericTradeEngine");
+        LOG.info("init of GenericTradeEngine");
         //todo put more threads here
         //executor = Executors.newFixedThreadPool();
         executor = Executors.newSingleThreadExecutor();
@@ -85,7 +88,7 @@ public class GenericTradesEngine extends TradesEngine {
                     TradesConverter.convertTradesShallowObjectsToTradesHistoryRecords(sortedTrades));
             dao.saveTradesHistoryRecords(historyRecordsToSave, true);
 
-            System.out.println(new Date() + " new trades loaded, size of loaded trades=" + sortedTrades.size());
+            LOG.info("New trades loaded, size of loaded trades=" + sortedTrades.size());
             //in case the list downloaded is NOT empty, mark that all who will ask for trades will be able to download the new list
             shouldLoadTradesMap.put(new MultiKey(market, currency), true);
         } else {
@@ -111,9 +114,9 @@ public class GenericTradesEngine extends TradesEngine {
             //initialize previousTimestamp with the current time
             previousTimestamp = calendar.getTimeInMillis();
             previousTimestampMap.put(new MultiKey(market, currency), previousTimestamp);
-            System.out.println("first time trades");
+            LOG.info("first time trades");
 
-            System.out.println("current time: " + new Date(previousTimestamp));
+            LOG.info("current time: " + new Date(previousTimestamp));
             //go back the specified amount of seconds
             calendar.add(Calendar.MILLISECOND, (-1) * INITIAL_TRADES_INTERVAL);
 
@@ -122,7 +125,7 @@ public class GenericTradesEngine extends TradesEngine {
             //save the current run time as a reference for the next run time.
             Long currentExecutionTime = calendar.getTimeInMillis();
             previousTimestampMap.put(new MultiKey(market, currency), currentExecutionTime);
-            System.out.println("getting trades from: " + new Date(previousTimestamp) + " to " + new Date(currentExecutionTime));
+            LOG.info("getting trades from: " + new Date(previousTimestamp) + " to " + new Date(currentExecutionTime));
             return previousTimestamp;
         }
     }
@@ -144,7 +147,7 @@ public class GenericTradesEngine extends TradesEngine {
     public boolean shouldLoadTradesFromServer(Markets market, Currency currency) {
         Boolean shouldLoadTrades = shouldLoadTradesMap.get(new MultiKey(market, currency));
         if (shouldLoadTrades == null) {
-            System.out.println("There is no trades information for market: " + HistoryDownloader.getMarketIdentifierName(market, currency));
+            LOG.info("There is no trades information for market: " + HistoryDownloader.getMarketIdentifierName(market, currency));
             return false;
         }
         return shouldLoadTrades;

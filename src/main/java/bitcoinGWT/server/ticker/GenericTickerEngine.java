@@ -3,6 +3,7 @@ package bitcoinGWT.server.ticker;
 import bitcoinGWT.shared.model.*;
 import bitcoinGWT.server.history.HistoryDownloader;
 import org.apache.commons.collections.keyvalue.MultiKey;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
@@ -28,6 +29,8 @@ import java.util.concurrent.Executors;
 @Qualifier("GENERIC")
 public class GenericTickerEngine extends TickerEngine {
 
+    private static final Logger LOG = Logger.getLogger(GenericTickerEngine.class);
+
     @Autowired
     @Qualifier("GENERIC")
     private GenericTradesEngine tradesEngine;
@@ -42,7 +45,7 @@ public class GenericTickerEngine extends TickerEngine {
 
     @PostConstruct
     private void init() {
-        System.out.println("init of GenericTickerEngine");
+        LOG.info("init of GenericTickerEngine");
         //executor = Executors.newFixedThreadPool(Currency.values().length);
         executor = Executors.newSingleThreadExecutor();
         tickerMap = new ConcurrentHashMap<>();
@@ -87,7 +90,7 @@ public class GenericTickerEngine extends TickerEngine {
     private void getTickerPerMarketAndCurrency(Markets market, Currency currency) {
         Date initialDate = new Date();
         String marketIdentifier = HistoryDownloader.getMarketIdentifierName(market, currency);
-        System.out.println(initialDate + ": execute ticker task for: " + marketIdentifier);
+        LOG.info(initialDate + ": execute ticker task for: " + marketIdentifier);
         //double price = trade.getPrice(MtGox.Currency.EUR).getPrice();
         TickerShallowObject tradeObject = trade.getPrice(market, currency);
         if (tradeObject instanceof TickerFullLayoutObject) {
@@ -111,15 +114,13 @@ public class GenericTickerEngine extends TickerEngine {
 
             double price = currentTicker.getPrice();
             //String lag = trade.getLag();
-            System.out.println(new Date() + ": last price=" + price + " for:" + marketIdentifier);// + ", lag: " + lag);
-            System.out.println();
+            LOG.info("Last price=" + price + " for:" + marketIdentifier);// + ", lag: " + lag);
         } else {
-            System.out.println(new Date() + ": something went wrong when getting the price. Got a shallow object instead of a full object");
+            LOG.info("Something went wrong when getting the price. Got a shallow object instead of a full object");
             //String lag = trade.getLag();
-            System.out.println(new Date() + ": last price=" + tradeObject.getPrice() + " for:" + marketIdentifier);// + ", lag: " + lag);
-            System.out.println();
+            LOG.info("Last price=" + tradeObject.getPrice() + " for:" + marketIdentifier);// + ", lag: " + lag);
         }
-        System.out.println("after each ticker task, " + HistoryDownloader.getMarketIdentifierName(market, currency));
+        LOG.info("After each ticker task, " + HistoryDownloader.getMarketIdentifierName(market, currency));
     }
 
     class TickerEngineRunnable implements Runnable {
@@ -134,9 +135,9 @@ public class GenericTickerEngine extends TickerEngine {
 
         @Override
         public void run() {
-            System.out.println("Running ticker thread for:" + HistoryDownloader.getMarketIdentifierName(market, currency));
+            LOG.info("Running ticker thread for:" + HistoryDownloader.getMarketIdentifierName(market, currency));
             getTickerPerMarketAndCurrency(market, currency);
-            System.out.println("After running ticker thread for:" + HistoryDownloader.getMarketIdentifierName(market, currency));
+            LOG.info("After running ticker thread for:" + HistoryDownloader.getMarketIdentifierName(market, currency));
         }
     }
 }

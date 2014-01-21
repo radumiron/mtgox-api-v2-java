@@ -1,5 +1,6 @@
 package bitcoinGWT.server.ticker;
 
+import org.apache.log4j.Logger;
 import trading.api_interfaces.TradeInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,13 +23,15 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class AbstractTradeEngine {
 
+    private static final Logger LOG = Logger.getLogger(AbstractTradeEngine.class);
+
     protected static int INITIAL_DELAY = 5000;
 
     private Timer tickerTimer = new Timer(getTradeName());
 
     @PostConstruct
     private void init() {
-        System.out.println("Initializing AbstractTradeEngine for trade: " + getTradeName());
+        LOG.info("Initializing AbstractTradeEngine for trade: " + getTradeName());
         tickerTimer.scheduleAtFixedRate(new TickerTask(), getInitialDelay(), getTimerInterval());
     }
 
@@ -44,7 +47,7 @@ public abstract class AbstractTradeEngine {
 
         @Override
         public void run() {
-            System.out.println(new Date() + " - Running timer task for trade engine: " + getTradeName());
+            LOG.info("Running timer task for trade engine: " + getTradeName());
             executeTradeTask();
         }
     }
