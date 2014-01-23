@@ -96,7 +96,7 @@ public class TradesFullLayoutRecord {
                 ", currency=" + currency +
                 ", tradeItem=" + tradeItem +
                 ", type=" + type +
-                ", date=" + new Date(timestamp) +
+                ", date=" + new Date(timestamp) + "(timestamp=" + timestamp + ")" +
                 ", price=" + price +
                 ", tradeId=" + tradeId +
                 '}';

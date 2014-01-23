@@ -4,6 +4,7 @@ import bitcoinGWT.server.dao.entities.TradesFullLayoutRecord;
 import bitcoinGWT.server.dao.entities.TradesHistoryRecord;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.TradeType;
+import com.google.gwt.rpc.server.Pair;
 import com.mongodb.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -51,98 +52,97 @@ public class MongoDAO implements GenericDAO {
         }
     }
 
-    public void saveTradesHistoryRecords(Map<String, List<TradesHistoryRecord>> csvRecords, boolean saveLastRecord) {
+    public void saveTradesHistoryRecords(Pair<String, List<TradesHistoryRecord>> csvRecords, boolean saveLastRecord) {
         DB db = mongoClient.getDB(connectionProperties.getProperty(MongoConnectionPropertyKeys.SCHEMA.getKey()));
 
-        for (Map.Entry<String, List<TradesHistoryRecord>> entry : csvRecords.entrySet()) {
-            DBCollection tradesTable = db.getCollection(entry.getKey() + TradesHistoryRecord.TRADES_TABLE_SUFFIX);
-            //ensure the trades table has the needed indexes
-            //changeHistoryTradesTableDefinition(tradesTable);
+        DBCollection tradesTable = db.getCollection(csvRecords.getA() + TradesHistoryRecord.TRADES_TABLE_SUFFIX);
+        //ensure the trades table has the needed indexes
+        //changeHistoryTradesTableDefinition(tradesTable);
 
-            Date before = new Date();
+        Date before = new Date();
 
-            //in case we don't want to save the last record, we can choose not to (this is useful in case the last record
-            //will in fact be the next record to be saved, but in a different records batch
-            int recordsSizeToSave = saveLastRecord ? entry.getValue().size() : entry.getValue().size() - 1;
+        //in case we don't want to save the last record, we can choose not to (this is useful in case the last record
+        //will in fact be the next record to be saved, but in a different records batch
+        int recordsSizeToSave = saveLastRecord ? csvRecords.getB().size() : csvRecords.getB().size() - 1;
 
-            LOG.info("Start converting " + entry.getValue().size() + " CSV records");
+        LOG.info("Start converting " + csvRecords.getB().size() + " CSV records");
 
-            List<DBObject> dbRecords = new ArrayList<>();
-            for (int i = 0; i < recordsSizeToSave; i++) {
-                TradesHistoryRecord csvRecord = entry.getValue().get(i);
-                BasicDBObject document = new BasicDBObject();
-                document.put(TradesHistoryRecord.COLUMN_TIME, csvRecord.getTime());
-                document.put(TradesHistoryRecord.COLUMN_PRICE, csvRecord.getPrice());
-                document.put(TradesHistoryRecord.COLUMN_AMOUNT, csvRecord.getAmount());
-                dbRecords.add(document);
-            }
-            LOG.info("Done converting CSV records, operation took:" + +(new Date().getTime() - before.getTime()) + " ms");
+        List<DBObject> dbRecords = new ArrayList<>();
+        for (int i = 0; i < recordsSizeToSave; i++) {
+            TradesHistoryRecord csvRecord = csvRecords.getB().get(i);
+            BasicDBObject document = new BasicDBObject();
+            document.put(TradesHistoryRecord.COLUMN_TIME, csvRecord.getTime());
+            document.put(TradesHistoryRecord.COLUMN_PRICE, csvRecord.getPrice());
+            document.put(TradesHistoryRecord.COLUMN_AMOUNT, csvRecord.getAmount());
+            dbRecords.add(document);
+        }
+        LOG.info("Done converting CSV records, operation took:" + +(new Date().getTime() - before.getTime()) + " ms");
 
-            before = new Date();
-            LOG.info("Start saving " + recordsSizeToSave + " CSV records");
-            try {
-                //for (DBObject document : dbRecords) {
-                    //try {
-                        tradesTable.insert(dbRecords);
-                    //} catch (MongoException.DuplicateKey dup) {
-                        //System.err.println("Trying to insert duplicate record, skipping...(" + document + ")");
-                    //}
-                //}
-                LOG.info("Done saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
-            } catch (Exception e) {
-                LOG.error("Error occurred while saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
-            }
+        before = new Date();
+        LOG.info("Start saving " + recordsSizeToSave + " CSV records");
+        try {
+            tradesTable.insert(dbRecords);
+            LOG.info("Done saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
+        } catch (Exception e) {
+            LOG.error("Error occurred while saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
         }
     }
 
-    public void saveTradesFullLayoutRecords(Map<String, List<TradesFullLayoutRecord>> csvRecords, boolean saveLastRecord) {
+    public Collection<TradesFullLayoutRecord> saveTradesFullLayoutRecords(Pair<String, List<TradesFullLayoutRecord>> csvRecords, boolean saveLastRecord) {
         DB db = mongoClient.getDB(connectionProperties.getProperty(MongoConnectionPropertyKeys.SCHEMA.getKey()));
 
-        for (Map.Entry<String, List<TradesFullLayoutRecord>> entry : csvRecords.entrySet()) {
-            DBCollection tradesTable = db.getCollection(entry.getKey() + TradesFullLayoutRecord.TRADES_TABLE_SUFFIX);
-            changeFullTradesTableDefinition(tradesTable);
+        DBCollection tradesTable = db.getCollection(csvRecords.getA() + TradesFullLayoutRecord.TRADES_TABLE_SUFFIX);
+        changeFullTradesTableDefinition(tradesTable);
 
-            Date before = new Date();
+        Date before = new Date();
 
-            //in case we don't want to save the last record, we can choose not to (this is useful in case the last record
-            //will in fact be the next record to be saved, but in a different records batch
-            int recordsSizeToSave = saveLastRecord ? entry.getValue().size() : entry.getValue().size() - 1;
+        //in case we don't want to save the last record, we can choose not to (this is useful in case the last record
+        //will in fact be the next record to be saved, but in a different records batch
+        int recordsSizeToSave = saveLastRecord ? csvRecords.getB().size() : csvRecords.getB().size() - 1;
 
-            LOG.info("Start converting " + entry.getValue().size() + " full layout records");
+        LOG.info("Start converting " + csvRecords.getB().size() + " full layout records");
 
-            List<DBObject> dbRecords = new ArrayList<>();
-            for (int i = 0; i < recordsSizeToSave; i++) {
-                TradesFullLayoutRecord fullRecord = entry.getValue().get(i);
-                if (fullRecord.getAmount() < 0.0001) {
-                    return; //don't save any record with a transaction amount less than 0.01 BTC
-                }
-                BasicDBObject document = new BasicDBObject();
-                document.put(TradesFullLayoutRecord.COLUMN_DATE, fullRecord.getTimestamp());
-                document.put(TradesFullLayoutRecord.COLUMN_PRICE, fullRecord.getPrice());
-                document.put(TradesFullLayoutRecord.COLUMN_AMOUNT, fullRecord.getAmount());
-                document.put(TradesFullLayoutRecord.COLUMN_CURRENCY, fullRecord.getCurrency().name());
-                document.put(TradesFullLayoutRecord.COLUMN_TRADE_ITEM, fullRecord.getTradeItem().name());
-                document.put(TradesFullLayoutRecord.COLUMN_TRADE_ID, fullRecord.getTradeId());
-                document.put(TradesFullLayoutRecord.COLUMN_TRADE_TYPE, fullRecord.getType().name());
-
-                dbRecords.add(document);
+        Map<TradesFullLayoutRecord, DBObject> dbRecords = new LinkedHashMap<>();
+        for (int i = 0; i < recordsSizeToSave; i++) {
+            TradesFullLayoutRecord fullRecord = csvRecords.getB().get(i);
+            if (fullRecord.getAmount() < 0.0001) {
+                continue; //don't save any record with a transaction amount less than 0.01 BTC
             }
-            LOG.info("Done converting full layout records, operation took:" + +(new Date().getTime() - before.getTime()) + " ms");
+            BasicDBObject document = new BasicDBObject();
+            document.put(TradesFullLayoutRecord.COLUMN_DATE, fullRecord.getTimestamp());
+            document.put(TradesFullLayoutRecord.COLUMN_PRICE, fullRecord.getPrice());
+            document.put(TradesFullLayoutRecord.COLUMN_AMOUNT, fullRecord.getAmount());
+            document.put(TradesFullLayoutRecord.COLUMN_CURRENCY, fullRecord.getCurrency().name());
+            document.put(TradesFullLayoutRecord.COLUMN_TRADE_ITEM, fullRecord.getTradeItem().name());
+            document.put(TradesFullLayoutRecord.COLUMN_TRADE_ID, fullRecord.getTradeId());
+            document.put(TradesFullLayoutRecord.COLUMN_TRADE_TYPE, fullRecord.getType().name());
 
-            before = new Date();
-            LOG.info("Start saving " + recordsSizeToSave + " CSV records");
-            try {
-                for (DBObject document : dbRecords) {
-                    try {
-                        tradesTable.insert(document);
-                    } catch (MongoException.DuplicateKey dup) {
-                        LOG.warn("Trying to insert duplicate record, skipping...(" + document + ")", dup);
-                    }
+            dbRecords.put(fullRecord, document);
+        }
+        LOG.info("Done converting full layout records, operation took:" + +(new Date().getTime() - before.getTime()) + " ms");
+
+        LOG.debug("Going to save: " + dbRecords.toString());
+
+        before = new Date();
+        LOG.info("Start saving " + recordsSizeToSave + " CSV records");
+        try {
+            Iterator<Map.Entry<TradesFullLayoutRecord, DBObject>> iterator = dbRecords.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<TradesFullLayoutRecord, DBObject> record = iterator.next();
+                try {
+                    tradesTable.insert(record.getValue());
+                } catch (MongoException.DuplicateKey dup) {
+                    LOG.warn("Trying to insert duplicate record, skipping...(" + record.getValue() + ")", dup);
+                    //remove the duplicate records
+                    iterator.remove();
                 }
-                LOG.info("Done saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
-            } catch (Exception e) {
-                LOG.error("Error occurred while saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
             }
+            LOG.info("Done saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
+        } catch (Exception e) {
+            LOG.error("Error occurred while saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
+        } finally {
+            //return the full trades which were not marked as duplicate
+            return dbRecords.keySet();
         }
     }
 
@@ -167,7 +167,7 @@ public class MongoDAO implements GenericDAO {
             //take just one element and add it to the partial results
             parseHistoryTradesDBRecords(result, cursor);
 
-           /* //we should have only one record here:
+            /* //we should have only one record here:
             if (partialResults.size() == 1) {
                 //try to identify if there are any more records at the same timestamp
                 BasicDBObject objectsAtTimestampQuery = BasicDBObject();

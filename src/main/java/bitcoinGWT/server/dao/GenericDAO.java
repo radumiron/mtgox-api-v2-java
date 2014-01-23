@@ -2,7 +2,9 @@ package bitcoinGWT.server.dao;
 
 import bitcoinGWT.server.dao.entities.TradesFullLayoutRecord;
 import bitcoinGWT.server.dao.entities.TradesHistoryRecord;
+import com.google.gwt.rpc.server.Pair;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -15,8 +17,8 @@ import java.util.Map;
  */
 public interface GenericDAO {
 
-    public void saveTradesHistoryRecords(Map<String, List<TradesHistoryRecord>> csvRecords, boolean saveLastRecord);
-    public void saveTradesFullLayoutRecords(Map<String, List<TradesFullLayoutRecord>> fullLayoutRecords, boolean saveLastRecord);
+    public void saveTradesHistoryRecords(Pair<String, List<TradesHistoryRecord>> csvRecords, boolean saveLastRecord);
+    public Collection<TradesFullLayoutRecord> saveTradesFullLayoutRecords(Pair<String, List<TradesFullLayoutRecord>> fullLayoutRecords, boolean saveLastRecord);
 
     List<TradesHistoryRecord> getTradesHistoryRecords(String marketIdentifier, Long start, Long end, boolean loadLastRecord);
     public List<TradesFullLayoutRecord> getTradesFullLayoutRecords(String marketIdentifier, Long timestamp, boolean loadLastRecord);

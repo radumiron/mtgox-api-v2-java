@@ -6,6 +6,7 @@ import bitcoinGWT.shared.model.TradesFullLayoutObject;
 import bitcoinGWT.shared.model.TradesShallowObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
 public class TradesConverter {
 
     public static List<TradesFullLayoutObject> convertTradesFullLayoutRecordsToTradesFullLayoutObjects(
-            List<TradesFullLayoutRecord> tradeRecords) {
+            Collection<TradesFullLayoutRecord> tradeRecords) {
 
         List<TradesFullLayoutObject> result = new ArrayList<>();
         for (TradesFullLayoutRecord record : tradeRecords) {
@@ -33,7 +34,7 @@ public class TradesConverter {
     }
 
     public static List<TradesFullLayoutRecord> convertTradesFullLayoutObjectsToTradesFullLayoutRecords(
-            List<TradesFullLayoutObject> tradeObjects) {
+            Collection<TradesFullLayoutObject> tradeObjects) {
 
         List<TradesFullLayoutRecord> result = new ArrayList<>();
         for (TradesFullLayoutObject trade : tradeObjects) {
@@ -47,7 +48,7 @@ public class TradesConverter {
     }
 
     public static List<TradesShallowObject> convertTradesHistoryRecordsToTradesShallowObjects(
-            List<TradesHistoryRecord> historyRecords) {
+            Collection<TradesHistoryRecord> historyRecords) {
         List<TradesShallowObject> result = new ArrayList<>();
         for (TradesHistoryRecord record : historyRecords) {
             TradesShallowObject trade = new TradesShallowObject(new Date(record.getTime()), record.getAmount(), record.getPrice());
@@ -58,10 +59,21 @@ public class TradesConverter {
     }
 
     public static List<TradesHistoryRecord> convertTradesShallowObjectsToTradesHistoryRecords(
-            List<? extends TradesShallowObject> shallowObjects) {
+            Collection<? extends TradesShallowObject> shallowObjects) {
         List<TradesHistoryRecord> result = new ArrayList<>();
         for (TradesShallowObject trade : shallowObjects) {
             TradesHistoryRecord record = new TradesHistoryRecord(trade.getDate().getTime() / 1000, trade.getAmount(), trade.getPrice());
+            result.add(record);
+        }
+
+        return result;
+    }
+
+    public static List<TradesHistoryRecord> convertTradesFullLayoutRecordsToTradesHistoryRecords(
+            Collection<TradesFullLayoutRecord> shallowObjects) {
+        List<TradesHistoryRecord> result = new ArrayList<>();
+        for (TradesFullLayoutRecord trade : shallowObjects) {
+            TradesHistoryRecord record = new TradesHistoryRecord(trade.getTimestamp() / 1000, trade.getAmount(), trade.getPrice());
             result.add(record);
         }
 

@@ -93,26 +93,30 @@ public class StressTesterMainComponent extends ContentPanel {
             public void onSelect(SelectEvent event) {
                 executeTest = true;
                 if (gridStressTestEnabled.getValue()) {
+                    //start the test stop timer
+                    Timer testStopTimer = new Timer() {
+                        @Override
+                        public void run() {
+                            //stop the test
+                            executeTest = false;
+                        }
+                    };
+                    testStopTimer.schedule(120 * 1000);
+
+
                     Integer gridStressNumberOfTesters = Integer.parseInt(gridTestNumberOfTesters.getValue());
                     for (int i = 0; i < gridStressNumberOfTesters; i++) {
                         startTimer();
-                        /*Scheduler.get().scheduleIncremental(new Scheduler.RepeatingCommand() {
-                            @Override
-                            public boolean execute() {
-
-                                return executeTest;
-                            }
-                        });*/
                     }
                 }
+
             }
         });
 
         end.addSelectHandler(new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                //stop the test
-                executeTest = false;
+
             }
         });
     }
@@ -147,7 +151,7 @@ public class StressTesterMainComponent extends ContentPanel {
 
             }
         };
-        timer.scheduleRepeating(Random.nextInt(1000));
+        timer.schedule(Random.nextInt(20000));
     }
 
 

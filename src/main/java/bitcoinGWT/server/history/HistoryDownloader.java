@@ -10,6 +10,7 @@ import bitcoinGWT.shared.model.Markets;
 import bitcoinGWT.shared.model.TimeInterval;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 import com.google.common.io.Resources;
+import com.google.gwt.rpc.server.Pair;
 import org.apache.commons.collections.keyvalue.MultiKey;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,39 +94,42 @@ public class HistoryDownloader {
 
         timestamp = new Date().getTime();
         LOG.info("Saving full layout trades into the DB");
-        saveFullLayoutTrades(demoMarket, demoCurrency, trades);
+        Collection<TradesFullLayoutRecord> actuallySavedTrades = saveFullLayoutTrades(demoMarket, demoCurrency, trades);
         LOG.info("Done saving full layout trades into the DB, operation took:" + (new Date().getTime() - timestamp) + " ms");
 
         timestamp = new Date().getTime();
-        LOG.info("Saving history trades into the DB");
-        saveHistoryTrades(demoMarket, demoCurrency, latestCSVRecord, trades);
-        LOG.info("Done saving history trades into the DB, operation took:" + (new Date().getTime() - timestamp) + " ms");
+
+        if (actuallySavedTrades.size() > 0) {
+            LOG.info("Saving history trades into the DB");
+            saveHistoryTrades(demoMarket, demoCurrency, latestCSVRecord, actuallySavedTrades);
+            LOG.info("Done saving history trades into the DB, operation took:" + (new Date().getTime() - timestamp) + " ms");
+        } else {
+            LOG.info("There are no records to be saved to the history DB");
+        }
 
         LOG.info("Finished initializing trades & history for market: " + getMarketIdentifierName(demoMarket, demoCurrency)
                 + ", operation took:" + (new Date().getTime() - bigTimestamp) + " ms");
     }
 
-    private void saveHistoryTrades(Markets demoMarket, Currency demoCurrency, TradesHistoryRecord latestCSVRecord, List<TradesFullLayoutObject> trades) {
+    private void saveHistoryTrades(Markets demoMarket, Currency demoCurrency, TradesHistoryRecord latestCSVRecord, Collection<TradesFullLayoutRecord> trades) {
         LOG.info("Have to save " + trades.size() + " history records");
         //#POINT5
         //save also data for the history (for the chart), but only the ones between POINT2 & current time
-        Map<String, List<TradesHistoryRecord>> historyRecordsToSave = new HashMap<>();
-        List<TradesHistoryRecord> filteredRecords = filterOutOldHistoryTrades(latestCSVRecord, TradesConverter.convertTradesShallowObjectsToTradesHistoryRecords(trades), true);
-
+        List<TradesHistoryRecord> filteredRecords = filterOutOldHistoryTrades(latestCSVRecord, TradesConverter.convertTradesFullLayoutRecordsToTradesHistoryRecords(trades), true);
         LOG.info("After filtering the records, there are " + filteredRecords.size() + " history records which are newer than the latest trade in the history: " + latestCSVRecord);
-        historyRecordsToSave.put(HistoryDownloader.getMarketIdentifierName(demoMarket, demoCurrency),
+
+        Pair<String, List<TradesHistoryRecord>> historyRecordsToSave = new Pair<>(HistoryDownloader.getMarketIdentifierName(demoMarket, demoCurrency),
                 filteredRecords);//filter out the trades which are older than the latest history trades loaded from bitcoin-charts (POINT2)
         dao.saveTradesHistoryRecords(historyRecordsToSave, true);
     }
 
-    private void saveFullLayoutTrades(Markets demoMarket, Currency demoCurrency, List<TradesFullLayoutObject> trades) {
+    private Collection<TradesFullLayoutRecord> saveFullLayoutTrades(Markets demoMarket, Currency demoCurrency, List<TradesFullLayoutObject> trades) {
         //#POINT4
         //save the new trades in the DB, both full layout & history
         //save the new trades in the database
-        Map<String, List<TradesFullLayoutRecord>> recordsToSave = new HashMap<>();
-        recordsToSave.put(HistoryDownloader.getMarketIdentifierName(demoMarket, demoCurrency),
+        Pair<String, List<TradesFullLayoutRecord>> recordsToSave = new Pair<>(HistoryDownloader.getMarketIdentifierName(demoMarket, demoCurrency),
                 TradesConverter.convertTradesFullLayoutObjectsToTradesFullLayoutRecords(trades));
-        dao.saveTradesFullLayoutRecords(recordsToSave, true);
+        return dao.saveTradesFullLayoutRecords(recordsToSave, true);
     }
 
     private List<TradesFullLayoutObject> getFullLayoutTrades(Markets demoMarket, Currency demoCurrency) {
@@ -145,8 +149,8 @@ public class HistoryDownloader {
         List<TradesHistoryRecord> apiCSVRecords = executeQuery(demoMarket, demoCurrency, latestCSVRecord.getTime());
 
         LOG.info("Got " + apiCSVRecords.size() + " history trades from the API");
-        Map<String, List<TradesHistoryRecord>> marketToCSVRecords = new HashMap<>();
-        marketToCSVRecords.put(getMarketIdentifierName(demoMarket, demoCurrency), apiCSVRecords);
+        Pair<String, List<TradesHistoryRecord>> marketToCSVRecords = new Pair<>(getMarketIdentifierName(demoMarket, demoCurrency)
+                , apiCSVRecords);
         //save the API records in the DB
         dao.saveTradesHistoryRecords(marketToCSVRecords, true);
 
@@ -175,8 +179,8 @@ public class HistoryDownloader {
             LOG.info("After filtering the CSV history trades, still have to save " + csvRecords.size() + " records in the DB");
         }
 
-        Map<String, List<TradesHistoryRecord>> marketToCSVRecords = new HashMap<>();
-        marketToCSVRecords.put(getMarketIdentifierName(demoMarket, demoCurrency), csvRecords);
+        Pair<String, List<TradesHistoryRecord>> marketToCSVRecords = new Pair<>(getMarketIdentifierName(demoMarket, demoCurrency)
+                , csvRecords);
         dao.saveTradesHistoryRecords(marketToCSVRecords, false);
 
         //last record got from the CSV, this will be the threshold of getting the trades from the bitcoincharts API

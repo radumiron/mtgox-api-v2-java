@@ -8,6 +8,7 @@ import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.Markets;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 import bitcoinGWT.server.history.HistoryDownloader;
+import com.google.gwt.rpc.server.Pair;
 import org.apache.commons.collections.keyvalue.MultiKey;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,15 +78,13 @@ public class GenericTradesEngine extends TradesEngine {
 
         if (sortedTrades.size() > 0) {
             //save the new trades in the database
-            Map<String, List<TradesFullLayoutRecord>> recordsToSave = new HashMap<>();
-            recordsToSave.put(HistoryDownloader.getMarketIdentifierName(market, currency),
+            Pair<String, List<TradesFullLayoutRecord>> recordsToSave = new Pair<>(HistoryDownloader.getMarketIdentifierName(market, currency),
                     TradesConverter.convertTradesFullLayoutObjectsToTradesFullLayoutRecords(sortedTrades));
-            dao.saveTradesFullLayoutRecords(recordsToSave, true);
+            Collection<TradesFullLayoutRecord> actuallySavedTrades = dao.saveTradesFullLayoutRecords(recordsToSave, true);
 
             //save also data for the history (for the chart)
-            Map<String, List<TradesHistoryRecord>> historyRecordsToSave = new HashMap<>();
-            historyRecordsToSave.put(HistoryDownloader.getMarketIdentifierName(market, currency),
-                    TradesConverter.convertTradesShallowObjectsToTradesHistoryRecords(sortedTrades));
+            Pair<String, List<TradesHistoryRecord>> historyRecordsToSave = new Pair<>(HistoryDownloader.getMarketIdentifierName(market, currency),
+                    TradesConverter.convertTradesFullLayoutRecordsToTradesHistoryRecords(actuallySavedTrades));
             dao.saveTradesHistoryRecords(historyRecordsToSave, true);
 
             LOG.info("New trades loaded, size of loaded trades=" + sortedTrades.size());

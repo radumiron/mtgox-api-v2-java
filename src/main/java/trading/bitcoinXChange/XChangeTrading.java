@@ -192,6 +192,7 @@ public class XChangeTrading implements TradeInterface {
             LOG.error("Could not retrieve trades for market: " + HistoryDownloader.getMarketIdentifierName(market, currency), e);
         }
         LOG.info("Got " + result.size() + " trades for market:" + HistoryDownloader.getMarketIdentifierName(market, currency));
+        LOG.debug("Trades:" + result.toString());
         return result;
     }
 

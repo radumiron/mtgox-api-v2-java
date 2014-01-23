@@ -90,14 +90,15 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
         Date before = new Date();
         LOG.info("Getting ticker for market:" + HistoryDownloader.getMarketIdentifierName(market, currency));
         TickerFullLayoutObject price = ticker.getPrice(market, currency);
-        LOG.info("Finished getting trades for market:" + HistoryDownloader.getMarketIdentifierName(market, currency)  + ", operation took:" + (new Date().getTime() - before.getTime()) + " ms");
+        LOG.info("Finished getting trades for market:" + HistoryDownloader.getMarketIdentifierName(market, currency)
+                + ", operation took:" + (new Date().getTime() - before.getTime()) + " ms");
         return price;
     }
 
     @Override
     public PagingLoadResult<TradesFullLayoutObject> getTradesForGrid(Markets market, Currency currency, Long timestamp, PagingLoadConfig config) {
         Date before = new Date();
-        LOG.info("Getting trades for market:" + HistoryDownloader.getMarketIdentifierName(market, currency) + ", since " + timestamp);
+        LOG.info("Getting trades for market:" + HistoryDownloader.getMarketIdentifierName(market, currency) + (timestamp != null ? ", since " + timestamp : ""));
         //always take the whole list of retrieved trades: we will return to the UI just part of it, according to the PagingLoadConfig
         List<TradesFullLayoutObject> trades = new ArrayList<>(tradesEngine.getTrades(market, currency, timestamp, true));
 
@@ -119,8 +120,9 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
         for (int i = config.getOffset(); i < limit; i++) {  //put the paged trades inside the sublist
             sublist.add(trades.get(i));
         }
-        LOG.info("Finished getting trades for market:" + HistoryDownloader.getMarketIdentifierName(market, currency) + ", since "
-                + timestamp + ", operation took:" + (new Date().getTime() - before.getTime()) + " ms");
+        LOG.info("Finished getting " + trades.size() + " trades for market:" + HistoryDownloader.getMarketIdentifierName(market, currency)
+                + (timestamp != null ? ", since " + timestamp : "")
+                + ", operation took:" + (new Date().getTime() - before.getTime()) + " ms");
         //return the paged trades, also sending the no. of total results (trades.size) and the offset from the start point of the list for which the sublist corresponds.
         return new PagingLoadResultBean<TradesFullLayoutObject>(sublist, trades.size(), config.getOffset());
     }
