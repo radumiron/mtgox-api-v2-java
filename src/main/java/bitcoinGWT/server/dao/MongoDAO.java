@@ -65,7 +65,7 @@ public class MongoDAO implements GenericDAO {
         //will in fact be the next record to be saved, but in a different records batch
         int recordsSizeToSave = saveLastRecord ? csvRecords.getB().size() : csvRecords.getB().size() - 1;
 
-        LOG.info("Start converting " + csvRecords.getB().size() + " CSV records");
+        LOG.info("Start converting " + csvRecords.getB().size() + " history records");
 
         List<DBObject> dbRecords = new ArrayList<>();
         for (int i = 0; i < recordsSizeToSave; i++) {
@@ -76,10 +76,10 @@ public class MongoDAO implements GenericDAO {
             document.put(TradesHistoryRecord.COLUMN_AMOUNT, csvRecord.getAmount());
             dbRecords.add(document);
         }
-        LOG.info("Done converting CSV records, operation took:" + +(new Date().getTime() - before.getTime()) + " ms");
+        LOG.info("Done converting history records, operation took:" + +(new Date().getTime() - before.getTime()) + " ms");
 
         before = new Date();
-        LOG.info("Start saving " + recordsSizeToSave + " CSV records");
+        LOG.info("Start saving " + recordsSizeToSave + " history records");
         try {
             tradesTable.insert(dbRecords);
             LOG.info("Done saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");

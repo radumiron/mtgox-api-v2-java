@@ -88,10 +88,7 @@ public class GenericTickerEngine extends TickerEngine {
     }
 
     private void getTickerPerMarketAndCurrency(Markets market, Currency currency) {
-        Date initialDate = new Date();
         String marketIdentifier = HistoryDownloader.getMarketIdentifierName(market, currency);
-        LOG.info(initialDate + ": execute ticker task for: " + marketIdentifier);
-        //double price = trade.getPrice(MtGox.Currency.EUR).getPrice();
         TickerShallowObject tradeObject = trade.getPrice(market, currency);
         if (tradeObject instanceof TickerFullLayoutObject) {
             //if all went well, we should have a full layout object
@@ -103,6 +100,8 @@ public class GenericTickerEngine extends TickerEngine {
                 //check if there is a difference between the tickers, and load the trades only then
                 //the difference between the tickers is most probably caused by some trades
                 if (oldTicker.getPrice() != currentTicker.getPrice()) {
+                    LOG.info("Ticker value changed (oldTicker=" + oldTicker.getPrice()
+                            + ", newTicker=" + currentTicker.getPrice() + "), have to load trades for market:" + marketIdentifier);
                     tradesEngine.loadAndSaveTradesPerMarketAndCurrency(market, currency);
                 }
             } else {    //in case the old ticker is null, then it's the first time we load the ticker, hence also load the trades
@@ -135,9 +134,11 @@ public class GenericTickerEngine extends TickerEngine {
 
         @Override
         public void run() {
+            Date before = new Date();
             LOG.info("Running ticker thread for:" + HistoryDownloader.getMarketIdentifierName(market, currency));
             getTickerPerMarketAndCurrency(market, currency);
-            LOG.info("After running ticker thread for:" + HistoryDownloader.getMarketIdentifierName(market, currency));
+            LOG.info("After running ticker thread for:" + HistoryDownloader.getMarketIdentifierName(market, currency)
+                    + ", operation took:" + (new Date().getTime() - before.getTime()) + " ms");
         }
     }
 }

@@ -122,6 +122,9 @@ public class XChangeTrading implements TradeInterface {
         // Get the latest ticker data showing BTC to USD
         Ticker ticker;
         TickerShallowObject result = null;
+
+        Date before = new Date();
+        LOG.debug("Getting ticker price for market:" + HistoryDownloader.getMarketIdentifierName(market, currency));
         try {
             ticker = marketsServiceMap.get(market).getTicker(Currencies.BTC, currency.name());
             result = new TickerFullLayoutObject(currency, ticker.getLast().getAmount().doubleValue(),
@@ -131,7 +134,8 @@ public class XChangeTrading implements TradeInterface {
         } catch (Throwable e) {
             LOG.error("error while invoking ticker service for:" + HistoryDownloader.getMarketIdentifierName(market, currency));
         }
-
+        LOG.debug("Finished getting ticker price for market:" + HistoryDownloader.getMarketIdentifierName(market, currency)
+                + ", operation took:" + (new Date().getTime() - before.getTime()) + " ms");
         return (T) (result != null ? result : new TickerShallowObject(currency, 0, null));
     }
 
