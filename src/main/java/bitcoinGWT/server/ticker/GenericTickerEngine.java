@@ -66,6 +66,11 @@ public class GenericTickerEngine extends TickerEngine {
         return this.getClass().getName();
     }
 
+    @Override
+    public void shutdown() {
+        executor.shutdownNow();
+    }
+
     public TickerFullLayoutObject getPrice(Markets market, Currency currency) {
         return tickerMap.get(new MultiKey(market, currency));
     }

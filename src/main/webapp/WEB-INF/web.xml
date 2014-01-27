@@ -18,19 +18,7 @@
         <url-pattern>/BitcoinGWT/bit</url-pattern>
     </servlet-mapping>
 
-    <!--example servlet-->
-    <servlet>
-        <servlet-name>exampleServlet</servlet-name>
-        <servlet-class>bitcoinGWT.server.ExampleServiceImpl</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>exampleServlet</servlet-name>
-        <url-pattern>/BitcoinGWT/example</url-pattern>
-    </servlet-mapping>
-
-
-
-    <servlet>
+   <servlet>
         <servlet-name>gwt-log-remote-logger-servlet</servlet-name>
         <servlet-class>com.allen_sauer.gwt.log.server.RemoteLoggerServlet</servlet-class>
     </servlet>

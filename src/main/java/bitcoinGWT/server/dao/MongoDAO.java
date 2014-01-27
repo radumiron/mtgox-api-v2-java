@@ -6,6 +6,7 @@ import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.TradeType;
 import com.google.gwt.rpc.server.Pair;
 import com.mongodb.*;
+import com.sun.servicetag.UnauthorizedAccessException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ClassPathResource;
@@ -53,7 +54,10 @@ public class MongoDAO implements GenericDAO {
     }
 
     public void saveTradesHistoryRecords(Pair<String, List<TradesHistoryRecord>> csvRecords, boolean saveLastRecord) {
-        DB db = mongoClient.getDB(connectionProperties.getProperty(MongoConnectionPropertyKeys.SCHEMA.getKey()));
+        DB db = getDBConnection();
+        if (db == null) {
+            return;
+        }
 
         DBCollection tradesTable = db.getCollection(csvRecords.getA() + TradesHistoryRecord.TRADES_TABLE_SUFFIX);
         //ensure the trades table has the needed indexes
@@ -89,7 +93,10 @@ public class MongoDAO implements GenericDAO {
     }
 
     public Collection<TradesFullLayoutRecord> saveTradesFullLayoutRecords(Pair<String, List<TradesFullLayoutRecord>> csvRecords, boolean saveLastRecord) {
-        DB db = mongoClient.getDB(connectionProperties.getProperty(MongoConnectionPropertyKeys.SCHEMA.getKey()));
+        DB db = getDBConnection();
+        if (db == null) {
+            return new ArrayList<>();
+        }
 
         DBCollection tradesTable = db.getCollection(csvRecords.getA() + TradesFullLayoutRecord.TRADES_TABLE_SUFFIX);
         changeFullTradesTableDefinition(tradesTable);
@@ -146,9 +153,36 @@ public class MongoDAO implements GenericDAO {
         }
     }
 
+    private DB getDBConnection() {
+        DB db = mongoClient.getDB(connectionProperties.getProperty(MongoConnectionPropertyKeys.SCHEMA.getKey()));
+
+        String username = connectionProperties.getProperty(MongoConnectionPropertyKeys.USERNAME.getKey());
+        String password = connectionProperties.getProperty(MongoConnectionPropertyKeys.PASSWORD.getKey());
+        boolean authenticated = false;
+        try {
+            if (username != null && !username.isEmpty()
+                    && password != null & !password.isEmpty()) {
+                //need to authenticate
+                authenticated = db.authenticate(username, password.toCharArray());
+            }
+        } catch (Exception e) {
+            if (!authenticated) {
+                LOG.error(new UnauthorizedAccessException("Not authenticated to the database"), e);
+                return null;
+            }
+        }
+
+
+        return db;
+    }
+
     @Override
     public List<TradesHistoryRecord> getTradesHistoryRecords(String marketIdentifier, Long start, Long end, boolean loadLastRecord) {
-        DB db = mongoClient.getDB(connectionProperties.getProperty(MongoConnectionPropertyKeys.SCHEMA.getKey()));
+        DB db = getDBConnection();
+        if (db == null) {
+            return new ArrayList<>();
+        }
+
         DBCollection tradesTable = db.getCollection(marketIdentifier + TradesHistoryRecord.TRADES_TABLE_SUFFIX);
 
         List<TradesHistoryRecord> result = new ArrayList<>();
@@ -189,7 +223,11 @@ public class MongoDAO implements GenericDAO {
 
     @Override
     public List<TradesFullLayoutRecord> getTradesFullLayoutRecords(String marketIdentifier, Long timestamp, boolean loadLastRecord) {
-        DB db = mongoClient.getDB(connectionProperties.getProperty(MongoConnectionPropertyKeys.SCHEMA.getKey()));
+        DB db = getDBConnection();
+        if (db == null) {
+            return new ArrayList<>();
+        }
+
         DBCollection tradesTable = db.getCollection(marketIdentifier + TradesFullLayoutRecord.TRADES_TABLE_SUFFIX);
 
         List<TradesFullLayoutRecord> result = new ArrayList<>();

@@ -90,7 +90,7 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
         Date before = new Date();
         LOG.info("Getting ticker for market:" + HistoryDownloader.getMarketIdentifierName(market, currency));
         TickerFullLayoutObject price = ticker.getPrice(market, currency);
-        LOG.info("Finished getting trades for market:" + HistoryDownloader.getMarketIdentifierName(market, currency)
+        LOG.info("Finished getting ticker for market:" + HistoryDownloader.getMarketIdentifierName(market, currency)
                 + ", operation took:" + (new Date().getTime() - before.getTime()) + " ms");
         return price;
     }
@@ -219,5 +219,9 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
         return null;
     }
 
-
+    @Override
+    public void destroy() {
+        tradesEngine.shutdown();
+        super.destroy();    //To change body of overridden methods use File | Settings | File Templates.
+    }
 }

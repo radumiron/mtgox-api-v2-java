@@ -42,7 +42,6 @@ import org.springframework.stereotype.Component;
  *         Consider donations @ 1N7XxSvek1xVnWEBFGa5sHn1NhtDdMhkA7
  *         unofficial documentation by nitrous https://bitbucket.org/nitrous/mtgox-api/overview
  */
-@Component
 public class MtGox extends MtGoxTradeInterface {
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(MtGox.class);
@@ -74,9 +73,9 @@ public class MtGox extends MtGoxTradeInterface {
 
     public MtGox() {
         Utils.initSSL();
-        ApiKeys keys = Utils.readApiKeys("WEB-INF/res/api-keys.json");
+        //ApiKeys keys = Utils.readApiKeys("WEB-INF/res/api-keys.json");
 
-        initTrade(keys);
+        //initTrade(keys);
     }
 
     private void initTrade(ApiKeys keys) {

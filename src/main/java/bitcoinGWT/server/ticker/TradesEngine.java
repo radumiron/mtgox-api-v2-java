@@ -24,10 +24,10 @@ import static bitcoinGWT.shared.model.Constants.*;
  */
 @Component
 @Qualifier("MTGOX_EUR")
-public class TradesEngine extends AbstractTradeEngine {
+public abstract class TradesEngine extends AbstractTradeEngine {
 
-    @Autowired
-    protected MtGoxTradeInterface trade;
+   /* @Autowired
+    protected MtGoxTradeInterface trade;*/
 
     private Long previousTimestamp;
 
@@ -170,6 +170,6 @@ public class TradesEngine extends AbstractTradeEngine {
     }
 
     public Set<Currency> getSupportedCurrencies(Markets market) {
-        return trade.getSupportedCurrencies(market);
+        return null;//trade.getSupportedCurrencies(market);
     }
 }

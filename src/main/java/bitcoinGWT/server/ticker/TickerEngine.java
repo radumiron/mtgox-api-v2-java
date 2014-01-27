@@ -17,7 +17,7 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 @Component
-public class TickerEngine extends AbstractTradeEngine {
+public abstract class TickerEngine extends AbstractTradeEngine {
 
     @Autowired
     private TradeInterface trade;

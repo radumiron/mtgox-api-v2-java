@@ -38,10 +38,13 @@ public abstract class AbstractTradeEngine {
     protected abstract void executeTradeTask();
     protected abstract int getTimerInterval();
     protected abstract String getTradeName();
+    public abstract void shutdown();
 
     protected int getInitialDelay() {
         return INITIAL_DELAY;
     }
+
+
 
     class TickerTask extends TimerTask {
 

@@ -4,12 +4,10 @@ import bitcoinGWT.client.CustomAsyncCallback;
 import bitcoinGWT.client.util.UiUtils;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.Markets;
+import bitcoinGWT.shared.model.TickerFullLayoutObject;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
-import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Timer;
-import com.sencha.gxt.data.shared.SortInfo;
-import com.sencha.gxt.data.shared.loader.PagingLoadConfig;
 import com.sencha.gxt.data.shared.loader.PagingLoadConfigBean;
 import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 import com.sencha.gxt.widget.core.client.ContentPanel;
@@ -38,8 +36,12 @@ public class StressTesterMainComponent extends ContentPanel {
     private TextButton end;
     private CheckBox gridStressTestEnabled;
     private TextField gridTestNumberOfTesters;
+    private TextField tickerTestNumberOfTesters;
+    private CheckBox tickerStressTestEnabled;
 
     private boolean executeTest = false;
+
+
 
     public StressTesterMainComponent() {
         initComponents();
@@ -71,13 +73,16 @@ public class StressTesterMainComponent extends ContentPanel {
         gridLoaderParams.add(gridTestNumberOfTesters, new HorizontalLayoutContainer.HorizontalLayoutData(-1, 20));
         p.add(new FieldLabel(gridLoaderParams, "Stress test grid load"), new VerticalLayoutContainer.VerticalLayoutData(-1, 20));
 
-        /*TextField lastName = new TextField();
-        lastName.setAllowBlank(false);
-        p.add(new FieldLabel(lastName, "Last Name"), new VerticalLayoutContainer.VerticalLayoutData(1, -1));
+        HorizontalLayoutContainer tickerLoaderParams = new HorizontalLayoutContainer();
+        tickerStressTestEnabled = new CheckBox();
+        tickerStressTestEnabled.setBoxLabel("Enabled?");
+        tickerLoaderParams.add(tickerStressTestEnabled, new HorizontalLayoutContainer.HorizontalLayoutData(-1, 20));
 
-        TextField email = new TextField();
-        email.setAllowBlank(false);
-        p.add(new FieldLabel(email, "Email"), new VerticalLayoutContainer.VerticalLayoutData(1, -1));*/
+        tickerTestNumberOfTesters = new TextField();
+        tickerTestNumberOfTesters.setEmptyText("Number of testers");
+        tickerTestNumberOfTesters.setAllowBlank(false);
+        tickerLoaderParams.add(tickerTestNumberOfTesters, new HorizontalLayoutContainer.HorizontalLayoutData(-1, 20));
+        p.add(new FieldLabel(tickerLoaderParams, "Stress test ticker load"), new VerticalLayoutContainer.VerticalLayoutData(-1, 20));
 
         start = new TextButton("Start");
         end = new TextButton("End");
@@ -92,21 +97,38 @@ public class StressTesterMainComponent extends ContentPanel {
             @Override
             public void onSelect(SelectEvent event) {
                 executeTest = true;
+                //start the test stop timer
+                Timer testStopTimer = new Timer() {
+                    @Override
+                    public void run() {
+                        //stop the test
+                        executeTest = false;
+                    }
+                };
+                testStopTimer.schedule(120 * 1000);
+
                 if (gridStressTestEnabled.getValue()) {
-                    //start the test stop timer
-                    Timer testStopTimer = new Timer() {
-                        @Override
-                        public void run() {
-                            //stop the test
-                            executeTest = false;
-                        }
-                    };
-                    testStopTimer.schedule(120 * 1000);
-
-
                     Integer gridStressNumberOfTesters = Integer.parseInt(gridTestNumberOfTesters.getValue());
                     for (int i = 0; i < gridStressNumberOfTesters; i++) {
-                        startTimer();
+                        startTimer(new StressExecutor() {
+                            @Override
+                            public void execute(List<Currency> result) {
+                                final StressExecutor current = this;
+                                UiUtils.getAsyncService().getTradesForGrid(getMarket()
+                                        , result.get(Random.nextInt(result.size())), null, new PagingLoadConfigBean(0, 200), new StressAsyncCallback<PagingLoadResult<TradesFullLayoutObject>>());
+                            }
+                        });
+                    }
+                }
+                if (tickerStressTestEnabled.getValue()) {
+                    Integer tickerStressNumberOfTesters = Integer.parseInt(tickerTestNumberOfTesters.getValue());
+                    for (int i = 0; i < tickerStressNumberOfTesters; i++) {
+                        startTimer(new StressExecutor() {
+                            @Override
+                            public void execute(List<Currency> result) {
+                                UiUtils.getAsyncService().getPrice(getMarket(), result.get(Random.nextInt(result.size())), new StressAsyncCallback<TickerFullLayoutObject>());
+                            }
+                        });
                     }
                 }
 
@@ -121,31 +143,17 @@ public class StressTesterMainComponent extends ContentPanel {
         });
     }
 
-    private void startTimer() {
+    private void startTimer(final StressExecutor stressExecutor) {
         Timer timer = new Timer() {
 
             @Override
             public void run() {
                 final Markets testMarket = Markets.values()[Random.nextInt(Markets.values().length)];
+                stressExecutor.setMarket(testMarket);
                 UiUtils.getAsyncService().getSupportedCurrencies(testMarket, new CustomAsyncCallback<List<Currency>>() {
                     @Override
                     public void onSuccess(List<Currency> result) {
-                        UiUtils.getAsyncService().getTradesForGrid(testMarket
-                                , result.get(Random.nextInt(result.size())), null, new PagingLoadConfigBean(0, 200), new CustomAsyncCallback<PagingLoadResult<TradesFullLayoutObject>>() {
-                            @Override
-                            public void onFailure(Throwable caught) {
-                                if (executeTest) {
-                                    startTimer();
-                                }
-                            }
-
-                            @Override
-                            public void onSuccess(PagingLoadResult<TradesFullLayoutObject> result) {
-                                if (executeTest) {
-                                    startTimer();
-                                }
-                            }
-                        });
+                        stressExecutor.execute(result);
                     }
                 });
 
@@ -154,5 +162,34 @@ public class StressTesterMainComponent extends ContentPanel {
         timer.schedule(Random.nextInt(20000));
     }
 
+    private abstract class StressExecutor {
 
+        private Markets market;
+
+        public void setMarket(Markets market) {
+            this.market = market;
+        }
+
+        public Markets getMarket() {
+            return market;
+        }
+
+        public abstract void execute(List<Currency> result);
+
+        class StressAsyncCallback<T> implements com.google.gwt.user.client.rpc.AsyncCallback<T> {
+
+
+            public void onFailure(Throwable caught) {
+                if (executeTest) {
+                    startTimer(StressExecutor.this);
+                }
+            }
+
+            public void onSuccess(T result) {
+                startTimer(StressExecutor.this);
+            }
+        }
+
+
+    }
 }

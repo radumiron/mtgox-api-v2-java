@@ -180,4 +180,12 @@ public class GenericTradesEngine extends TradesEngine {
             loadAndSaveTradesPerMarketAndCurrency(market, currency);
         }
     }
+
+    @Override
+    public void shutdown() {
+        //closing down the trades refresher
+        executor.shutdownNow();
+
+        //shutting down the mongo DB connection
+    }
 }

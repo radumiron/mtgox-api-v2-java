@@ -59,7 +59,11 @@ public class HistoryDownloader {
     private void init() {
         LOG.info("init History downloader");
         previousTimestampMap = new ConcurrentHashMap<>();
-        performTradesImport();
+        try {
+            performTradesImport();
+        } catch (Exception e) {
+            LOG.error("Error occurred while initializing the History Downloader", e);
+        }
     }
 
     public static void main(String[] args) {
@@ -146,7 +150,16 @@ public class HistoryDownloader {
         //then, try to load all the trades from bitcoincharts, which happened between the last record in the DB and
         //as close as possible to the current time (the bitcoincharts API returns trades with a latency of ~ 15 minutes)
         //#POINT2
-        List<TradesHistoryRecord> apiCSVRecords = executeQuery(demoMarket, demoCurrency, latestCSVRecord.getTime());
+        Calendar calendar = GregorianCalendar.getInstance();
+        if (latestCSVRecord == null) {
+            //if there are no records in the DB, and we don't have any records from the CSV
+            //try to take the trades from the last day
+            calendar.add(Calendar.SECOND, (-1) * TimeInterval.ONE_DAY.getSeconds());
+        } else {
+            //if we do have a History/CSV record, set it to the calendar
+            calendar.setTimeInMillis(latestCSVRecord.getTime());
+        }
+        List<TradesHistoryRecord> apiCSVRecords = executeQuery(demoMarket, demoCurrency, calendar.getTimeInMillis());
 
         LOG.info("Got " + apiCSVRecords.size() + " history trades from the API");
         Pair<String, List<TradesHistoryRecord>> marketToCSVRecords = new Pair<>(getMarketIdentifierName(demoMarket, demoCurrency)
@@ -187,9 +200,11 @@ public class HistoryDownloader {
         if (csvRecords.isEmpty() && latestHistoryRecord != null) {
             LOG.info("No records were to be saved in the DB, since we've got all the necessary trades in the history");
             return latestHistoryRecord; //this is the last record from the history DB
-        } else {
+        } else if (!csvRecords.isEmpty()) {
             LOG.info("Returning last trade from the CSV, which was not saved in the DB:" + csvRecords.get(csvRecords.size() - 1));
             return csvRecords.get(csvRecords.size() - 1);   //this is the last record from the CSV file
+        } else {
+            return null;
         }
     }
 
@@ -255,9 +270,7 @@ public class HistoryDownloader {
                 }
             }
 
-        } catch (FileNotFoundException e) {
-            LOG.error(e);
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOG.error(e);
         } finally {
             if (br != null) {
