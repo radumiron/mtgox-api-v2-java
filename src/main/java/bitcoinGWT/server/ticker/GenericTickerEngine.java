@@ -68,7 +68,13 @@ public class GenericTickerEngine extends TickerEngine {
 
     @Override
     public void shutdown() {
-        executor.shutdownNow();
+        LOG.info("Shutting down the Generic Ticker Engine");
+        try {
+            //closing down the trades refresher
+            executor.shutdownNow();
+        } catch (Exception e) {
+            LOG.error("Error occurred while shutting down the trades refresher");
+        }
     }
 
     public TickerFullLayoutObject getPrice(Markets market, Currency currency) {

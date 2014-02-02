@@ -222,6 +222,7 @@ public class BitcoinGWTServiceImpl extends RemoteServiceServlet implements Bitco
     @Override
     public void destroy() {
         tradesEngine.shutdown();
+        ticker.shutdown();
         super.destroy();    //To change body of overridden methods use File | Settings | File Templates.
     }
 }

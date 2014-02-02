@@ -27,4 +27,5 @@ public interface GenericDAO {
     public List<TradesHistoryRecord> getLatestHistoryTrades(String marketIdentifier);
 
 
+    void shutdown();
 }

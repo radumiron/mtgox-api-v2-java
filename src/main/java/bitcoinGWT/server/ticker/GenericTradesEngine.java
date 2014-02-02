@@ -183,9 +183,19 @@ public class GenericTradesEngine extends TradesEngine {
 
     @Override
     public void shutdown() {
-        //closing down the trades refresher
-        executor.shutdownNow();
+        LOG.info("Shutting down the Generic Trades Engine");
+        try {
+            //closing down the trades refresher
+            executor.shutdownNow();
+        } catch (Exception e) {
+            LOG.error("Error occurred while shutting down the trades refresher");
+        }
 
-        //shutting down the mongo DB connection
+        try {
+            //shutting down the mongo DB connection
+            dao.shutdown();
+        } catch (Exception e) {
+            LOG.error("Error occurred while shutting down the DB connection");
+        }
     }
 }

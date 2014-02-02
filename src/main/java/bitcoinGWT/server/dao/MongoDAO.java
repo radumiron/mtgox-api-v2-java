@@ -48,7 +48,7 @@ public class MongoDAO implements GenericDAO {
             // Since 2.10.0, uses MongoClient
             mongoClient = new MongoClient(connectionProperties.getProperty(MongoConnectionPropertyKeys.ADDRESS.getKey())
                     , Integer.valueOf(connectionProperties.getProperty(MongoConnectionPropertyKeys.PORT.getKey())));
-        } catch (UnknownHostException e) {
+        } catch (Exception e) {
             LOG.error(e);
         }
     }
@@ -172,7 +172,6 @@ public class MongoDAO implements GenericDAO {
             }
         }
 
-
         return db;
     }
 
@@ -257,6 +256,12 @@ public class MongoDAO implements GenericDAO {
     @Override
     public List<TradesHistoryRecord> getLatestHistoryTrades(String marketIdentifier) {
         return getTradesHistoryRecords(marketIdentifier, null, null, true);
+    }
+
+    @Override
+    public void shutdown() {
+        LOG.info("Closing DB connection");
+        mongoClient.close();
     }
 
     private void parseFullLayoutTradesDBRecords(List<TradesFullLayoutRecord> result, DBCursor cursor) {
