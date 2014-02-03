@@ -188,14 +188,14 @@ public class GenericTradesEngine extends TradesEngine {
             //closing down the trades refresher
             executor.shutdownNow();
         } catch (Exception e) {
-            LOG.error("Error occurred while shutting down the trades refresher");
+            LOG.error("Error occurred while shutting down the trades refresher", e);
         }
 
         try {
             //shutting down the mongo DB connection
             dao.shutdown();
         } catch (Exception e) {
-            LOG.error("Error occurred while shutting down the DB connection");
+            LOG.error("Error occurred while shutting down the DB connection", e);
         }
     }
 }

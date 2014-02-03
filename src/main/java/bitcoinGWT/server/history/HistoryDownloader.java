@@ -209,6 +209,10 @@ public class HistoryDownloader {
     }
 
     private List<TradesHistoryRecord> filterOutOldHistoryTrades(TradesHistoryRecord latestAPICSVRecord, List<TradesHistoryRecord> historyRecords, boolean useMillis) {
+        //we dont have an API record to refer to
+        if (latestAPICSVRecord == null) {
+            return historyRecords;
+        }
         ArrayDeque<TradesHistoryRecord> deque = new ArrayDeque<>(historyRecords);
         List<TradesHistoryRecord> result = new ArrayList<>();
 
@@ -271,13 +275,13 @@ public class HistoryDownloader {
             }
 
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.error("An error has occurred while reading CSV: " + csvFile, e);
         } finally {
             if (br != null) {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    LOG.error(e);
+                    LOG.error("IO Error while closing CSV: " + csvFile, e);
                 }
             }
         }
@@ -310,9 +314,9 @@ public class HistoryDownloader {
         }
         //Capture Exceptions
         catch (IllegalStateException ex) {
-            LOG.error(ex);
+            LOG.error("An error has occurred while executing a trades API request", ex);
         } catch (IOException ex) {
-            LOG.error(ex);
+            LOG.error("An error has occurred while executing a trades API request", ex);
         } finally {
             //close the connection, set all objects to null
             if (connection != null) {
@@ -383,7 +387,7 @@ public class HistoryDownloader {
                 result += URLEncoder.encode(hashkey, ENCODING) + "="
                         + URLEncoder.encode(args.get(hashkey), ENCODING);
             } catch (Exception ex) {
-                LOG.error(ex);
+                LOG.error("An error has occurred while building query string for:" + args, ex);
             }
         }
         return result;

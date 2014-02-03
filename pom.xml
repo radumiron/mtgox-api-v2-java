@@ -163,24 +163,6 @@
             <version>0.9.9</version>
         </dependency>
 
-        <!--<dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate</artifactId>
-            <version>3.5.1-Final</version>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-annotations</artifactId>
-            <version>3.5.5-Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.5.5-Final</version>
-        </dependency>-->
-
-
         <!--XChange dependencies-->
         <dependency>
             <groupId>com.xeiam.xchange</groupId>
@@ -285,7 +267,7 @@
                 <version>2.4.2</version>
                 <executions>
                     <execution>
-                        <id>default-copy-resources</id>
+                        <id>Copying default resources</id>
                         <phase>process-resources</phase>
                         <goals>
                             <goal>copy-resources</goal>
@@ -296,6 +278,9 @@
                             <resources>
                                 <resource>
                                     <directory>${project.basedir}/src/main/resources</directory>
+                                    <excludes>
+                                        <exclude>historical_data/**</exclude>
+                                    </excludes>
                                 </resource>
                                 <resource>
                                     <directory>${project.basedir}/lib</directory>
@@ -323,6 +308,7 @@
                 <version>2.5.0-SNAPSHOT</version>
                 <executions>
                     <execution>
+                        <id>Running GWT Maven Plugin</id>
                         <goals>
                             <goal>compile</goal>
                             <goal>test</goal>
@@ -348,6 +334,7 @@
                 <version>2.1.1</version>
                 <executions>
                     <execution>
+                        <id>Running the GWT Maven WAR plugin</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>exploded</goal>
@@ -376,6 +363,9 @@
                     <include>**/**.csv</include>
                     <include>**.properties</include>
                 </includes>
+                <excludes>
+                    <exclude>historical_data/**</exclude>
+                </excludes>
                 <filtering>false</filtering>
             </resource>
         </resources>

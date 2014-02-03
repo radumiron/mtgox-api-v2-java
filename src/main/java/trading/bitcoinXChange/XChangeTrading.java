@@ -132,7 +132,7 @@ public class XChangeTrading implements TradeInterface {
                     ticker.getBid().getAmount().doubleValue(), ticker.getHigh().getAmount().doubleValue(), -1d, -1d, -1d,
                     ticker.getLow().getAmount().doubleValue(), ticker.getVolume().doubleValue(), -1d);
         } catch (Throwable e) {
-            LOG.error("error while invoking ticker service for:" + HistoryDownloader.getMarketIdentifierName(market, currency));
+            LOG.error("error while invoking ticker service for:" + HistoryDownloader.getMarketIdentifierName(market, currency), e);
         }
         LOG.debug("Finished getting ticker price for market:" + HistoryDownloader.getMarketIdentifierName(market, currency)
                 + ", operation took:" + (new Date().getTime() - before.getTime()) + " ms");
@@ -170,7 +170,7 @@ public class XChangeTrading implements TradeInterface {
                 mtGoxLagWrapper = mtGoxV2.getLag();
                 return mtGoxLagWrapper.getResult();
             } catch (IOException e) {
-                LOG.error(e);
+                LOG.error("An error has occurred while getting trade lag", e);
             }
         }
 

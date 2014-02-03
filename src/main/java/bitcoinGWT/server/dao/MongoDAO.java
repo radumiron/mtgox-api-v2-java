@@ -13,7 +13,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.io.FileReader;
-import java.net.UnknownHostException;
 import java.util.*;
 
 import static bitcoinGWT.shared.model.Constants.*;
@@ -31,6 +30,7 @@ public class MongoDAO implements GenericDAO {
 
     private static final Logger LOG = Logger.getLogger(MongoDAO.class);
 
+    //private static String MONGO_PROPERTIES_FILE = "WEB-INF/classes/mongo.properties";
     private static String MONGO_PROPERTIES_FILE = "mongo.properties";
 
     private Properties connectionProperties;
@@ -41,7 +41,7 @@ public class MongoDAO implements GenericDAO {
         try {
             connectionProperties.load(new FileReader(new ClassPathResource(MONGO_PROPERTIES_FILE).getFile()));
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.error("An error has occurred while reading the DB connection properties", e);
         }
 
         try {
@@ -49,7 +49,7 @@ public class MongoDAO implements GenericDAO {
             mongoClient = new MongoClient(connectionProperties.getProperty(MongoConnectionPropertyKeys.ADDRESS.getKey())
                     , Integer.valueOf(connectionProperties.getProperty(MongoConnectionPropertyKeys.PORT.getKey())));
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.error("An error has occurred while initializing the DB connection", e);
         }
     }
 
@@ -88,7 +88,7 @@ public class MongoDAO implements GenericDAO {
             tradesTable.insert(dbRecords);
             LOG.info("Done saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
         } catch (Exception e) {
-            LOG.error("Error occurred while saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
+            LOG.error("Error occurred while saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms", e);
         }
     }
 
@@ -146,7 +146,7 @@ public class MongoDAO implements GenericDAO {
             }
             LOG.info("Done saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
         } catch (Exception e) {
-            LOG.error("Error occurred while saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms");
+            LOG.error("Error occurred while saving full layout records, operation took: " + (new Date().getTime() - before.getTime()) + " ms", e);
         } finally {
             //return the full trades which were not marked as duplicate
             return dbRecords.keySet();
@@ -163,6 +163,7 @@ public class MongoDAO implements GenericDAO {
             if (username != null && !username.isEmpty()
                     && password != null & !password.isEmpty()) {
                 //need to authenticate
+                LOG.info("logging in with credentials" + connectionProperties);
                 authenticated = db.authenticate(username, password.toCharArray());
             }
         } catch (Exception e) {

@@ -73,7 +73,7 @@ public class GenericTickerEngine extends TickerEngine {
             //closing down the trades refresher
             executor.shutdownNow();
         } catch (Exception e) {
-            LOG.error("Error occurred while shutting down the trades refresher");
+            LOG.error("Error occurred while shutting down the trades refresher", e);
         }
     }
 

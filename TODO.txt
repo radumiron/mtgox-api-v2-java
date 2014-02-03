@@ -15,6 +15,7 @@ DONE:
 !attention:
 - when adding new trades to the chart, they might not match with the already drawn chart. This is because some trade might fall in the 10 minutes
 interval which was already drawn on the chart.
+- when connecting to a MongoDB, add your desired user to that schema
 
 Market data functionality=
 ==========================
@@ -41,3 +42,18 @@ openxchangerates
 Bugs===
 =======
 - the candles in the candlestick chart don't have the correct color/type (some of them are falling and displayed as rising)
+
+Stress Testing===
+=================
+- 1 try - 03.02.2014
+- 150 trades
+- 20000 clients
+=> all looking good, response time under 10 ms
+=> server performance is good
+
+- perpetual try - 03.02.2014
+- maximum 1000 trades
+- 50000 clients
+=> response time varies from 100 ms to 1500 ms
+=> server performance is good, but degrading
+    - problems with CPU on MongoDB
