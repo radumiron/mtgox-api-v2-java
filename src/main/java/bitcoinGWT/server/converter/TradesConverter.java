@@ -1,7 +1,9 @@
 package bitcoinGWT.server.converter;
 
+import bitcoinGWT.server.dao.entities.ChartRecord;
 import bitcoinGWT.server.dao.entities.TradesFullLayoutRecord;
 import bitcoinGWT.server.dao.entities.TradesHistoryRecord;
+import bitcoinGWT.shared.model.ChartElement;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 import bitcoinGWT.shared.model.TradesShallowObject;
 
@@ -42,6 +44,18 @@ public class TradesConverter {
                     trade.getPrice(), trade.getAmount(), trade.getCurrency(), trade.getTradeItem(),
                     trade.getType());
             result.add(record);
+        }
+
+        return result;
+    }
+
+    public static List<ChartElement> convertChartRecordsToChartElements(Collection<ChartRecord> chartRecords) {
+        List<ChartElement> result = new ArrayList<>();
+
+        for (ChartRecord record : chartRecords) {
+            ChartElement element = new ChartElement(record.getOpen(), record.getClose(), record.getLow(), record.getHigh(),
+                    record.getAmount(), record.getElementDate(), record.getTimeOfLastTrade(), record.getTimeInterval());
+            result.add(element);
         }
 
         return result;

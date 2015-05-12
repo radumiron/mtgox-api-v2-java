@@ -1,12 +1,12 @@
 package bitcoinGWT.server.dao;
 
+import bitcoinGWT.server.dao.entities.ChartRecord;
 import bitcoinGWT.server.dao.entities.TradesFullLayoutRecord;
 import bitcoinGWT.server.dao.entities.TradesHistoryRecord;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.TradeType;
 import com.google.gwt.rpc.server.Pair;
 import com.mongodb.*;
-import com.sun.servicetag.UnauthorizedAccessException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ClassPathResource;
@@ -151,6 +151,11 @@ public class MongoDAO implements GenericDAO {
             //return the full trades which were not marked as duplicate
             return dbRecords.keySet();
         }
+    }
+
+    @Override
+    public void saveChartRecords(Pair<String, List<ChartRecord>> chartRecords) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     private DB getDBConnection() {

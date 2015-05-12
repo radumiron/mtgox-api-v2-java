@@ -51,7 +51,7 @@ public class GenericTradesEngine extends TradesEngine {
     @Autowired
     HistoryDownloader historyDownloader;
 
-    private ExecutorService executor;
+    //private ExecutorService executor;
 
     private ConcurrentHashMap<MultiKey, Boolean> shouldLoadTradesMap;
 
@@ -62,7 +62,7 @@ public class GenericTradesEngine extends TradesEngine {
         LOG.info("init of GenericTradeEngine");
         //todo put more threads here
         //executor = Executors.newFixedThreadPool();
-        executor = Executors.newSingleThreadExecutor();
+        //executor = Executors.newSingleThreadExecutor();
         shouldLoadTradesMap = new ConcurrentHashMap<>();
         previousTimestampMap = historyDownloader.getPreviousTimestampMap();
     }
@@ -73,7 +73,6 @@ public class GenericTradesEngine extends TradesEngine {
     }
 
     public void loadAndSaveTradesPerMarketAndCurrency(Markets market, Currency currency) {
-        //todo in case previousTimestamp is more recent than the latest record in the DB, save new trades
         List<TradesFullLayoutObject> sortedTrades = new ArrayList<>(trade.getTrades(market, currency, getPreviousTimestamp(market, currency)));
 
         if (sortedTrades.size() > 0) {
@@ -86,6 +85,8 @@ public class GenericTradesEngine extends TradesEngine {
             Pair<String, List<TradesHistoryRecord>> historyRecordsToSave = new Pair<>(HistoryDownloader.getMarketIdentifierName(market, currency),
                     TradesConverter.convertTradesFullLayoutRecordsToTradesHistoryRecords(actuallySavedTrades));
             dao.saveTradesHistoryRecords(historyRecordsToSave, true);
+
+            //TODO save also data for the candlestick charts
 
             LOG.info("New trades loaded, size of loaded trades=" + sortedTrades.size());
             //in case the list downloaded is NOT empty, mark that all who will ask for trades will be able to download the new list
@@ -186,7 +187,7 @@ public class GenericTradesEngine extends TradesEngine {
         LOG.info("Shutting down the Generic Trades Engine");
         try {
             //closing down the trades refresher
-            executor.shutdownNow();
+            //executor.shutdownNow();
         } catch (Exception e) {
             LOG.error("Error occurred while shutting down the trades refresher", e);
         }

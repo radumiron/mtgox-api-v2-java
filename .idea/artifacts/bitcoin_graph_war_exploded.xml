@@ -1,0 +1,75 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="bitcoin-graph:war exploded">
+    <output-path>$PROJECT_DIR$/target/bitcoin-graph-1.0-SNAPSHOT</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="bitcoin-graph/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="bitcoin-graph" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: com.carrotsearch:java-sizeof:0.0.3" />
+          <element id="library" level="project" name="Maven: com.allen-sauer.gwt.log:gwt-log:3.2.0" />
+          <element id="library" level="project" name="Maven: org.apache.derby:derby:10.9.1.0" />
+          <element id="library" level="project" name="Maven: org.apache.derby:derbyclient:10.4.2.0" />
+          <element id="library" level="project" name="Maven: org.apache.derby:derbytools:10.9.1.0" />
+          <element id="library" level="project" name="Maven: com.sencha.gxt:gxt:3.0.1" />
+          <element id="library" level="project" name="Maven: javax.validation:validation-api:1.0.0.GA" />
+          <element id="library" level="project" name="Maven: javax.validation:validation-api:sources:1.0.0.GA" />
+          <element id="library" level="project" name="Maven: org.json:json:20090211" />
+          <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
+          <element id="library" level="project" name="Maven: com.google.gwt:gwt-servlet:2.5.0" />
+          <element id="library" level="project" name="Maven: com.google.gwt:gwt-user:2.5.0" />
+          <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.2.2" />
+          <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.1" />
+          <element id="library" level="project" name="Maven: org.mindrot:jbcrypt:0.3m" />
+          <element id="library" level="project" name="Maven: com.googlecode.json-simple:json-simple:1.1" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.7" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:3.0.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-asm:3.0.0.RELEASE" />
+          <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.1.1" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-web:3.0.0.RELEASE" />
+          <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-beans:3.0.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:3.0.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-expression:3.0.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:3.0.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context-support:3.0.0.RELEASE" />
+          <element id="library" level="project" name="Maven: org.ocpsoft.prettytime:prettytime:3.0.2.Final" />
+          <element id="library" level="project" name="Maven: com.google.gwt.google-apis:gwt-visualization:1.1.2" />
+          <element id="library" level="project" name="Maven: com.google.gwt.google-apis:gwt-ajaxloader:1.1.0" />
+          <element id="library" level="project" name="Maven: com.googlecode.gwt-charts:gwt-charts:0.9.9" />
+          <element id="library" level="project" name="Maven: com.xeiam.xchange:xchange-core:1.10.0" />
+          <element id="library" level="project" name="Maven: org.java-websocket:Java-WebSocket:1.3.0" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.5" />
+          <element id="library" level="project" name="Maven: org.joda:joda-money:0.9" />
+          <element id="library" level="project" name="Maven: com.github.mmazi:rescu:1.5.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.1.1" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.1.1" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.1.1" />
+          <element id="library" level="project" name="Maven: javax.ws.rs:jsr311-api:1.1.1" />
+          <element id="library" level="project" name="Maven: com.google.code.findbugs:jsr305:1.3.9" />
+          <element id="library" level="project" name="Maven: com.xeiam.xchange:xchange-examples:1.10.0" />
+          <element id="library" level="project" name="Maven: com.xeiam.xchange:xchange-mtgox:1.10.0" />
+          <element id="library" level="project" name="Maven: com.xeiam.xchange:xchange-cavirtex:1.10.0" />
+          <element id="library" level="project" name="Maven: com.xeiam.xchange:xchange-openexchangerates:1.10.0" />
+          <element id="library" level="project" name="Maven: com.xeiam.xchange:xchange-btce:1.10.0" />
+          <element id="library" level="project" name="Maven: com.xeiam.xchange:xchange-bitcurex:1.10.0" />
+          <element id="library" level="project" name="Maven: com.xeiam.xchange:xchange-bitstamp:1.10.0" />
+          <element id="library" level="project" name="Maven: com.xeiam.xchange:xchange-campbx:1.10.0" />
+          <element id="library" level="project" name="Maven: com.xeiam.xchange:xchange-bitcoincharts:1.10.0" />
+          <element id="library" level="project" name="Maven: com.xeiam.xchange:xchange-btcchina:1.10.0" />
+          <element id="library" level="project" name="Maven: com.xeiam.xchange:xchange-blockchain:1.10.0" />
+          <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.0.13" />
+          <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.0.13" />
+          <element id="library" level="project" name="Maven: com.xeiam.xchart:xchart:2.2.1" />
+          <element id="library" level="project" name="Maven: com.xeiam.xchange:xchange-kraken:1.10.0" />
+          <element id="library" level="project" name="Maven: com.google.guava:guava:15.0" />
+          <element id="library" level="project" name="Maven: com.google.guava:guava-gwt:15.0" />
+          <element id="library" level="project" name="Maven: org.mongodb:mongo-java-driver:2.10.1" />
+        </element>
+      </element>
+      <element id="gwt-compiler-output" facet="bitcoin-graph/gwt/GWT" />
+    </root>
+  </artifact>
+</component>

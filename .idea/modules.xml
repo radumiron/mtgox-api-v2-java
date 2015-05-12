@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Mtgox-api-v2-java.iml" filepath="$PROJECT_DIR$/Mtgox-api-v2-java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bitcoin-graph.iml" filepath="$PROJECT_DIR$/bitcoin-graph.iml" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,19 @@
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <!-- Turn off third party chatter -->
+    <logger name="si.mazi.rescu.HttpTemplate" level="OFF" />
+    <logger name="com.xeiam.xchange.ExchangeFactory" level="OFF"/>
+    <logger name="si.mazi.rescu.Config" level="OFF"/>
+    <!--<logger name="org.apache" level="OFF"/>-->
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
