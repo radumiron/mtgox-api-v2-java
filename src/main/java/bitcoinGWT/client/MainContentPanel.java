@@ -1,13 +1,11 @@
 package bitcoinGWT.client;
 
-import bitcoinGWT.client.chart.CandleStickChart;
 import bitcoinGWT.client.chart.ChartComponent;
 import bitcoinGWT.client.candlestick_chart.ChartComponent2;
 import bitcoinGWT.client.controls.ControlsComponent;
 import bitcoinGWT.client.scatter_chart.ScatterChartComponent;
 import bitcoinGWT.client.ticker.TickerComponent;
 import bitcoinGWT.client.trades.TradesComponent;
-import com.google.gwt.visualization.client.VisualizationUtils;
 import com.googlecode.gwt.charts.client.ChartLoader;
 import com.googlecode.gwt.charts.client.ChartPackage;
 import com.sencha.gxt.core.client.util.Margins;
@@ -50,7 +48,7 @@ public class MainContentPanel extends Viewport {
         eastData.setMargins(margins);
         mainContainer.setEastWidget(new TradesComponent(mainService), eastData);
 
-        addChartComponent2(mainContainer);
+        //addChartComponent2(mainContainer);
         //addChartComponent(mainContainer);
         //addScatterChart(mainContainer);
 
@@ -68,7 +66,7 @@ public class MainContentPanel extends Viewport {
 
         // Load the visualization api, passing the onLoadCallback to be called
         // when loading is done.
-        VisualizationUtils.loadVisualizationApi(onLoadCallback, CandleStickChart.PACKAGE);
+        //VisualizationUtils.loadVisualizationApi(onLoadCallback, CandleStickChart.PACKAGE);
     }
 
     private void addChartComponent2(final BorderLayoutContainer mainContainer) {

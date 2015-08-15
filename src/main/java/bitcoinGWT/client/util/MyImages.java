@@ -12,7 +12,7 @@ import com.google.gwt.resources.client.ImageResource;
  * To change this template use File | Settings | File Templates.
  */
 public interface MyImages extends ClientBundle {
-    public static final MyImages INSTANCE = GWT.create(MyImages.class);
+    //public static final MyImages INSTANCE = GWT.create(MyImages.class);
 
     @Source("images/bitcoin_charts.png")
     ImageResource bitcoinCharts();

@@ -142,7 +142,7 @@ public class TradesComponent extends ContentPanel {
 
         ToolBar toolBar = new ToolBar();
         toolBar.add(new LiveToolItem(view));
-        toolBar.addStyleName(ThemeStyles.getStyle().borderTop());
+        //toolBar.addStyleName(ThemeStyles.get().borderTop());
         toolBar.getElement().getStyle().setProperty("borderBottom", "none");
 
         con.add(toolBar, new VerticalLayoutContainer.VerticalLayoutData(1, 25));

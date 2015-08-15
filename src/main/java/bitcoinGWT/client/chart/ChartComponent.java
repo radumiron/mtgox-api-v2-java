@@ -1,16 +1,13 @@
 package bitcoinGWT.client.chart;
 
 import bitcoinGWT.shared.model.Constants;
-import com.google.gwt.core.client.JsArray;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.visualization.client.AbstractDataTable;
 import com.google.gwt.visualization.client.DataTable;
-import com.google.gwt.visualization.client.Selection;
 import com.google.gwt.visualization.client.events.SelectHandler;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 
-import java.util.Date;
 import java.util.Random;
 
 /**
@@ -23,7 +20,7 @@ import java.util.Random;
 public class ChartComponent extends ContentPanel {
 
     private DataTable data;
-    private CandleStickChart candleStickChart;
+    //private CandleStickChart candleStickChart;
 
     public ChartComponent() {
         initComponents();
@@ -38,10 +35,10 @@ public class ChartComponent extends ContentPanel {
         setHeaderVisible(true);
         setHeadingText("Chart");
 
-        candleStickChart = new CandleStickChart(createTable(), createOptions());
-        candleStickChart.addSelectHandler(createSelectHandler(candleStickChart));
+        //candleStickChart = new CandleStickChart(createTable(), createOptions());
+        //candleStickChart.addSelectHandler(createSelectHandler(candleStickChart));
 
-        add(candleStickChart);
+        //add(candleStickChart);
 
         startTimer();
     }
@@ -58,16 +55,16 @@ public class ChartComponent extends ContentPanel {
         timer.scheduleRepeating(Constants.TRADES_RETRIEVAL_INTERVAL);
     }
 
-    private SelectHandler createSelectHandler(final CandleStickChart chart) {
+    private SelectHandler createSelectHandler() {
         return new SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
                 String message = "";
 
                 // May be multiple selections.
-                JsArray<Selection> selections = chart.getSelections();
+                //JsArray<Selection> selections = chart.getSelections();
 
-                for (int i = 0; i < selections.length(); i++) {
+                /*for (int i = 0; i < selections.length(); i++) {
                     // add a new line for each selection
                     message += i == 0 ? "" : "\n";
 
@@ -92,7 +89,7 @@ public class ChartComponent extends ContentPanel {
                         message += "Pie chart selections should be either row selections or cell selections.";
                         message += "  Other visualizations support column selections as well.";
                     }
-                }
+                }*/
 
                 Window.alert(message);
             }
@@ -165,7 +162,7 @@ public class ChartComponent extends ContentPanel {
         data.setValue(originalRows, 3, close);
         data.setValue(originalRows, 4, high);
 
-        candleStickChart.draw(data,createOptions());
+        //candleStickChart.draw(data,createOptions());
     }
 
 }

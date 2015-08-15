@@ -18,9 +18,25 @@
     </facet>
     <facet type="gwt" name="GWT">
       <configuration>
-        <setting name="gwtSdkUrl" value="file://$MAVEN_REPOSITORY$/com/google/gwt/gwt-dev/2.5.0/" />
+        <setting name="gwtSdkUrl" value="file://$MAVEN_REPOSITORY$/com/google/gwt/gwt-dev/2.7.0/" />
         <setting name="gwtSdkType" value="maven" />
         <setting name="webFacet" value="Web" />
+      </configuration>
+    </facet>
+    <facet type="hibernate" name="Hibernate">
+      <configuration>
+        <datasource-map>
+          <unit-entry name="hibernate.cfg.xml" value="510a71be-3db3-4964-a0cf-43a8c54eb3ce" />
+        </datasource-map>
+        <naming-strategy-map />
+        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/resources/hibernate.cfg.xml" />
+      </configuration>
+    </facet>
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/spring-config.xml</file>
+        </fileset>
       </configuration>
     </facet>
   </component>
@@ -37,7 +53,6 @@
       <excludeFolder url="file://$MODULE_DIR$/target/gwt-unitCache" />
       <excludeFolder url="file://$MODULE_DIR$/target/maven-archiver" />
       <excludeFolder url="file://$MODULE_DIR$/target/surefire" />
-      <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -46,13 +61,13 @@
     <orderEntry type="library" name="Maven: org.apache.derby:derby:10.9.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.derby:derbyclient:10.4.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.derby:derbytools:10.9.1.0" level="project" />
-    <orderEntry type="library" name="Maven: com.sencha.gxt:gxt:3.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.sencha.gxt:gxt:3.1.1" level="project" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:1.0.0.GA" level="project" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:sources:1.0.0.GA" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20090211" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
-    <orderEntry type="library" name="Maven: com.google.gwt:gwt-servlet:2.5.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.gwt:gwt-user:2.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.gwt:gwt-servlet:2.7.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.gwt:gwt-user:2.7.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.7" level="project" />
     <orderEntry type="library" name="Maven: commons-fileupload:commons-fileupload:1.2.2" level="project" />
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
@@ -70,7 +85,7 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.ocpsoft.prettytime:prettytime:3.0.2.Final" level="project" />
-    <orderEntry type="library" name="Maven: com.google.gwt.google-apis:gwt-visualization:1.1.2" level="project" />
+    <orderEntry type="library" name="Maven: com.google.gwt.google-apis:gwt-visualization:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.gwt.google-apis:gwt-ajaxloader:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode.gwt-charts:gwt-charts:0.9.9" level="project" />
     <orderEntry type="library" name="Maven: com.xeiam.xchange:xchange-core:1.10.0" level="project" />
@@ -101,6 +116,7 @@
     <orderEntry type="library" name="Maven: com.google.guava:guava:15.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava-gwt:15.0" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:2.10.1" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm:5.0.4" level="project" />
   </component>
 </module>
 

@@ -6,7 +6,6 @@ import bitcoinGWT.client.util.UiUtils;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.Markets;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.rpc.server.Pair;
 import com.google.gwt.user.client.ui.IndexedPanel;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.core.client.util.ToggleGroup;

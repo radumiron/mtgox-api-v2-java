@@ -5,7 +5,7 @@ import bitcoinGWT.server.dao.entities.TradesFullLayoutRecord;
 import bitcoinGWT.server.dao.entities.TradesHistoryRecord;
 import bitcoinGWT.shared.model.Currency;
 import bitcoinGWT.shared.model.TradeType;
-import com.google.gwt.rpc.server.Pair;
+import com.google.web.bindery.requestfactory.server.Pair;
 import com.mongodb.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -173,7 +173,7 @@ public class MongoDAO implements GenericDAO {
             }
         } catch (Exception e) {
             if (!authenticated) {
-                LOG.error(new UnauthorizedAccessException("Not authenticated to the database"), e);
+                LOG.error(new Exception("Not authenticated to the database"), e);
                 return null;
             }
         }

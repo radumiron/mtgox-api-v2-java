@@ -19,9 +19,6 @@
     <set-property name="gwt.logging.developmentModeHandler"
                   value="ENABLED" />
     <set-property name="gwt.logging.systemHandler" value="ENABLED" />
-    <set-property name="gwt.logging.popupHandler" value="DISABLED" />
-    <set-property name="gwt.logging.consoleHandler" value="DISABLED" />
-    <set-property name="gwt.logging.firebugHandler" value="DISABLED" />
 
     <!-- For development, a default of `DEBUG` is recommended -->
     <inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />

@@ -13,13 +13,13 @@
           <element id="library" level="project" name="Maven: org.apache.derby:derby:10.9.1.0" />
           <element id="library" level="project" name="Maven: org.apache.derby:derbyclient:10.4.2.0" />
           <element id="library" level="project" name="Maven: org.apache.derby:derbytools:10.9.1.0" />
-          <element id="library" level="project" name="Maven: com.sencha.gxt:gxt:3.0.1" />
+          <element id="library" level="project" name="Maven: com.sencha.gxt:gxt:3.1.1" />
           <element id="library" level="project" name="Maven: javax.validation:validation-api:1.0.0.GA" />
           <element id="library" level="project" name="Maven: javax.validation:validation-api:sources:1.0.0.GA" />
           <element id="library" level="project" name="Maven: org.json:json:20090211" />
           <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
-          <element id="library" level="project" name="Maven: com.google.gwt:gwt-servlet:2.5.0" />
-          <element id="library" level="project" name="Maven: com.google.gwt:gwt-user:2.5.0" />
+          <element id="library" level="project" name="Maven: com.google.gwt:gwt-servlet:2.7.0" />
+          <element id="library" level="project" name="Maven: com.google.gwt:gwt-user:2.7.0" />
           <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.2.2" />
           <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.1" />
           <element id="library" level="project" name="Maven: org.mindrot:jbcrypt:0.3m" />
@@ -36,7 +36,7 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:3.0.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context-support:3.0.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.ocpsoft.prettytime:prettytime:3.0.2.Final" />
-          <element id="library" level="project" name="Maven: com.google.gwt.google-apis:gwt-visualization:1.1.2" />
+          <element id="library" level="project" name="Maven: com.google.gwt.google-apis:gwt-visualization:1.0.0" />
           <element id="library" level="project" name="Maven: com.google.gwt.google-apis:gwt-ajaxloader:1.1.0" />
           <element id="library" level="project" name="Maven: com.googlecode.gwt-charts:gwt-charts:0.9.9" />
           <element id="library" level="project" name="Maven: com.xeiam.xchange:xchange-core:1.10.0" />
@@ -67,6 +67,7 @@
           <element id="library" level="project" name="Maven: com.google.guava:guava:15.0" />
           <element id="library" level="project" name="Maven: com.google.guava:guava-gwt:15.0" />
           <element id="library" level="project" name="Maven: org.mongodb:mongo-java-driver:2.10.1" />
+          <element id="library" level="project" name="Maven: org.ow2.asm:asm:5.0.4" />
         </element>
       </element>
       <element id="gwt-compiler-output" facet="bitcoin-graph/gwt/GWT" />

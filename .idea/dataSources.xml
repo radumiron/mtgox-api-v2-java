@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="1440764251">
+    <data-source source="LOCAL" name="hibernate.cfg.xml" uuid="510a71be-3db3-4964-a0cf-43a8c54eb3ce">
+      <driver-ref>derby.embedded</driver-ref>
+      <jdbc-driver>org.apache.derby.jdbc.EmbeddedDriver</jdbc-driver>
+      <jdbc-url>jdbc:derby:data;create=true</jdbc-url>
+      <user-name>application</user-name>
+      <user-password>dfdadfcbdfd9dfd9dfdddfc5dfd8dfce</user-password>
+      <libraries>
+        <library>
+          <url>file://C:\Users\Radu\.m2\repository\org\apache\derby\derby\10.9.1.0\derby-10.9.1.0.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
+</project>
+

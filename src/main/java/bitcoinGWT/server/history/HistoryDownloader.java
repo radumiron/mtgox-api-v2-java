@@ -2,7 +2,6 @@ package bitcoinGWT.server.history;
 
 import bitcoinGWT.server.converter.TradesConverter;
 import bitcoinGWT.server.dao.GenericDAO;
-import bitcoinGWT.server.dao.MongoDAO;
 import bitcoinGWT.server.dao.entities.TradesFullLayoutRecord;
 import bitcoinGWT.server.dao.entities.TradesHistoryRecord;
 import bitcoinGWT.shared.model.Currency;
@@ -10,7 +9,7 @@ import bitcoinGWT.shared.model.Markets;
 import bitcoinGWT.shared.model.TimeInterval;
 import bitcoinGWT.shared.model.TradesFullLayoutObject;
 import com.google.common.io.Resources;
-import com.google.gwt.rpc.server.Pair;
+import com.google.web.bindery.requestfactory.server.Pair;
 import org.apache.commons.collections.keyvalue.MultiKey;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static bitcoinGWT.shared.model.Constants.INITIAL_TRADES_INTERVAL;
 
 /**
  * Created with IntelliJ IDEA.

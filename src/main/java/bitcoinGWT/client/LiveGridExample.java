@@ -132,7 +132,7 @@ public class LiveGridExample implements IsWidget, EntryPoint {
 
             ToolBar toolBar = new ToolBar();
             toolBar.add(new LiveToolItem(view));
-            toolBar.addStyleName(ThemeStyles.getStyle().borderTop());
+            //toolBar.addStyleName(ThemeStyles.getStyle().borderTop());
             toolBar.getElement().getStyle().setProperty("borderBottom", "none");
 
             con.add(toolBar, new VerticalLayoutData(1, 25));

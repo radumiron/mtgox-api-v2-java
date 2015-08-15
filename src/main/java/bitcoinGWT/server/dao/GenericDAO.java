@@ -3,7 +3,7 @@ package bitcoinGWT.server.dao;
 import bitcoinGWT.server.dao.entities.ChartRecord;
 import bitcoinGWT.server.dao.entities.TradesFullLayoutRecord;
 import bitcoinGWT.server.dao.entities.TradesHistoryRecord;
-import com.google.gwt.rpc.server.Pair;
+import com.google.web.bindery.requestfactory.server.Pair;
 
 import java.util.Collection;
 import java.util.List;
